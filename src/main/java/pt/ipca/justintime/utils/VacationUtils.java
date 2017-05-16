@@ -51,7 +51,7 @@ public class VacationUtils {
 	 * @return a list of dates "dateList" returns a list with the days between the start and the end
 	 */
 	public List<LocalDate> getDaysBetweenDates(List<Vacation> vacationList)
-	{	
+	{
 		List<LocalDate> dateList = new ArrayList<>();
 		for (Vacation vacation : vacationList)
 		{
