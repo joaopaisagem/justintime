@@ -15,9 +15,9 @@
 			Dashboard <small>Vacations</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><i class="glyphicon glyphicon-dashboard"></i> Dashboard</li>
+			<li><i class="fa fa-tachometer"></i> Dashboard</li>
 			<li class="active"><i
-				class="glyphicon glyphicon-glyphicon-calendar"></i>vacations</li>
+				class="fa fa-1x fa-calendar"></i>vacations</li>
 		</ol>
 	</div>
 	<!-- end of page title -->
@@ -30,7 +30,7 @@
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
-									<i class="glyphicon glyphicon-user"></i>
+									<i class="fa fa-3x fa-user-circle-o"></i>
 								</div>
 								<div class="col-xs-9 text-right boardtext">
 									<div>Total Vacations</div>
@@ -69,6 +69,49 @@
 					</div>
 				</div>
 			</div>
+			<!-- Vacations By Team -->
+			<div class="row">
+				<div class="col-lg-6 col-md-6">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-3x fa-users"></i>
+								</div>
+								<div class="col-xs-9 text-left boardtext">
+									<div>Vacations By Team</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<div class="panel panel-default">
+ 						 		<!-- Default panel contents -->
+  								<div class="panel-heading"></div>
+									<table class="table">
+									<thead>
+      									<tr>
+        								<th>Vacations :</th>     								
+      									</tr>
+    								</thead>
+    								<tbody th:each="vacation : ${vacationsByteam}">
+      									<tr>
+        								<td th:text="${vacation.data}"></td>      									 
+       									</tr>  								
+     								 </tbody>									
+								</table>
+							</div>
+							
+							<div class="clearfix"></div>				
+						</div>
+					</div>
+				</div>
+			</div>			
+			
+			
+			
+			
+			
+			
 		</div>
 	</div>
 		<script type="text/javascript" src="/js/jquery-ui.min.js"></script>

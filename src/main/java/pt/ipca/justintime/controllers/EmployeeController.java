@@ -35,7 +35,7 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
 	 * METHOD TO MAP AND SHOW EMPLOYEE FORM
 	 */
 	@RequestMapping(value = "/newemployee", method = RequestMethod.GET)
-    public ModelAndView employeeForm(ModelMap model) {
+    public ModelAndView employeeForm() {
 		ModelAndView employeeForm = new ModelAndView("employeeform");
 		employeeForm.addObject("employee", new Employee());
 		employeeForm.addObject("teamList",teamService.getAllTeams());

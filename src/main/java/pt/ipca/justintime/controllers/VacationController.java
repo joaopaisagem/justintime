@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pt.ipca.justintime.domain.Employee;
@@ -26,25 +27,26 @@ public class VacationController {
 	private TeamService teamService;
 
 	@RequestMapping(value = "/vacation", method = RequestMethod.GET)
-    public String vacationForm(ModelMap model) {
-		model.addAttribute("employeeList", employeeService.getAllEmployees());
-		model.addAttribute("availableVacations",employeeService.getAllAvailableDaysVacations());
-		model.addAttribute("unavailableVacations",employeeService.getAllUnavailableDaysVacations());
-		model.addAttribute("totalVacations", vacationService.countTotalVacations());
-		model.addAttribute("teams",teamService.getAllTeams());
-		model.addAttribute("vacationsByteam", teamService.vacationListForAllTeams(teamService.getAllTeams()));
-		return "vacation";
+    public ModelAndView vacationForm() {
+		ModelAndView vacationForm = new ModelAndView("vacation");
+		vacationForm.addObject("employeeList", employeeService.getAllEmployees());
+		vacationForm.addObject("availableVacations",employeeService.getAllAvailableDaysVacations());
+		vacationForm.addObject("unavailableVacations",employeeService.getAllUnavailableDaysVacations());
+		vacationForm.addObject("totalVacations", vacationService.countTotalVacations());
+		vacationForm.addObject("teams",teamService.getAllTeams());
+		vacationForm.addObject("vacationsByteam", teamService.vacationListForAllTeams(teamService.getAllTeams()));
+		return vacationForm;
     }
 
 	 @RequestMapping(value="/searchemployeevacation",method = RequestMethod.GET)
-	    public String showSearchEmployeeForm(ModelMap model){
-		  	model.addAttribute("employee",new Employee());
-		  	return "searchemployeevacation";
+	    public ModelAndView showSearchEmployeeForm(){
+		 	ModelAndView searchemployeeform = new ModelAndView("searchemployeevacation");
+		 	searchemployeeform.addObject("employee",new Employee());
+		  	return searchemployeeform;
    }
 	 
 	 @RequestMapping(value="/addemployeevacation",method = RequestMethod.POST)
-	    public  String showEmployeeToAddVacation( Long id, ModelMap model,RedirectAttributes redirectAttributes){
-		 
+	    public  String showEmployeeToAddVacation( Long id, ModelMap model,RedirectAttributes redirectAttributes){		 
 		 if(id == null)
 		 {
 			 redirectAttributes.addFlashAttribute("message", "Employee id cannot be null!");
