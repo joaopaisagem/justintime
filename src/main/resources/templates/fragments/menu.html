@@ -1,0 +1,50 @@
+<!-- Navigation Bar -->
+<nav th:fragment="menu" class="navbar navbar-default navbar-inverse" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"><img class ="img-responsive" src="/img/logo.png" /></a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Employee
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/newemployee">Add Employee</a></li>
+          <li><a href="/editemployee">Edit Employee</a></li>
+          <li><a href="#">Delete Employee</a></li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/vacation">See Teams</a></li>
+          <li><a href="/newteam">Add Team</a></li>
+          <li><a href="/editteam">Edit Team</a></li>
+          <li><a href="/deleteteam">Delete Team</a></li>
+        </ul>
+      </li>
+    </ul>
+   <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Vacation
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/vacation">See vacation</a></li>
+          <li><a href="/searchemployeevacation">Add Employee vacation</a></li>
+          <li><a href="/searchemployeetoedit">Edit Employee vacation</a></li>
+        </ul>
+      </li>
+    </ul>
+      <form class="navbar-form navbar-right" th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-default logout">Sign out</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><p class="navbar-text" th:inline="text">Signed in as [[${#httpServletRequest.remoteUser}]]! </p></li>       
+      </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>
+<!-- End of navigation Bar -->

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head th:replace ="/fragments/header :: header"></head>
+    <body>
+        <form action="#" th:action="@{/newproject}" th:object="${project}" method="post">
+            <div class="form-group">           		                						          						                						
+			<select th:field="*{status}">
+   			<option th:each="status : ${T(pt.ipca.justintime.domain.SoftwareDevelopmentCicle).values()}" th:value="${status}" th:text="${status}"></option>
+			</select>					                																	
+			</div>
+			<div class="col-lg-3">
+    		<select class="form-control"  th:field="*{assignedTeam}">
+       		 <option value="">Select Team</option>
+       		 <option th:each="team : ${teamList}"
+                th:value="${team.id}"
+                th:text="${team.teamName}"></option>
+   			 </select>
+			</div>
+			<div class="col-lg-3">
+    		<select class="form-control"  th:field="*{client}">
+       		 <option value="">Select a Client</option>
+       		 <option th:each="client : ${clientList}"
+                th:value="${client.id}"
+                th:text="${client.firstName}"></option>
+   			 </select>
+			</div>
+            <table>                       
+                <tr>
+                    <td>Project Name:</td>
+                    <td><input type="text" th:field="*{projectName}" /></td>
+                    <td th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}">Project name error</td>
+                </tr>
+                <tr>
+                    <td>Description:</td> 
+                    <td><input type="text" th:field="*{projectDescription}" /></td>
+                    <td th:if="${#fields.hasErrors('projectDescription')}" th:errors="*{projectDescription}">Project Description Error</td>
+                </tr>
+                
+                     
+                <tr>
+                    <td>Project start Date:</td> 
+                    <td><input type="date" th:field="*{projectStartDate}" /></td>
+                    <td th:if="${#fields.hasErrors('projectStartDate')}" th:errors="*{projectStartDate}">Date Error</td>
+                </tr> 
+                <tr>
+                    <td>Estimated end date:</td> 
+                    <td><input type="date" th:field="*{projectEndDate}" /></td>
+                    <td th:if="${#fields.hasErrors('projectEndDate')}" th:errors="*{projectEndDate}">Date Error</td>
+                </tr>  
+
+                                 
+                <tr>
+                    <td><button type="submit" value ="save">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+         
+    </body>
+</html>

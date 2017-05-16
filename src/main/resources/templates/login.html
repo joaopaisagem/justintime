@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>JustinTime - Welcome , please login</title>
+<meta charset="utf-8"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+	href="../../css/bootstrap.min.css" />
+<link rel="stylesheet" th:href="@{/css/login.css}"
+	href="../../css/login.css" />
+<link rel="stylesheet"
+	href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" />
+
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron">
+			<div class="logo">
+									
+				<span  class="brand-name"><img class="jitlogo" src="/img/logo.png"></img>JIT - </span> <span>J</span>ust<span>i</span>n<span>T</span>ime
+			</div>
+		</div>
+
+		<div id="login">
+			<form name='form-login' th:action="@{/login}" method="post">
+				<span class="fontawesome-user"></span> <input type="text" id="user"
+					name="username" placeholder="Username" /> <span
+					class="fontawesome-lock"></span> <input type="password" id="pass"
+					name="password" placeholder="Password" /> <input type="submit"
+					value="Sign In" />
+			</form>
+			<div class="logout-message" th:if="${param.logout}">You have
+				been logged out.</div>
+			<div class="login-error" th:if="${param.error}">Invalid
+				username and password.</div>
+
+		</div>
+
+	</div>
+</body>
+
+</html>

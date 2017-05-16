@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    
+    <head th:replace ="/fragments/header :: header"></head>
+    <body>
+    <nav th:replace="/fragments/menu ::menu"> </nav>
+    <!-- Page Title -->
+<div class="col-lg-12">
+   <h1 class="page-header"> Dashboard <small>Add Employee Vacation</small> </h1>
+      <ol class="breadcrumb">
+     <li>
+      <i class="glyphicon glyphicon-dashboard"></i> Dashboard</li>
+      <li class="active">
+      <i class="glyphicon glyphicon-calendar"></i> Add Vacation</li>
+     </ol>
+</div>
+<div class="col-lg-12">
+        <form class="form-horizontal" action="#" th:action="@{/addemployeevacation}" th:object="${employee}" method="post">
+        <table>
+        <tr>
+         
+            <td><input type="hidden" th:field="*{id}" /></td>
+        </tr>
+        </table>  
+        <fieldset th:replace ="/employeefragments/employeevacationform :: employeevacationform"></fieldset>              
+        </form>
+  </div>  
+  <footer th:replace="/fragments/footer :: footer"></footer>     
+    </body>
+</html>

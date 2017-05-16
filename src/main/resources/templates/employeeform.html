@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace ="/fragments/header :: header"></head>
+<body>
+<!-- Navigation Bar -->
+<nav th:replace="/fragments/menu :: menu" >
+
+</nav>
+<!-- End of navigation Bar -->
+<!-- Page Title -->
+<div class="col-lg-12">
+   <h1 class="page-header"> Dashboard <small>Add Employee</small> </h1>
+      <ol class="breadcrumb">
+     <li>
+      <i class="glyphicon glyphicon-dashboard"></i> Dashboard</li>
+      <li class="active">
+      <i class="glyphicon glyphicon-user"></i> Add Employee</li>
+     </ol>
+     <div th:if="${successmsg != null}">
+     <div class="alert alert-success" th:text="${successmsg}"></div>
+     </div>
+	 <div th:if="${errorssmsg != null}">
+     <div class="alert alert-danger" th:text="${errorsmsg}"></div>
+     </div>     
+</div>
+<div class="col-lg-12">
+<form class="form-horizontal" th:action="@{/newemployee}"
+				th:object="${employee}" method="post">
+				<fieldset th:replace="/employeefragments/employeeform :: employeeform" ></fieldset>
+</form>
+</div>
+<footer th:replace ="/fragments/footer :: footer"></footer>
+</body>
+</html>
