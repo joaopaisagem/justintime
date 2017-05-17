@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
- <head th:replace ="/fragments/header :: header"></head>
-    <body>
-        <form action="#" th:action="@{/editteam}" th:object="${team}" method="post">
-            
-            <table>                       
-                <tr>
-                    <td>Name:</td>
-                    <td><input type="text" th:field="*{teamName}" /></td>
-                    <td th:if="${#fields.hasErrors('teamName')}" th:errors="*{teamName}">Team Name Error</td>
-                </tr>
-               
-                				                                                                                   
-                <tr>
-                    <td><button type="submit" value ="save">Submit</button></td>
-                </tr>
-            </table>
-        </form>
-        
-       
-    </body>
+>
+<head th:replace="/fragments/header :: header"></head>
+<body>
+<form action="#" th:action="@{/editteam}" th:object="${team}" method="post">
+
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" th:field="*{teamName}"/></td>
+            <td th:if="${#fields.hasErrors('teamName')}" th:errors="*{teamName}">Team Name Error</td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <button type="submit" value="save">Submit</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+</body>
 </html>

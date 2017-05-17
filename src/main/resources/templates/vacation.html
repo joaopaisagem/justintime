@@ -1,77 +1,78 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:th="http://www.thymeleaf.org"
+>
 <head th:replace="/fragments/header :: header">
 </head>
 <body>
-	<!-- Navigation Bar -->
-	<nav th:replace="/fragments/menu :: menu"></nav>
-	<!-- End of navigation Bar -->
-	<!-- Page Title -->
-	<div class="col-lg-12">
-		<h1 class="page-header">
-			Dashboard <small>Vacations</small>
-		</h1>
-		<ol class="breadcrumb">
-			<li><i class="glyphicon glyphicon-dashboard"></i> Dashboard</li>
-			<li class="active"><i
-				class="glyphicon glyphicon-glyphicon-calendar"></i>vacations</li>
-		</ol>
-	</div>
-	<!-- end of page title -->
+<!-- Navigation Bar -->
+<nav th:replace="/fragments/menu :: menu"></nav>
+<!-- End of navigation Bar -->
+<!-- Page Title -->
+<div class="col-lg-12">
+    <h1 class="page-header">
+        Dashboard
+        <small>Vacations</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><i class="glyphicon glyphicon-dashboard"></i> Dashboard</li>
+        <li class="active"><i
+                class="glyphicon glyphicon-glyphicon-calendar"></i>vacations
+        </li>
+    </ol>
+</div>
+<!-- end of page title -->
 
-	<div id="page-wraper">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12 col-md-6 ">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<div class="row">
-								<div class="col-xs-3">
-									<i class="glyphicon glyphicon-user"></i>
-								</div>
-								<div class="col-xs-9 text-right boardtext">
-									<div>Total Vacations</div>
-									<span th:text="${totalVacations}"></span>
-								</div>
-							</div>
-						</div>
-						<div class="panel-footer">
-							<div class="panel panel-default">
- 						 		<!-- Default panel contents -->
-  								<div class="panel-heading">All Employee Vacations</div>
-									<table class="table">
-									<thead>
-      									<tr>
-        								<th>First Name</th>
-        								<th>Last Name</th>
-        								<th>Team</th>
-        								<th>Available days</th>
-        								<th>Spent days</th>
-      									</tr>
-    								</thead>
-    								<tbody th:each="employee : ${employeeList}">
-      									<tr>
-        								<td th:text="${employee.firstName}"></td>
-       									 <td th:text="${employee.lastName}"></td>
-       									 <td th:text="${employee.employeeTeamName.teamName}"></td>
-       									 <td th:text="${availableVacations}"></td>  
-       									 <td th:text="${unavailableVacations}"></td>
-       									</tr>  								
-     								 </tbody>									
-								</table>
-							</div>
-							
-							<div class="clearfix"></div>				
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-		<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<div id="page-wraper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-6 ">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </div>
+                            <div class="col-xs-9 text-right boardtext">
+                                <div>Total Vacations</div>
+                                <span th:text="${totalVacations}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="panel panel-default">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">All Employee Vacations</div>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Team</th>
+                                    <th>Available days</th>
+                                    <th>Spent days</th>
+                                </tr>
+                                </thead>
+                                <tbody th:each="employee : ${employeeList}">
+                                <tr>
+                                    <td th:text="${employee.firstName}"></td>
+                                    <td th:text="${employee.lastName}"></td>
+                                    <td th:text="${employee.employeeTeamName.teamName}"></td>
+                                    <td th:text="${availableVacations}"></td>
+                                    <td th:text="${unavailableVacations}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 </body>
 </html>

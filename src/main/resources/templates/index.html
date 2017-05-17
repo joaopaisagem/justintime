@@ -1,90 +1,92 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:th="http://www.thymeleaf.org"
+>
 <head th:replace="/fragments/header :: header">
 
 </head>
 <body>
-<nav th:replace="/fragments/menu ::menu"> </nav>
+<nav th:replace="/fragments/menu ::menu"></nav>
 <!-- Page Title -->
 <div class="col-lg-12">
-   <h1 class="page-header"> Dashboard <small>Statistics Overview</small> </h1>
-      <ol class="breadcrumb">
-     <li class="active">
-      <i class="glyphicon glyphicon-dashboard"></i> Dashboard</li>
-     </ol>
+    <h1 class="page-header"> Dashboard
+        <small>Statistics Overview</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li class="active">
+            <i class="glyphicon glyphicon-dashboard"></i> Dashboard
+        </li>
+    </ol>
 </div>
 <!-- end of page title -->
 
 <div id="page-wraper">
-<div class="container-fluid">
-<div class="row">
-                    <div class="col-lg-4 col-md-6 ">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="glyphicon glyphicon-user"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right boardtext">
-                                        
-                                        <div>Number of Teams</div>
-                                    </div>
-                                </div>
-                            </div>                           
-                                <div class="panel-footer">
-                                    <span class="pull-left"></span>
-                                    <span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>                      
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="glyphicon glyphicon-tasks"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right boardtext">                                       
-                                        <div>Number of Projects</div>
-                                    </div>
-                                </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 ">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="glyphicon glyphicon-user"></i>
                             </div>
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right boardtext">                                       
-                                        <div>Employee Vacations</div>
-                                    </div>
-                                </div>
+                            <div class="col-xs-9 text-right boardtext">
+
+                                <div>Number of Teams</div>
                             </div>
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
                         </div>
                     </div>
-                    
+                    <div class="panel-footer">
+                        <span class="pull-left"></span>
+                        <span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
-             </div>
-           </div>
- <footer th:replace ="/fragments/footer ::footer">
- 
- </footer>              
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="glyphicon glyphicon-tasks"></i>
+                            </div>
+                            <div class="col-xs-9 text-right boardtext">
+                                <div>Number of Projects</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </div>
+                            <div class="col-xs-9 text-right boardtext">
+                                <div>Employee Vacations</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<footer th:replace="/fragments/footer ::footer">
+
+</footer>
 </body>
 </html>

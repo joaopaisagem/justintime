@@ -1,34 +1,35 @@
 <fieldset th:fragment="teamform">
-	<div class="form-group">
-		<label class="col-md-4 control-label" for="teamName">Team Name</label>
-		<div class="col-md-4">
-			<input th:field="*{teamName}" id="teamName" name="teamName"
-				type="text" placeholder="Team Name" class="form-control input-md" />
-			<span class="help-block" th:if="${#fields.hasErrors('teamName')}"
-				th:errors="*{nifteamName}">Team Name Error</span>
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-md-4 control-label" for="submit"></label>
-		<div class="col-md-4">
-			<button type="submit" value="save" id="submit" name="submit"
-				class="btn btn-primary">Submit</button>
-		</div>
-	</div>
-	<div class="form-group">
-	<div class="col-md-4" th:if="${!teamList.isEmpty()}">Teams :</div>
-			<div class="col-md-4 col-md-offset-4" th:if="${teamList.isEmpty()}">There are no Teams</div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="teamName">Team Name</label>
+        <div class="col-md-4">
+            <input th:field="*{teamName}" id="teamName" name="teamName"
+                   type="text" placeholder="Team Name" class="form-control input-md"/>
+            <span class="help-block" th:if="${#fields.hasErrors('teamName')}"
+                  th:errors="*{nifteamName}">Team Name Error</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="submit"></label>
+        <div class="col-md-4">
+            <button type="submit" value="save" id="submit" name="submit"
+                    class="btn btn-primary">Submit
+            </button>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-4" th:if="${!teamList.isEmpty()}">Teams :</div>
+        <div class="col-md-4 col-md-offset-4" th:if="${teamList.isEmpty()}">There are no Teams</div>
 
-			<div class="col-md-4" th:each="existTeam : ${teamList}">
-				<table>
-					<tr>
-						<td th:text="${existTeam.id}"></td>
-						<td th:text="${existTeam.teamName}"></td>
-					</tr>
-				</table>
-			</div>
-			<div class="col-md-4" th:text="${message}"></div>
-	
-	</div>
+        <div class="col-md-4" th:each="existTeam : ${teamList}">
+            <table>
+                <tr>
+                    <td th:text="${existTeam.id}"></td>
+                    <td th:text="${existTeam.teamName}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-4" th:text="${message}"></div>
+
+    </div>
 </fieldset>
 
