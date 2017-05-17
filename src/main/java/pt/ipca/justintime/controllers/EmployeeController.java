@@ -71,9 +71,7 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
     }
 	 
 	 @RequestMapping(value="/editemployee",method = RequestMethod.POST)
-	    public  String showEmployeeToEditById( Long id, ModelMap model,RedirectAttributes redirectAttributes){
-		 
-		 
+	    public  String showEmployeeToEditById( Long id, ModelMap model,RedirectAttributes redirectAttributes){		 	 
 		 if ( employeeService.getEmployeeById(id) != null) {
 			 model.addAttribute("employee", employeeService.getEmployeeById(id));
 		     model.addAttribute("teamList", teamService.getAllTeams());

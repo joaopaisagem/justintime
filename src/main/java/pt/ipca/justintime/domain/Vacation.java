@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import org.joda.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +30,9 @@ public class Vacation {
 	@Id
 	@GeneratedValue
 	private Long id;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate vacationStartDay;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate vacationEndDay;
    /* @ManyToOne
     private Employee employee;*/
