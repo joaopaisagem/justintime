@@ -55,7 +55,7 @@ public class VacationUtils {
 		List<LocalDate> dateList = new ArrayList<>();
 		for (Vacation vacation : vacationList)
 		{
-			int days = Days.daysBetween(vacation.getVacationStartDay(),vacation.getVacationEndDate()).getDays();
+			int days = Days.daysBetween(vacation.getVacationStartDay(),vacation.getVacationEndDay()).getDays();
 			for(int i =0; i<days;i++)
 			{
 				LocalDate d = vacation.getVacationStartDay().withFieldAdded(DurationFieldType.days(), i);
@@ -103,7 +103,7 @@ public class VacationUtils {
 		List<LocalDate> listToReturn = new ArrayList<>();
 		for (Vacation vacation : vacationList)
 		{
-			for(LocalDate date :getDaysBetweenDates(vacation.getVacationStartDay(),vacation.getVacationEndDate()))
+			for(LocalDate date :getDaysBetweenDates(vacation.getVacationStartDay(),vacation.getVacationEndDay()))
 			{
 				if(date.getDayOfWeek()!=6 && date.getDayOfWeek()!=7 && date.getYear() == LocalDate.now().getYear())
 				{
@@ -131,7 +131,7 @@ public class VacationUtils {
 
 		for(Vacation date : vacationList)
 		{
-			for(LocalDate dayDate : getDaysBetweenDates(date.getVacationStartDay(),date.getVacationEndDate()))
+			for(LocalDate dayDate : getDaysBetweenDates(date.getVacationStartDay(),date.getVacationEndDay()))
 			{
 				if(dayDate.getMonthOfYear() == month)
 				{

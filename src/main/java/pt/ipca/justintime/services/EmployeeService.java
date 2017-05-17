@@ -42,8 +42,7 @@ public class EmployeeService {
 	
 	 //////////////////////////////////////////////////////////
 	 //         Employee vacation method´s                  //
-	 ////////////////////////////////////////////////////////
-	
+	 ////////////////////////////////////////////////////////		
 	public int getAllAvailableDaysVacations(){
 		List<LocalDate> listOfVacations = getAllTotalEmployeeVacations();
 		int contAvailable =0;

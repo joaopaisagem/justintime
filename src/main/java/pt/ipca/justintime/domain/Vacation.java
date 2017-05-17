@@ -30,7 +30,7 @@ public class Vacation {
 	@GeneratedValue
 	private Long id;
     private LocalDate vacationStartDay;
-    private LocalDate vacationEndDate;
+    private LocalDate vacationEndDay;
    /* @ManyToOne
     private Employee employee;*/
     @ManyToMany(mappedBy = "vacationList")

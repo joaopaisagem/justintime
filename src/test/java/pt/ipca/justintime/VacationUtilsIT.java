@@ -41,7 +41,7 @@ public class VacationUtilsIT {
 		int month = LocalDate.now().getMonthOfYear();
 		Vacation vacation = new Vacation();
 		vacation.setVacationStartDay(LocalDate.now());
-		vacation.setVacationEndDate(LocalDate.now().plusDays(6));
+		vacation.setVacationEndDay(LocalDate.now().plusDays(6));
 		vacationList.add(vacation);
 		List<LocalDate> result = vacationUtils.getDaysOfVacationByMonth(vacationList, month);
 		Assert.assertTrue(result.size() == 6);
@@ -52,13 +52,13 @@ public class VacationUtilsIT {
 		List<Vacation> vacationList = new ArrayList<>();
 		Vacation a = new Vacation();
 		a.setVacationStartDay(LocalDate.now());
-		a.setVacationEndDate(LocalDate.now().plusDays(6));
+		a.setVacationEndDay(LocalDate.now().plusDays(6));
 		Vacation b = new Vacation();
 		b.setVacationStartDay(LocalDate.now().minusYears(1));
-		b.setVacationEndDate(b.getVacationStartDay().plusDays(6));
+		b.setVacationEndDay(b.getVacationStartDay().plusDays(6));
 		Vacation c = new Vacation();
 		c.setVacationStartDay(LocalDate.now().plusMonths(1));
-		c.setVacationEndDate(c.getVacationStartDay().plusDays(6));
+		c.setVacationEndDay(c.getVacationStartDay().plusDays(6));
 		vacationList.add(a);
 		vacationList.add(b);
 		vacationList.add(c);

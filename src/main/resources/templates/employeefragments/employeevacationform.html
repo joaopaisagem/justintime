@@ -1,38 +1,33 @@
-
-<fieldset th:fragment="employeevacationform" >
-<div id="page-wraper">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12 col-md-6 ">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<div class="row">
-								<div class="col-xs-3">
-									<i class="glyphicon glyphicon-user"></i>
-									<span class="boardtext" th:text="${employee.firstName}"></span>
-									<span class="boardtext" th:text="${employee.lastName}"></span>
-									<span class="boardtext" th:text="${employee.employeeTeamName.teamName}"></span>
-								</div>
-								<div class="col-xs-9 text-right boardtext">
-									<div>Employee</div>
-									<span></span>
-								</div>
-							</div>
-						</div>
-						<div class="panel-footer">
-							<div class="panel panel-default">
- 						 		<!-- Default panel contents -->
-  								<div class="panel-heading">
-  								 <h3 class="panel-title">Select days for vacation</h3>	 
-  								</div>
-								<div class="panel-body"> Panel content</div>	
-							
-							<div class="clearfix"></div>		
-						</div>
-					</div>
-				</div>
-			</div>
+<fieldset th:fragment="employeevacationform">
+	<div class="form-group">
+		<label class="col-md-4 control-label" for="VacationStartDay">Start
+			Date</label>
+		<div class="col-md-4">
+			<input th:field="*{vacationList[${size}+1].vacationStartDay}" id="VacationStartDay"
+				name="VacationStartDay" type="date" placeholder="VacationStartDay"
+				class="form-control input-md" /> <span class="help-block"
+				th:if="${#fields.hasErrors('vacationList[${size}+1].vacationStartDay')}"
+				th:errors="*{vacationList[${size}+1].vacationStartDay}"></span>
 		</div>
 	</div>
-</div>
+<div class="form-group">
+		<label class="col-md-4 control-label" for="VacationEndDay">End
+			Date</label>
+		<div class="col-md-4">
+			<input th:field="*{vacationList[${size}+1].vacationEndDay}" id="VacationEndDay"
+				name="VacationEndDay" type="date" placeholder="VacationEndDay"
+				class="form-control input-md" /> <span class="help-block"
+				th:if="${#fields.hasErrors('vacationList[${size}+1].vacationEndDay')}"
+				th:errors="*{vacationList[${size}+1].vacationEndDay}"></span>
+		</div>
+	</div>
+<div class="form-group">
+						<label class="col-md-4 control-label" for="submit"></label>
+						<div class="col-md-4">
+							<button type="submit" value="save" id="submit" name="submit"
+								class="btn btn-primary">Submit</button>
+						</div>
+					</div>
 </fieldset>
+
+

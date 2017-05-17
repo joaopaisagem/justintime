@@ -31,14 +31,16 @@ public class VacationController {
 	private TeamService teamService;
 
 	@RequestMapping(value = "/vacation", method = RequestMethod.GET)
-    public String vacationForm(ModelMap model) {
-		model.addAttribute("employeeList", employeeService.getAllEmployees());
-		model.addAttribute("availableVacations",employeeService.getAllAvailableDaysVacations());
-		model.addAttribute("unavailableVacations",employeeService.getAllUnavailableDaysVacations());
-		model.addAttribute("totalVacations", vacationService.countTotalVacations());
-		model.addAttribute("teams",teamService.getAllTeams());
-		model.addAttribute("vacationsByteam", teamService.vacationListForAllTeams(teamService.getAllTeams()));
-		return "vacation";
+    public ModelAndView vacationForm() {
+		ModelAndView vacationForm = new ModelAndView("vacation");
+		vacationForm.addObject("employeeList", employeeService.getAllEmployees());
+		vacationForm.addObject("availableVacations",employeeService.getAllAvailableDaysVacations());
+		vacationForm.addObject("unavailableVacations",employeeService.getAllUnavailableDaysVacations());
+		vacationForm.addObject("totalVacations", vacationService.countTotalVacations());
+		vacationForm.addObject("teams",teamService.getAllTeams());
+		vacationForm.addObject("vacationsByteam", teamService.vacationListForAllTeams(teamService.getAllTeams()));
+		
+		return vacationForm;
     }
 
 	 @RequestMapping(value="/searchemployeevacation",method = RequestMethod.GET)
@@ -47,7 +49,7 @@ public class VacationController {
 		  	return "searchemployeevacation";
 	 }
 	 
-	 @RequestMapping(value="/addemployeevacation",method = RequestMethod.POST)
+	 @RequestMapping(value="/searchemployeevacation",method = RequestMethod.POST)
 	    public ModelAndView searchEmployeeForVacationForm(Long id, Employee employee,RedirectAttributes redirectAttributes){		
 	 	ModelAndView addEmployeeForm = new ModelAndView("addemployeevacation");
 	 	if(id==null)
@@ -59,13 +61,15 @@ public class VacationController {
 			return searchEmployeeForm; 
 	 	}
 	 	Employee employeeToAdd = employeeService.getEmployeeById(id);
+	 	int size = employeeToAdd.getVacationList().size();
 	 	addEmployeeForm.addObject("employee",employeeToAdd);
+	 	addEmployeeForm.addObject("size",size);
 	 	return addEmployeeForm;
 	 } 
 	 
 	 
-	/* @RequestMapping(value="/addemployeevacation/addvacation",method = RequestMethod.POST)
-	    public  void showEmployeeToAddVacation( ModelMap model,RedirectAttributes redirectAttributes){
+	/* @RequestMapping(value="/addemployeevacation",method = RequestMethod.POST)
+	    public  void showEmployeeToAddVacation(Employee employee,Vacation vacation,RedirectAttributes redirectAttributes){
 		 
 		
 	 }*/
