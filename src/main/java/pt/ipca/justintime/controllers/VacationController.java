@@ -55,7 +55,7 @@ public class VacationController {
         if (id == null) {
             searchEmployeeForm.addObject("message", "Employee cannot be null!");
             return searchEmployeeForm;
-        } else if (employeeService.getEmployeeById(id) != null) {
+          } else if (employeeService.getEmployeeById(id) != null) {
             ModelAndView addEmployeeForm = new ModelAndView("addemployeevacation");
             Employee emp = employeeService.getEmployeeById(id);
             addEmployeeForm.addObject(emp);
@@ -66,15 +66,16 @@ public class VacationController {
     }
 
     @RequestMapping(value = "/addemployeevacation", method = RequestMethod.POST)
-    public ModelAndView showEmployeeToAddVacation(@Valid Employee employee,
-                                                  BindingResult bindingResult) {
+    public ModelAndView showEmployeeToAddVacation(Long id,Employee employee , BindingResult bindingResult ) {
         ModelAndView addemployeeForm = new ModelAndView("addemployeevacation");
-        addemployeeForm.addObject("addemployeevacation", employee);
+        Employee employeeToAddVacation = employeeService.getEmployeeById(id);
+        employeeToAddVacation.setVacationList(employee.getVacationList());
+        addemployeeForm.addObject("addemployeevacation", employeeToAddVacation);
         if (bindingResult.hasErrors()) {
             addemployeeForm.addObject("errorsmsg", "Error saving employee");
             return addemployeeForm;
         }
-        employeeService.updateEmployee(employee);
+        employeeService.updateEmployee(employeeToAddVacation);
         addemployeeForm.addObject("successmsg", "Success you save employee");
         return addemployeeForm;
     }

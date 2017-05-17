@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Past;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,9 +29,8 @@ public class Employee extends Person {
 
     private String picture;
 
-    @Past
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birthdayDate;
+    private LocalDate birthdayDate;
 
     @OneToMany
     @Cascade({CascadeType.ALL})
@@ -40,7 +40,7 @@ public class Employee extends Person {
     @Cascade({CascadeType.ALL})
     private Team employeeTeamName;
 
-    @ManyToMany
+    @ManyToMany(cascade = javax.persistence.CascadeType.ALL)
     @JoinTable(name = "vacations",
             joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "vacation_id", referencedColumnName = "id"))
