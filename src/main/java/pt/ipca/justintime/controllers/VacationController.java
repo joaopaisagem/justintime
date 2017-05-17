@@ -1,14 +1,15 @@
 package pt.ipca.justintime.controllers;
 
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.services.EmployeeService;
 import pt.ipca.justintime.services.TeamService;
@@ -44,34 +45,39 @@ public class VacationController {
     }
 
 	 @RequestMapping(value="/searchemployeevacation",method = RequestMethod.GET)
-	    public String showSearchEmployeeForm(ModelMap model){
-		  	model.addAttribute("employee",new Employee());
-		  	return "searchemployeevacation";
+	    public ModelAndView showSearchEmployeeForm(){
+		ModelAndView searchemployeevacationForm = new ModelAndView("searchemployeevacation");
+		searchemployeevacationForm.addObject("employee",new Employee());
+		return searchemployeevacationForm;
 	 }
 	 
-	 @RequestMapping(value="/searchemployeevacation",method = RequestMethod.POST)
-	    public ModelAndView searchEmployeeForVacationForm(Long id, Employee employee,RedirectAttributes redirectAttributes){		
-	 	ModelAndView addEmployeeForm = new ModelAndView("addemployeevacation");
+/*	 @RequestMapping(value="/searchemployeevacation",method = RequestMethod.POST)
+	    public ModelAndView searchEmployeeForVacationForm(Long id,Employee employee){		
+	 	
 	 	if(id==null)
 	 	{
 	 		ModelAndView searchEmployeeForm = new ModelAndView("searchemployeevacation");
-	 		searchEmployeeForm.addObject("employee",employee);
 	 		searchEmployeeForm.addObject("message", "Employee not cannot be null!");
-	 		//redirectAttributes.addFlashAttribute("message","Employee not cannot be null!" );
 			return searchEmployeeForm; 
 	 	}
-	 	Employee employeeToAdd = employeeService.getEmployeeById(id);
-	 	int size = employeeToAdd.getVacationList().size();
-	 	addEmployeeForm.addObject("employee",employeeToAdd);
-	 	addEmployeeForm.addObject("size",size);
+	 	ModelAndView addEmployeeForm = new ModelAndView("addemployeevacation");
+	 	Employee emp =employeeService.getEmployeeById(id);
+	 	addEmployeeForm.addObject("employee",emp);
 	 	return addEmployeeForm;
 	 } 
 	 
 	 
-	/* @RequestMapping(value="/addemployeevacation",method = RequestMethod.POST)
-	    public  void showEmployeeToAddVacation(Employee employee,Vacation vacation,RedirectAttributes redirectAttributes){
-		 
-		
-	 }*/
+	@RequestMapping(value="/addemployeevacation",method = RequestMethod.POST)
+	    public  ModelAndView showEmployeeToAddVacation(@Valid @ModelAttribute("employee")Employee employee,BindingResult bindingResult){
+		ModelAndView addemployeeForm = new ModelAndView("addemployeevacation");
+		addemployeeForm.addObject("addemployeevacation",employee );
+		if (bindingResult.hasErrors()) {			
+			addemployeeForm.addObject("errorsmsg","Error saving employee");
+			return addemployeeForm;
+		}
+		employeeService.updateEmployee(employee);
+		addemployeeForm.addObject("successmsg","Success you save employee");
+		return addemployeeForm;
+	}*/
 	
 }
