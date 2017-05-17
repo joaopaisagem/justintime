@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pt.ipca.justintime.domain.Employee;
@@ -15,6 +16,10 @@ import pt.ipca.justintime.services.VacationService;
 
 
 
+/**
+ * @author Utilizador
+ *
+ */
 @Controller
 public class VacationController {
 
@@ -40,23 +45,29 @@ public class VacationController {
 	    public String showSearchEmployeeForm(ModelMap model){
 		  	model.addAttribute("employee",new Employee());
 		  	return "searchemployeevacation";
-   }
+	 }
 	 
 	 @RequestMapping(value="/addemployeevacation",method = RequestMethod.POST)
-	    public  String showEmployeeToAddVacation( Long id, ModelMap model,RedirectAttributes redirectAttributes){
+	    public ModelAndView searchEmployeeForVacationForm(Long id, Employee employee,RedirectAttributes redirectAttributes){		
+	 	ModelAndView addEmployeeForm = new ModelAndView("addemployeevacation");
+	 	if(id==null)
+	 	{
+	 		ModelAndView searchEmployeeForm = new ModelAndView("searchemployeevacation");
+	 		searchEmployeeForm.addObject("employee",employee);
+	 		searchEmployeeForm.addObject("message", "Employee not cannot be null!");
+	 		//redirectAttributes.addFlashAttribute("message","Employee not cannot be null!" );
+			return searchEmployeeForm; 
+	 	}
+	 	Employee employeeToAdd = employeeService.getEmployeeById(id);
+	 	addEmployeeForm.addObject("employee",employeeToAdd);
+	 	return addEmployeeForm;
+	 } 
+	 
+	 
+	/* @RequestMapping(value="/addemployeevacation/addvacation",method = RequestMethod.POST)
+	    public  void showEmployeeToAddVacation( ModelMap model,RedirectAttributes redirectAttributes){
 		 
-		 if(id == null)
-		 {
-			 redirectAttributes.addFlashAttribute("message", "Employee id cannot be null!");
-			 return "redirect:/searchemployeevacation"; 
-		 }
-		 if ( employeeService.getEmployeeById(id) != null) {
-			 model.addAttribute("employee", employeeService.getEmployeeById(id));
-		        return "addemployeevacation";
-
-		    }
-		 	redirectAttributes.addFlashAttribute("message", "Employee not found!");
-	        return "redirect:/searchemployeevacation";
-	    }  
+		
+	 }*/
 	
 }
