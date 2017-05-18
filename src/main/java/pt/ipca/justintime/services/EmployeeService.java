@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pt.ipca.justintime.domain.Contact;
 import pt.ipca.justintime.domain.Employee;
+import pt.ipca.justintime.domain.Vacation;
 import pt.ipca.justintime.repositories.*;
 import pt.ipca.justintime.utils.VacationUtils;
 
@@ -127,4 +128,14 @@ public class EmployeeService {
 
         return employeeVacationList;
     }
+
+    public Employee saveEmployeeVacations(Vacation vacation , Employee employee){
+        List<Vacation> vacationList = employee.getVacationList();
+        vacationList.add(vacation);
+        employee.setVacationList(vacationList);
+        employeeRepository.saveAndFlush(employee);
+        return employee;
+    }
+
+
 }

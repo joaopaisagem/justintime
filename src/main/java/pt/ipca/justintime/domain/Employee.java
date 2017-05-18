@@ -20,9 +20,11 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance
 @Entity
+@Table(name="EMPLOYEE")
+@PrimaryKeyJoinColumn(name="PERSON_ID")
 public class Employee extends Person {
+
 
     private String picture;
 
@@ -35,10 +37,6 @@ public class Employee extends Person {
     @ManyToOne
     private Team employeeTeamName;
 
-    @ManyToMany
-    @Where(clause ="dtype='Employee'")
-    @JoinTable( name = "vacations",
-            joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "vacation_id", referencedColumnName = "id"))
+    @OneToMany
     private List<Vacation> vacationList;
 }

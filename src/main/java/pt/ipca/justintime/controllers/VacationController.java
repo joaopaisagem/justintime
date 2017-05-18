@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import pt.ipca.justintime.domain.Employee;
+import pt.ipca.justintime.domain.Vacation;
 import pt.ipca.justintime.services.EmployeeService;
 import pt.ipca.justintime.services.TeamService;
 import pt.ipca.justintime.services.VacationService;
+import pt.ipca.justintime.utils.VacationUtils;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author Utilizador
@@ -28,6 +31,8 @@ public class VacationController {
     private EmployeeService employeeService;
     @Autowired
     private TeamService teamService;
+    @Autowired
+    private VacationUtils vacationUtils;
 
     @RequestMapping(value = "/vacation", method = RequestMethod.GET)
     public ModelAndView vacationForm() {
@@ -43,22 +48,67 @@ public class VacationController {
     }
 
     @RequestMapping(value = "/searchemployeevacation", method = RequestMethod.GET)
+    public String showSearchEmployeeForm(ModelMap model) {
+
+        model.addAttribute("employee", new Employee());
+        return "searchemployeevacation";
+    }
+
+    @RequestMapping(value = "/searchemployeevacation", method = RequestMethod.POST )
+    public String searchEmployeeForVacationForm(Long id ,ModelMap model) {
+        ModelAndView searchEmployeeForm = new ModelAndView("searchemployeevacation");
+        ModelAndView addEmployeeForm = new ModelAndView("addemployeevacation");
+
+        if (id == null) {
+            model.addAttribute("employee",new Employee());
+            model.addAttribute("message", "Employee cannot be null!");
+            return "searchemployeevacation";
+        } else if (employeeService.getEmployeeById(id) != null) {
+            model.addAttribute(employeeService.getEmployeeById(id));
+            model.addAttribute("vacation",new Vacation());
+            return "addemployeevacation";
+        }
+       model.addAttribute("message", "Employee cannot be found!");
+        return "searchemployeevacation";
+    }
+
+    @RequestMapping(value = "/addemployeevacation", method = RequestMethod.POST)
+    public ModelAndView showEmployeeToAddVacation(Long id, Vacation vacation) {
+        ModelAndView addEmployeeForm = new ModelAndView("addemployeevacation");
+        Employee employee = employeeService.getEmployeeById(id);
+        if (vacation==null) {
+            addEmployeeForm.addObject("employee",employee);
+            addEmployeeForm.addObject("errorsmsg", "Error saving employee");
+            return addEmployeeForm;
+        }
+        else if(vacationUtils.checkIfVacationsExist(vacation,employee.getVacationList())){
+            addEmployeeForm.addObject("employee",employee);
+            addEmployeeForm.addObject("errorsmsg", "The vacations you selected are already in you vacation period");
+            return addEmployeeForm;
+        }
+        addEmployeeForm.addObject("employee", employeeService.saveEmployeeVacations(vacation, employee));
+        addEmployeeForm.addObject("successmsg", "Success you save employee");
+        return addEmployeeForm;
+    }
+
+
+/*
+    @RequestMapping(value = "/searchemployeevacation", method = RequestMethod.GET)
     public ModelAndView showSearchEmployeeForm(ModelMap model) {
         ModelAndView searchemployeevacationForm = new ModelAndView("searchemployeevacation");
         searchemployeevacationForm.addObject("employee", new Employee());
         return searchemployeevacationForm;
     }
-
-    @RequestMapping(value = "/searchemployeevacation", method = RequestMethod.POST)
-    public ModelAndView searchEmployeeForVacationForm(Long id, Employee employee) {
-        ModelAndView searchEmployeeForm = new ModelAndView("searchemployeevacation");
+    @RequestMapping(value = "/searchemployeevacation", method = RequestMethod.POST )
+    public ModelAndView searchEmployeeForVacationForm(Long id) {
+        ModelAndView searchEmployeeForm = new ModelAndView("searchemployeevacation", "employee", new Employee());
         if (id == null) {
             searchEmployeeForm.addObject("message", "Employee cannot be null!");
             return searchEmployeeForm;
-          } else if (employeeService.getEmployeeById(id) != null) {
-            ModelAndView addEmployeeForm = new ModelAndView("addemployeevacation");
-            Employee emp = employeeService.getEmployeeById(id);
-            addEmployeeForm.addObject(emp);
+        } else if (employeeService.getEmployeeById(id) != null) {
+            ModelAndView addEmployeeForm = new ModelAndView("addemployeevacation","vacation",new Vacation());
+            Employee employee = employeeService.getEmployeeById(id);
+            addEmployeeForm.addObject("employee",employee);
             return addEmployeeForm;
         }
         searchEmployeeForm.addObject("message", "Employee cannot be found!");
@@ -66,18 +116,25 @@ public class VacationController {
     }
 
     @RequestMapping(value = "/addemployeevacation", method = RequestMethod.POST)
-    public ModelAndView showEmployeeToAddVacation(Long id,Employee employee , BindingResult bindingResult ) {
-        ModelAndView addemployeeForm = new ModelAndView("addemployeevacation");
-        Employee employeeToAddVacation = employeeService.getEmployeeById(id);
-        employeeToAddVacation.setVacationList(employee.getVacationList());
-        addemployeeForm.addObject("addemployeevacation", employeeToAddVacation);
-        if (bindingResult.hasErrors()) {
-            addemployeeForm.addObject("errorsmsg", "Error saving employee");
-            return addemployeeForm;
+    public ModelAndView showEmployeeToAddVacation(Long id,Vacation vacation) {
+        ModelAndView addEmployeeForm = new ModelAndView("addemployeevacation","vacation",vacation);
+        Employee employee = employeeService.getEmployeeById(id);
+        if (vacation==null) {
+            addEmployeeForm.addObject("employee",employee);
+            addEmployeeForm.addObject("errorsmsg", "Error saving employee");
+            return addEmployeeForm;
         }
-        employeeService.updateEmployee(employeeToAddVacation);
-        addemployeeForm.addObject("employee",employeeToAddVacation );
-        addemployeeForm.addObject("successmsg", "Success you save employee");
-        return addemployeeForm;
+        else if(vacationUtils.checkIfVacationsExist(vacation,employee.getVacationList())){
+            addEmployeeForm.addObject("employee",employee);
+            addEmployeeForm.addObject("errorsmsg", "The vacations you selected are already in you vacation period");
+            return addEmployeeForm;
+        }
+        addEmployeeForm.addObject("employee", employeeService.saveEmployeeVacations(vacation, employee));
+        addEmployeeForm.addObject("successmsg", "Success you save employee");
+        return addEmployeeForm;
     }
+*/
+
+
+
 }

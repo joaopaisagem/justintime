@@ -46,17 +46,11 @@
                                 <h3 class="panel-title">Select days for vacation</h3>
                             </div>
                             <div class="panel-body">
-                                <form class="form-horizontal"
-                                      th:action="@{/addemployeevacation}" th:object="${employee}"
-                                      method="post">
-                                    <table>
-                                        <tr>
+                                <form class="form-horizontal" th:action="@{/addemployeevacation}" method="post">
 
-                                            <td><input type="hidden" th:field="*{id}"/></td>
-                                        </tr>
-                                    </table>
-                                    <fieldset
-                                            th:replace="/employeefragments/employeevacationform :: employeevacationform"></fieldset>
+                                    <fieldset th:replace="/employeefragments/employeevacationform :: employeevacationform">
+
+                                    </fieldset>
                                 </form>
 
 

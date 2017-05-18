@@ -142,7 +142,15 @@ public class VacationUtils {
         return listOfDaysToReturn;
     }
 
-
+    public boolean checkIfVacationsExist(Vacation vacation, List<Vacation> list)
+    {
+        for (Vacation vac : list)
+        {
+            if (vac.getVacationStartDay()== vacation.getVacationStartDay()& vac.getVacationEndDay()== vacation.getVacationEndDay())
+                return true;
+        }
+        return false;
+    }
     public boolean getDatesForCurrentYear(LocalDate date) {
 
         if (date.getYear() == LocalDate.now().getYear()) {

@@ -24,12 +24,14 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Entity
+@Table(name = "PERSON")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue
+    @Column(name = "PERSON_ID")
     private Long id;
 
     @NotEmpty
