@@ -3,8 +3,9 @@ package pt.ipca.justintime.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pt.ipca.justintime.domain.Contact;
 import pt.ipca.justintime.domain.Employee;
-import pt.ipca.justintime.repositories.EmployeeRepository;
+import pt.ipca.justintime.repositories.*;
 import pt.ipca.justintime.utils.VacationUtils;
 
 import java.time.LocalDate;
@@ -18,24 +19,40 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
     @Autowired
     private VacationUtils vacationUtils;
-
+    @Autowired
+    private AddressRepository addressRepository;
+    @Autowired
+    private ContactRepository contactRepository;
+    @Autowired
+    private WorkSkillRepository workSkillRepository;
+    @Autowired
+    private VacationRepository vacationRepository;
     //////////////////////////////////////////////////////////
     //               CRUD METHOD`S                         //
     ////////////////////////////////////////////////////////
     public Employee saveEmployee(Employee employee) {
+
+        addressRepository.save(employee.getAddressOne());
+        addressRepository.save(employee.getAddressTwo());
+        contactRepository.save(employee.getContactList());
+        workSkillRepository.save(employee.getSkillList());
         return employeeRepository.save(employee);
     }
 
     public Employee getEmployeeById(Long id) {
+
         return employeeRepository.findOne(id);
     }
 
     public List<Employee> getAllEmployees() {
+
         return employeeRepository.findAll();
 
     }
 
     public void updateEmployee(Employee employee) {
+
+        vacationRepository.save(employee.getVacationList());
         employeeRepository.saveAndFlush(employee);
     }
 

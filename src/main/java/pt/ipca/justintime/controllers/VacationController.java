@@ -18,7 +18,7 @@ import javax.validation.Valid;
 /**
  * @author Utilizador
  */
-@SessionAttributes({"addEmployeeForm"})
+
 @Controller
 public class VacationController {
 
@@ -76,6 +76,7 @@ public class VacationController {
             return addemployeeForm;
         }
         employeeService.updateEmployee(employeeToAddVacation);
+        addemployeeForm.addObject("employee",employeeToAddVacation );
         addemployeeForm.addObject("successmsg", "Success you save employee");
         return addemployeeForm;
     }

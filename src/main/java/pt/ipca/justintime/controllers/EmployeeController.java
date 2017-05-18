@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ipca.justintime.domain.Employee;
+import pt.ipca.justintime.repositories.AddressRepository;
 import pt.ipca.justintime.services.EmployeeService;
 import pt.ipca.justintime.services.TeamService;
 
@@ -25,7 +26,6 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
     private EmployeeService employeeService;
     @Autowired
     private TeamService teamService;
-
     /*
      * METHOD TO MAP AND SHOW EMPLOYEE FORM
      */
@@ -46,6 +46,7 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
             mav.addObject("errorsmsg", "Error saving employee");
             return mav;
         }
+
         employeeService.saveEmployee(employee);
         mav.addObject("successmsg", "Success you save employee");
         return mav;

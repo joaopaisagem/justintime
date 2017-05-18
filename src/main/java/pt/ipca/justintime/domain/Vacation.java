@@ -3,10 +3,7 @@ package pt.ipca.justintime.domain;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -34,6 +31,7 @@ public class Vacation {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate vacationEndDay;
 
-    @ManyToMany(mappedBy = "vacationList",cascade = javax.persistence.CascadeType.ALL)
+    @ManyToMany(mappedBy = "vacationList")
     private List<Employee> usersList;
+
 }

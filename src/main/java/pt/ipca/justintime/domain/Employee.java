@@ -1,16 +1,13 @@
 package pt.ipca.justintime.domain;
-
-
 import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Past;
+import javax.persistence.Entity;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
+import javax.persistence.Table;
 
 /**
  * @author Tiago Silva
@@ -23,8 +20,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Inheritance
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Employee extends Person {
 
     private String picture;
@@ -33,16 +30,15 @@ public class Employee extends Person {
     private LocalDate birthdayDate;
 
     @OneToMany
-    @Cascade({CascadeType.ALL})
     private List<WorkSkill> skillList;
 
     @ManyToOne
-    @Cascade({CascadeType.ALL})
     private Team employeeTeamName;
 
-    @ManyToMany(cascade = javax.persistence.CascadeType.ALL)
-    @JoinTable(name = "vacations",
-            joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
+    @ManyToMany
+    @Where(clause ="dtype='Employee'")
+    @JoinTable( name = "vacations",
+            joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "vacation_id", referencedColumnName = "id"))
     private List<Vacation> vacationList;
 }

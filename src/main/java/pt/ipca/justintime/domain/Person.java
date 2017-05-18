@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -26,12 +24,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Entity
 public class Person {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     @NotEmpty
@@ -75,14 +73,11 @@ public class Person {
     private Gender gender;
 
     @OneToOne
-    @Cascade({CascadeType.ALL})
     private Address addressOne;
 
     @OneToOne
-    @Cascade({CascadeType.ALL})
     private Address addressTwo;
 
-    @Cascade({CascadeType.ALL})
     @OneToMany
     private List<Contact> contactList;
 }
