@@ -17,10 +17,17 @@
 -- Person List
 -- Employees
  -- =================================================================================================
- INSERT INTO person (address_one_id, address_two_id, email, first_name, gender, last_name, nif, birthday_date, employee_team_name_id, picture, dtype)VALUE (1, 2, 'neiva_tiago@hotmail.com', 'Tiago', 'MALE', 'Silva', '222222222', '2004-08-09', 1, '', 'Employee')
- INSERT INTO person (address_one_id, address_two_id, email, first_name, gender, last_name, nif, birthday_date, employee_team_name_id, picture, dtype)VALUE(1, 2, 'marlene_p_b_@hotmail.com', 'Marlene', 'FEMALE', 'Silva', '222222222', '2004-08-09', 1, '', 'Employee')
- INSERT INTO person (address_one_id, address_two_id, email, first_name, gender, last_name, nif, birthday_date, employee_team_name_id, picture, dtype)VALUE(3, 4, 'skgdelf@hotmail.com', 'Miguel', 'MALE', 'Silva', '222222222', '2004-08-09', 1, '', 'Employee')
- INSERT INTO person (address_one_id, address_two_id, email, first_name, gender, last_name, nif, birthday_date, employee_team_name_id, picture, dtype)VALUE(3, 4, 'franciscosilva@gmail.com', 'Francisco', 'MALE', 'Silva', '222222222', '2004-08-09', 1, '', 'Employee')
+ INSERT INTO person (address_one_id, address_two_id, email, first_name, gender, last_name, nif)VALUE (1, 2, 'neiva_tiago@hotmail.com', 'Tiago', 'MALE', 'Silva', '222222222')
+ INSERT INTO person (address_one_id, address_two_id, email, first_name, gender, last_name, nif)VALUE(1, 2, 'marlene_p_b_@hotmail.com', 'Marlene', 'FEMALE', 'Silva', '222222222')
+ INSERT INTO person (address_one_id, address_two_id, email, first_name, gender, last_name, nif)VALUE(3, 4, 'skgdelf@hotmail.com', 'Miguel', 'MALE', 'Silva', '222222222')
+ INSERT INTO person (address_one_id, address_two_id, email, first_name, gender, last_name, nif)VALUE(3, 4, 'franciscosilva@gmail.com', 'Francisco', 'MALE', 'Silva', '222222222')
+  -- =================================================================================================
+ -- employees
+  -- =================================================================================================
+ insert into employee (birthdaydate, employee_team_name_id, picture)VALUE ("02-02-1999",1,"")
+ insert into employee (birthdaydate, employee_team_name_id, picture)VALUE ("02-02-1999",2,"")
+ insert into employee (birthdaydate, employee_team_name_id, picture)VALUE ("02-02-1999",3,"")
+ insert into employee (birthdaydate, employee_team_name_id, picture)VALUE ("02-02-1999",4,"")
  -- =================================================================================================
 -- Person Contacts List
 -- Contacts
@@ -59,7 +66,7 @@
   -- Skill list for employee
  -- =================================================================================================
 
- INSERT INTO person_skill_list (employee_id, skill_list_id) VALUE (1, 1)
+ INSERT INTO person_skill_list (employee_id, skill_list_id) VALUE(1, 1)
  INSERT INTO person_skill_list (employee_id, skill_list_id) VALUE(1, 2)
  INSERT INTO person_skill_list (employee_id, skill_list_id) VALUE(1, 3)
  INSERT INTO person_skill_list (employee_id, skill_list_id) VALUE(1, 1)

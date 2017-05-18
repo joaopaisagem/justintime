@@ -48,7 +48,7 @@ public class VacationController {
         searchemployeevacationForm.addObject("employee", new Employee());
         return searchemployeevacationForm;
     }
-
+//VERIFICAR ESTE METODO
     @RequestMapping(value = "/searchemployeevacation", method = RequestMethod.POST)
     public ModelAndView searchEmployeeForVacationForm(Long id, Employee employee) {
         ModelAndView searchEmployeeForm = new ModelAndView("searchemployeevacation");
@@ -59,12 +59,13 @@ public class VacationController {
             ModelAndView addEmployeeForm = new ModelAndView("addemployeevacation");
             Employee emp = employeeService.getEmployeeById(id);
             addEmployeeForm.addObject(emp);
+            addEmployeeForm.addObject("vacations",emp.getVacationList());
             return addEmployeeForm;
         }
         searchEmployeeForm.addObject("message", "Employee cannot be found!");
         return searchEmployeeForm;
     }
-
+//VERIFICAR ESTE METODO
     @RequestMapping(value = "/addemployeevacation", method = RequestMethod.POST)
     public ModelAndView showEmployeeToAddVacation(Long id,Employee employee , BindingResult bindingResult ) {
         ModelAndView addemployeeForm = new ModelAndView("addemployeevacation");

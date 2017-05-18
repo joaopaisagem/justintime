@@ -31,7 +31,5 @@ public class Vacation {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate vacationEndDay;
 
-    @ManyToMany(mappedBy = "vacationList")
-    private List<Employee> usersList;
 
 }

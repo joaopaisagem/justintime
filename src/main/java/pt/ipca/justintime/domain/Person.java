@@ -24,23 +24,28 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Entity
+@Table(name = "PERSON")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue
+    @Column(name = "PERSON_ID")
     private Long id;
 
     @NotEmpty
+    @Column(name = "FIRSTNAME")
     private String firstName;
 
     @NotEmpty
+    @Column(name = "LASTNAME")
     private String lastName;
 
     @NotNull
     @Min(value = 000000000)
     @Max(value = 999999999)
+    @Column(name = "NIF")
     private Integer nif;
     /**
      * ^	#start of the line
@@ -64,12 +69,13 @@ public class Person {
      */
     @NotEmpty
     @Email
+    @Column(name = "EMAIL")
     @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
             message = "Please insert a valid email")
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
+    @Column(name = "GENDER")
     private Gender gender;
 
     @OneToOne
