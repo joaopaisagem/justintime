@@ -52,11 +52,11 @@
 -- Contact List
  -- =================================================================================================
 
- INSERT INTO person_contact_list (person_person_id, contact_list_id) VALUE (1, 1)
- INSERT INTO person_contact_list (person_person_id, contact_list_id) VALUE (1, 2)
- INSERT INTO person_contact_list (person_person_id, contact_list_id) VALUE (1, 3)
- INSERT INTO person_contact_list (person_person_id, contact_list_id) VALUE (2, 4)
- INSERT INTO person_contact_list (person_person_id, contact_list_id) VALUE (2, 5)
- INSERT INTO person_contact_list (person_person_id, contact_list_id) VALUE (3, 6)
- INSERT INTO person_contact_list (person_person_id, contact_list_id) VALUE (3, 7)
- INSERT INTO person_contact_list (person_person_id, contact_list_id) VALUE (4, 8)
+ INSERT INTO person_contact_list (person_id, contact_list_id) VALUE (1, 1)
+ INSERT INTO person_contact_list (person_id, contact_list_id) VALUE (1, 2)
+ INSERT INTO person_contact_list (person_id, contact_list_id) VALUE (1, 3)
+ INSERT INTO person_contact_list (person_id, contact_list_id) VALUE (2, 4)
+ INSERT INTO person_contact_list (person_id, contact_list_id) VALUE (2, 5)
+ INSERT INTO person_contact_list (person_id, contact_list_id) VALUE (3, 6)
+ INSERT INTO person_contact_list (person_id, contact_list_id) VALUE (3, 7)
+ INSERT INTO person_contact_list (person_id, contact_list_id) VALUE (4, 8)
