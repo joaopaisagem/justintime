@@ -62,7 +62,7 @@ public class VacationController {
             model.addAttribute("employee",new Employee());
             model.addAttribute("message", "Employee cannot be null!");
             return "searchemployeevacation";
-        } else if ( id!= null) {
+        } else if ( employeeService.getEmployeeById(id) != null) {
             EmployeeVacationForm employeeVacationForm = new EmployeeVacationForm();
             employeeVacationForm.setEmployee(employeeService.getEmployeeById(id));
             employeeVacationForm.setVacation(new Vacation());
@@ -76,20 +76,21 @@ public class VacationController {
 
     @RequestMapping(value = "/addemployeevacation", method = RequestMethod.POST)
     public String showEmployeeToAddVacation( EmployeeVacationForm form, ModelMap model) {
-        if (form.getVacation()==null) {
-            model.addAttribute("employeeVacation",form);
-            model.addAttribute("errorsmsg", "Error saving employee");
+        Employee employee = employeeService.getEmployeeById(form.getEmployee().getId());
+        EmployeeVacationForm employeeForm = new EmployeeVacationForm();
+        employeeForm.setEmployee(employee);
+        if (vacationUtils.checkIfTheVacationIsNull(form.getVacation())) {
+            model.addAttribute("employeeVacation",employeeForm);
+            model.addAttribute("errorsmsg", "you need to insert a start date and end date");
             return "addemployeevacation";
         }
-        else if(vacationUtils.checkIfVacationsExist(form.getVacation(),form.getEmployee().getVacationList())) {
+        else if(vacationUtils.checkIfVacationsExist(form.getVacation(),employee.getVacationList())) {
 
-            model.addAttribute("employeeVacation",form);
+            model.addAttribute("employeeVacation",employeeForm);
             model.addAttribute("errorsmsg", "The vacations you selected are already in you vacation period");
             return "addemployeevacation";
         }else {
-            Employee employee =  employeeService.saveEmployeeVacations(form.getVacation(), form.getEmployee());
-            EmployeeVacationForm employeeForm = new EmployeeVacationForm();
-            employeeForm.setEmployee(employee);
+            employeeForm.setEmployee( employeeService.saveEmployeeVacations(form.getVacation(), employee));
             model.addAttribute("employeeVacation",employeeForm);
             model.addAttribute("successmsg", "Success you save employee");
             return "addemployeevacation";

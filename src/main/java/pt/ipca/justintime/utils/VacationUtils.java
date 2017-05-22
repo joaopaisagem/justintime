@@ -144,19 +144,19 @@ public class VacationUtils {
 
     public boolean checkIfVacationsExist(Vacation vacation, List<Vacation> list)
     {
-        if(list == null)
+        if (list == null)
         {
             return false;
-        }else{
+        }
             for (Vacation vac : list)
             {
-                if (vac.getVacationStartDay()== vacation.getVacationStartDay()& vac.getVacationEndDay()== vacation.getVacationEndDay())
+                if (vac.equals(vacation))
                     return true;
             }
             return false;
         }
 
-    }
+
     public boolean getDatesForCurrentYear(LocalDate date) {
 
         if (date.getYear() == LocalDate.now().getYear()) {
@@ -164,4 +164,18 @@ public class VacationUtils {
         }
         return false;
     }
+
+    public boolean checkIfTheVacationIsNull(Vacation vacation){
+        if (vacation.getVacationStartDay()==null){
+            return true;
+        }else if (vacation.getVacationEndDay()==null)
+        {
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+
 }

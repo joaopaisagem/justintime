@@ -31,5 +31,21 @@ public class Vacation {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate vacationEndDay;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vacation)) return false;
 
+        Vacation vacation = (Vacation) o;
+
+        if (!vacationStartDay.equals(vacation.vacationStartDay)) return false;
+        return vacationEndDay.equals(vacation.vacationEndDay);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = vacationStartDay.hashCode();
+        result = 31 * result + vacationEndDay.hashCode();
+        return result;
+    }
 }
