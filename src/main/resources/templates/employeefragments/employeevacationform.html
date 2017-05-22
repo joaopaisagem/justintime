@@ -4,11 +4,9 @@
         <label class="col-md-4 control-label" for="VacationStartDay">Start
             Date</label>
         <div class="col-md-4">
-            <input th:field="${vacation.vacationStartDay}" id="VacationStartDay"
+            <input th:field="${employeeVacation.vacation.vacationStartDay}" id="VacationStartDay"
                    name="VacationStartDay" type="date" placeholder="VacationStartDay"
-                   class="form-control input-md"/> <span class="help-block"
-                                                         th:if="${#fields.hasErrors('{vacation.vacationStartDay}')}"
-                                                         th:errors="*{vacation.vacationStartDay}"></span>
+                   class="form-control input-md"/>
         </div>
     </div>
 
@@ -16,16 +14,16 @@
         <label class="col-md-4 control-label" for="VacationEndDay">End
             Date</label>
         <div class="col-md-4">
-            <input th:field="${vacation.vacationEndDay}" id="VacationEndDay"
+            <input th:field="${employeeVacation.vacation.vacationEndDay}" id="VacationEndDay"
                    name="VacationEndDay" type="date" placeholder="VacationEndDay"
-                   class="form-control input-md"/> <span class="help-block"
-                                                         th:if="${#fields.hasErrors('{vacation.vacationEndDay}')}"
-                                                         th:errors="*{vacation.vacationEndDay}"></span>
+                   class="form-control input-md"/>
         </div>
     </div>
+
     <div class="form-group">
-                <td><input type="hidden" th:field="${employee.id}" id="employee.id" /></td>
+                <td><input type="hidden" th:field="${employeeVacation.employee.id}" id="employee.id" /></td>
     </div>
+
     <div class="form-group">
         <label class="col-md-4 control-label" for="submit"></label>
         <div class="col-md-4">

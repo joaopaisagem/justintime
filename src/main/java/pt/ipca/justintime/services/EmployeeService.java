@@ -129,10 +129,12 @@ public class EmployeeService {
         return employeeVacationList;
     }
 
-    public Employee saveEmployeeVacations(Vacation vacation , Employee employee){
+    public Employee saveEmployeeVacations(Vacation vacation , Employee emp){
+        Employee employee = getEmployeeById(emp.getId());
         List<Vacation> vacationList = employee.getVacationList();
         vacationList.add(vacation);
         employee.setVacationList(vacationList);
+        vacationRepository.save(vacation);
         employeeRepository.saveAndFlush(employee);
         return employee;
     }

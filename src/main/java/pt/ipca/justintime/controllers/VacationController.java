@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.domain.Vacation;
+import pt.ipca.justintime.forms.EmployeeVacationForm;
 import pt.ipca.justintime.services.EmployeeService;
 import pt.ipca.justintime.services.TeamService;
 import pt.ipca.justintime.services.VacationService;
@@ -56,15 +57,16 @@ public class VacationController {
     }
 
     @RequestMapping(value = "/searchemployeevacation", method = RequestMethod.POST )
-    public String searchEmployeeForVacationForm(Long id , ModelMap model) {
-        Employee employee =employeeService.getEmployeeById(id);
+    public String searchEmployeeForVacationForm(Long id ,ModelMap model) {
         if (id == null) {
             model.addAttribute("employee",new Employee());
             model.addAttribute("message", "Employee cannot be null!");
             return "searchemployeevacation";
-        } else if ( employee!= null) {
-            model.addAttribute("employee",employeeService.getEmployeeById(id));
-            model.addAttribute("vacation",new Vacation());
+        } else if ( id!= null) {
+            EmployeeVacationForm employeeVacationForm = new EmployeeVacationForm();
+            employeeVacationForm.setEmployee(employeeService.getEmployeeById(id));
+            employeeVacationForm.setVacation(new Vacation());
+            model.addAttribute( "employeeVacation",employeeVacationForm);
             return "addemployeevacation";
         }
         model.addAttribute("employee",new Employee());
@@ -73,21 +75,25 @@ public class VacationController {
     }
 
     @RequestMapping(value = "/addemployeevacation", method = RequestMethod.POST)
-    public String showEmployeeToAddVacation(Long id, Vacation vacation, ModelMap model) {
-        Employee employee = employeeService.getEmployeeById(id);
-        if (vacation==null) {
-            model.addAttribute("employee",model);
+    public String showEmployeeToAddVacation( EmployeeVacationForm form, ModelMap model) {
+        if (form.getVacation()==null) {
+            model.addAttribute("employeeVacation",form);
             model.addAttribute("errorsmsg", "Error saving employee");
             return "addemployeevacation";
         }
-        else if(vacationUtils.checkIfVacationsExist(vacation,employee.getVacationList())){
-            model.addAttribute("employee",employee);
+        else if(vacationUtils.checkIfVacationsExist(form.getVacation(),form.getEmployee().getVacationList())) {
+
+            model.addAttribute("employeeVacation",form);
             model.addAttribute("errorsmsg", "The vacations you selected are already in you vacation period");
             return "addemployeevacation";
+        }else {
+            Employee employee =  employeeService.saveEmployeeVacations(form.getVacation(), form.getEmployee());
+            EmployeeVacationForm employeeForm = new EmployeeVacationForm();
+            employeeForm.setEmployee(employee);
+            model.addAttribute("employeeVacation",employeeForm);
+            model.addAttribute("successmsg", "Success you save employee");
+            return "addemployeevacation";
         }
-        model.addAttribute("employee", employeeService.saveEmployeeVacations(vacation, employee));
-        model.addAttribute("successmsg", "Success you save employee");
-        return "addemployeevacation";
     }
 
 
