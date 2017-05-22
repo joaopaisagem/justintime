@@ -79,22 +79,33 @@ public class VacationController {
         Employee employee = employeeService.getEmployeeById(form.getEmployee().getId());
         EmployeeVacationForm employeeForm = new EmployeeVacationForm();
         employeeForm.setEmployee(employee);
-        if (vacationUtils.checkIfTheVacationIsNull(form.getVacation())) {
-            model.addAttribute("employeeVacation",employeeForm);
-            model.addAttribute("errorsmsg", "you need to insert a start date and end date");
-            return "addemployeevacation";
-        }
-        else if(vacationUtils.checkIfVacationsExist(form.getVacation(),employee.getVacationList())) {
 
-            model.addAttribute("employeeVacation",employeeForm);
-            model.addAttribute("errorsmsg", "The vacations you selected are already in you vacation period");
-            return "addemployeevacation";
-        }else {
-            employeeForm.setEmployee( employeeService.saveEmployeeVacations(form.getVacation(), employee));
-            model.addAttribute("employeeVacation",employeeForm);
-            model.addAttribute("successmsg", "Success you save employee");
-            return "addemployeevacation";
-        }
+       if( !vacationUtils.checkIfTheVacationIsNull(form.getVacation()))
+       {
+           if (vacationUtils.checkIfVacationsAreInFuture(form.getVacation())) {
+               if(vacationUtils.checkIfVacationsExist(form.getVacation(),employee.getVacationList())) {
+
+                   model.addAttribute("employeeVacation",employeeForm);
+                   model.addAttribute("errorsmsg", "The vacations you selected are already in you vacation period");
+                   return "addemployeevacation";
+               }else {
+                   employeeForm.setEmployee( employeeService.saveEmployeeVacations(form.getVacation(), employee));
+                   model.addAttribute("employeeVacation",employeeForm);
+                   model.addAttribute("successmsg", "Success you save vacations in your employee");
+                   return "addemployeevacation";
+               }
+           }else
+           {
+               model.addAttribute("employeeVacation",employeeForm);
+               model.addAttribute("errorsmsg", "you need to insert dates in the future");
+               return "addemployeevacation";
+           }
+
+       }else{
+           model.addAttribute("employeeVacation",employeeForm);
+           model.addAttribute("errorsmsg", "you need to insert a start date and end date");
+           return "addemployeevacation";
+       }
     }
 
 
