@@ -14,33 +14,33 @@ import java.util.List;
 public class VacationUtils {
 
     /**
-     * Returns an  ArrayList of dates day by day.
-     * The arguments must specify an LocalDate.
-     * The name argument is a specifier that is relative to a list of dates.
-     * This method always returns a dateList
-     * When this method is called will create a dateList and will check if the startDate is more recent then the endDate
-     * Since we will count the end day we add to our list date = date.plusDays(1)
-     * The for loop will incrementally add the day (data) to the list.
-     *
-     * @param startDate
-     * @param endDate
-     * @return a list of dates "dateList"
+     * This method checks the number of days between dates
+     * Returns the number of days
+     * The arguments must specify a period of dates startDate and endDate
+     * @param startDate the starting date of vacation period
+     * @param endDate the end date of vacation period
+     * @return a Long with the number of days
      */
-    public List<LocalDate> getDaysBetweenDates(LocalDate startDate, LocalDate endDate) {
-        long days = dateDiffInNumberOfDays(startDate, endDate);
-        List<LocalDate> dateList = new ArrayList();
-
-        for (int i = 0; i < days; i++) {
-            LocalDate d = startDate.plus(i, ChronoUnit.DAYS);
-            dateList.add(d);
-        }
-        return dateList;
-    }
-
     private long dateDiffInNumberOfDays(LocalDate startDate, LocalDate endDate) {
 
         return ChronoUnit.DAYS.between(startDate, endDate);
     }
+
+    /**
+     * This method checks if a date is difrent from Saturday = 6 and Sunday=7.
+     * Returns TRUE or FALSE
+     * Teh argument must specify a date
+     * @param date a "LocalDate" type
+     * @return TRUE,FALSE
+     */
+    private boolean dateDiffOfWeekend(LocalDate date){
+        if (date.getDayOfWeek().getValue() != 6 && date.getDayOfWeek().getValue() != 7 && date.getYear() == LocalDate.now().getYear()) {
+           return true;
+        }
+        return false;
+    }
+
+
 
     /**
      * This method is an Overload Method
@@ -52,7 +52,7 @@ public class VacationUtils {
      * will get the number of days between the start date and end date
      * We run a for loop while the i is < then days, we create a localdate ,and we add to the list that day.
      *
-     * @param vacationList cenas
+     * @param vacationList list of vacations
      * @return a list of dates "dateList" returns a list with the days between the start and the end
      */
     public List<LocalDate> getDaysBetweenDates(List<Vacation> vacationList) {
@@ -82,7 +82,7 @@ public class VacationUtils {
     public int getTotalNumberOfWorkingDays(List<LocalDate> dateList) {
         int cont = 0;
         for (LocalDate date : dateList) {
-            if (date.getDayOfWeek().getValue() != 6 && date.getDayOfWeek().getValue() != 7 && date.getYear() == LocalDate.now().getYear()) {
+            if (dateDiffOfWeekend(date)) {
                 cont++;
             }
         }
@@ -94,9 +94,8 @@ public class VacationUtils {
      * The arguments must specify a vacation list .
      * The name argument is a specifier that is relative to a list of vacations.
      * This method always returns a list of days
-     * We use a for each loop to transform first  the vacation list into a List of days
      * We use a for each loop to check the date on the list and if the day is different from 6 or 7
-     * if the day is difrent from 6 or 7 we add the day to a list
+     * if the day is different from 6 or 7 we add the day to a list
      * returns a list of days
      *
      * @param vacationList a list of vacation
@@ -104,11 +103,10 @@ public class VacationUtils {
      */
     public List<LocalDate> getWorkingDaysVacations(List<Vacation> vacationList) {
         List<LocalDate> listToReturn = new ArrayList<>();
-        for (Vacation vacation : vacationList) {
-            for (LocalDate date : getDaysBetweenDates(vacation.getVacationStartDay(), vacation.getVacationEndDay())) {
-                if (date.getDayOfWeek().getValue() != 6 && date.getDayOfWeek().getValue() != 7 && date.getYear() == LocalDate.now().getYear()) {
+
+            for (LocalDate date : getDaysBetweenDates(vacationList)) {
+                if (dateDiffOfWeekend(date)) {
                     listToReturn.add(date);
-                }
             }
         }
         return listToReturn;
@@ -119,9 +117,8 @@ public class VacationUtils {
      * The arguments must specify an Vacation List .
      * Both argument names are specifier that is relative to a list of vacations and a month.
      * This method always returns a List with days in the chosen month
-     * We use a for each loop to go through the vacation list then we pass the vacation start and end date to the Method
-     * "getDaysBetweenDates" to get day by day and then we do another for each to check if the day is in the current month
-     * if yes we add the day to the list of days to return.
+     * We use a for each loop to go through the dates received by "getDaysBetweenDates" method
+     * if the day is in the current month we add the element to the list
      *
      * @param vacationList list of vacations
      * @param month        id of the month we want to get the days
@@ -130,18 +127,27 @@ public class VacationUtils {
     public List<LocalDate> getDaysOfVacationByMonth(List<Vacation> vacationList, int month) {
         List<LocalDate> listOfDaysToReturn = new ArrayList<>();
 
-        for (Vacation date : vacationList) {
-            for (LocalDate dayDate : getDaysBetweenDates(date.getVacationStartDay(), date.getVacationEndDay())) {
+            for (LocalDate dayDate : getDaysBetweenDates(vacationList)) {
                 if (dayDate.getMonth().getValue() == month) {
                     listOfDaysToReturn.add(dayDate);
-
-                }
             }
 
         }
         return listOfDaysToReturn;
     }
 
+    /**
+     * This method tests if a a vacation already exists in the employee list
+     * Returns TRUE or FALSE
+     * The argument´s must specify a vacation and a list of vacations
+     * Test´s if the list is null returns FALSE " means the list is empty"
+     * if the list is different from null we compare the vacation with the vacation inside the list
+     * if this vacation exists we return TRUE else we return FALSE
+     *
+     * @param vacation vacation
+     * @param list list of vacations
+     * @return TRUE or FALSE
+     */
     public boolean checkIfVacationsExist(Vacation vacation, List<Vacation> list)
     {
         if (list == null)
@@ -157,14 +163,19 @@ public class VacationUtils {
         }
 
 
-    public boolean getDatesForCurrentYear(LocalDate date) {
-
-        if (date.getYear() == LocalDate.now().getYear()) {
-            return true;
-        }
-        return false;
-    }
-
+    /**
+     * This method is used to test if a vacation is null or not
+     * Returns TRUE or FALSE  .
+     * The arguments must specify a Vacation "vacationSartDate and vacationEndDate".
+     * Both argument names are specifier that is relative to a  vacations period.
+     * This method always returns TRUE if the vacationStartDay is null
+     * if the condition gives FALSE he will test if vacationEndDay is also null
+     * if positive returns TRUE
+     * of the conditions are both FALSE the method returns FALSE
+     *
+     * @param vacation
+     * @return TRUE,FALSE
+     */
     public boolean checkIfTheVacationIsNull(Vacation vacation){
         if (vacation.getVacationStartDay()==null){
             return true;
@@ -177,6 +188,16 @@ public class VacationUtils {
 
     }
 
+    /**
+     * This method is used to test if the vacations are in future and the user dosen´t insert past dates
+     * Returns TRUE or FALSE .
+     * The argument must be a Vacation period "vacationSartDate and vacationEndDate".
+     * Verify if vacationSartDate is atleaste after the Localdate.now() "FUTURE"
+     * Verify if the vacationEndDate is after the vacationSartDate so we have a period
+     *
+     * @param vacation
+     * @return TRUE or FALSE
+     */
     public boolean checkIfVacationsAreInFuture(Vacation vacation){
         if(vacation.getVacationStartDay().isAfter(LocalDate.now())){
            if(vacation.getVacationEndDay().isAfter(vacation.getVacationStartDay()))
