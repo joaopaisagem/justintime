@@ -177,5 +177,14 @@ public class VacationUtils {
 
     }
 
+    public boolean checkIfVacationsAreInFuture(Vacation vacation){
+        if(vacation.getVacationStartDay().isAfter(LocalDate.now())){
+           if(vacation.getVacationEndDay().isAfter(vacation.getVacationStartDay()))
+           {
+               return true;
+           }
+        }
+        return false;
+    }
 
 }
