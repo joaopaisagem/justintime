@@ -1,7 +1,10 @@
 package pt.ipca.justintime.utils;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+import pt.ipca.justintime.Exceptions.VacationException;
 import pt.ipca.justintime.domain.Vacation;
 
 import java.time.LocalDate;
@@ -9,10 +12,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
 public class VacationUtils {
-
+    @Autowired
+    private MessageSource messageSource;
+    static int maxDaysVacations = 22;
     /**
      * This method checks the number of days between dates
      * Returns the number of days
@@ -40,7 +44,30 @@ public class VacationUtils {
         return false;
     }
 
-
+    /**
+     * This method will check if the employee can add more vacations to is list
+     * Returns maxDaysVacations if he doesen´t have any vacations in the list
+     * Returns numberOfDays if the value still in the range and he can add more vacations
+     * Returns -1 if the employee exceed the maxDaysVacations
+     * The argument must specify a vacation List
+     * @param employeeList employee list
+     * @return maxDaysVacations , numberOfDays, -1
+     */
+    public int numberOfAvailableDays(List<Vacation> employeeList) {
+        int numberOfDays = 0;
+        if (checkIfTheVacationIsNull(employeeList))
+        {
+            return maxDaysVacations;
+        }
+            List<LocalDate> listToCheck = getDaysBetweenDates(employeeList);
+            numberOfDays= maxDaysVacations-getTotalNumberOfWorkingDays(listToCheck);
+            if(numberOfDays > maxDaysVacations)
+            {
+              return -1;
+            }else{
+                return numberOfDays;
+            }
+    }
 
     /**
      * This method is an Overload Method
@@ -173,19 +200,18 @@ public class VacationUtils {
      * if positive returns TRUE
      * of the conditions are both FALSE the method returns FALSE
      *
-     * @param vacation
+     * @param vacationList
      * @return TRUE,FALSE
      */
-    public boolean checkIfTheVacationIsNull(Vacation vacation){
-        if (vacation.getVacationStartDay()==null){
-            return true;
-        }else if (vacation.getVacationEndDay()==null)
-        {
-            return true;
-        }else{
+    public boolean checkIfTheVacationIsNull(List<Vacation> vacationList){
+       for(Vacation vacation : vacationList) {
+           if (vacation.getVacationStartDay() == null) {
+               return true;
+           } else if (vacation.getVacationEndDay() == null) {
+               return true;
+           }
+       }
             return false;
-        }
-
     }
 
     /**
