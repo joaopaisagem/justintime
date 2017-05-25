@@ -76,41 +76,23 @@ public class TeamService {
      * @return list of days for that team
      */
     public List<LocalDate> vacationListForTeam(Long id) {
-        List<LocalDate> employeeVacation = new ArrayList<>();
+
         List<LocalDate> listToReturn = new ArrayList<>();
+
         Team teamToSearch = getTeamById(id);
+
         List<Employee> employeeList = teamToSearch.getEmployeeList();
+
         for (Employee employee : employeeList) {
-            employeeVacation = vacationUtils.getDaysBetweenDates(employee.getVacationList());
+
+            List<LocalDate> employeeVacation = vacationUtils.getDatesForCurrentYear(employee.getVacationList());
+
             for (LocalDate date : employeeVacation) {
-                if (vacationUtils.getDatesForCurrentYear(date) == true) {
-                    listToReturn.add(date);
-                }
+                listToReturn.add(date);
             }
         }
         return listToReturn;
     }
 
-    /**
-     *
-     */
-    public List<LocalDate> vacationListForAllTeams(List<Team> teamList) {
-        List<LocalDate> employeeVacation = new ArrayList<>();
-        List<LocalDate> listToReturn = new ArrayList<>();
-        List<Employee> employeeList = new ArrayList<>();
-        for (Team team : teamList) {
-            employeeList = team.getEmployeeList();
-            for (Employee employee : employeeList) {
-                employeeVacation = vacationUtils.getDaysBetweenDates(employee.getVacationList());
-                for (LocalDate date : employeeVacation) {
-                    if (vacationUtils.getDatesForCurrentYear(date) == true) {
-                        listToReturn.add(date);
-                    }
-                }
-            }
 
-        }
-
-        return listToReturn;
-    }
 }

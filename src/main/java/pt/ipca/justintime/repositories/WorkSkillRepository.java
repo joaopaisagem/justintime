@@ -6,6 +6,6 @@ import pt.ipca.justintime.domain.WorkSkill;
 /**
  * Created by tiagosilva on 17/05/17.
  */
-public interface WorkSkillRepository extends JpaRepository<WorkSkill,Long> {
+public interface WorkSkillRepository extends JpaRepository<WorkSkill, Long> {
 
 }

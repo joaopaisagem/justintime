@@ -14,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="CLIENT")
-@PrimaryKeyJoinColumn(name="PERSON_ID")
+@Table(name = "CLIENT")
+@PrimaryKeyJoinColumn(name = "PERSON_ID")
 public class Client extends Person {
 
     @OneToMany

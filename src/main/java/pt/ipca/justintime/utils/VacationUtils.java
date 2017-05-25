@@ -1,10 +1,7 @@
 package pt.ipca.justintime.utils;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-import pt.ipca.justintime.Exceptions.VacationException;
 import pt.ipca.justintime.domain.Vacation;
 
 import java.time.LocalDate;
@@ -14,15 +11,16 @@ import java.util.List;
 
 @Service
 public class VacationUtils {
-    @Autowired
-    private MessageSource messageSource;
+
     static int maxDaysVacations = 22;
+
     /**
      * This method checks the number of days between dates
      * Returns the number of days
      * The arguments must specify a period of dates startDate and endDate
+     *
      * @param startDate the starting date of vacation period
-     * @param endDate the end date of vacation period
+     * @param endDate   the end date of vacation period
      * @return a Long with the number of days
      */
     private long dateDiffInNumberOfDays(LocalDate startDate, LocalDate endDate) {
@@ -34,39 +32,95 @@ public class VacationUtils {
      * This method checks if a date is difrent from Saturday = 6 and Sunday=7.
      * Returns TRUE or FALSE
      * Teh argument must specify a date
+     *
      * @param date a "LocalDate" type
-     * @return TRUE,FALSE
+     * @return TRUE, FALSE
      */
-    private boolean dateDiffOfWeekend(LocalDate date){
+    private boolean dateDiffOfWeekend(LocalDate date) {
         if (date.getDayOfWeek().getValue() != 6 && date.getDayOfWeek().getValue() != 7 && date.getYear() == LocalDate.now().getYear()) {
-           return true;
+            return true;
         }
         return false;
     }
 
+    public List<LocalDate> getDatesForCurrentYear(List<Vacation> vacationList) {
+
+        List<Vacation> listToReturn = new ArrayList<>();
+        for (Vacation vacation : vacationList) {
+            if (vacation.getVacationStartDay().getYear() == LocalDate.now().getYear()) {
+                if (vacation.getVacationEndDay().getYear() == LocalDate.now().getYear()) {
+                    listToReturn.add(vacation);
+                }
+
+            }
+        }
+        return getDaysBetweenDates(listToReturn);
+    }
+
     /**
      * This method will check if the employee can add more vacations to is list
-     * Returns maxDaysVacations if he doesen´t have any vacations in the list
+     * Returns numberOfDays if the value still in the range and he can add more vacations
+     * Returns -1 if the employee exceed the maxDaysVacations
+     * The argument must specify a vacation List and a Vacation from the input
+     *
+     * @param employeeList employee list
+     * @param formVacation vacations from user input
+     * @return numberOfDays, -1
+     */
+    public int numberOfAvailableDays(List<Vacation> employeeList, Vacation formVacation) {
+
+        int numberOfDays = 0;
+
+        List<Vacation> formVacationDays = new ArrayList<>();
+
+        formVacationDays.add(formVacation);
+
+        List<LocalDate> employeelistToCheck = getDaysBetweenDates(employeeList);
+
+        List<LocalDate> formVacations = getDaysBetweenDates(formVacationDays);
+
+        numberOfDays = maxDaysVacations - getTotalNumberOfWorkingDays(employeelistToCheck);
+
+        numberOfDays = numberOfDays-getTotalNumberOfWorkingDays(formVacations);
+
+            if (numberOfDays < 0 ) {
+
+                return -1;
+
+            }else{
+
+                return numberOfDays;
+
+            }
+    }
+
+    /**
+     * Overload Method
+     * This method will check if the employee can add more vacations to is list
      * Returns numberOfDays if the value still in the range and he can add more vacations
      * Returns -1 if the employee exceed the maxDaysVacations
      * The argument must specify a vacation List
-     * @param employeeList employee list
-     * @return maxDaysVacations , numberOfDays, -1
+     * @param employeeVacationList
+     * @return
      */
-    public int numberOfAvailableDays(List<Vacation> employeeList) {
+    public int numberOfAvailableDays(List<Vacation> employeeVacationList) {
+
         int numberOfDays = 0;
-        if (checkIfTheVacationIsNull(employeeList))
-        {
-            return maxDaysVacations;
+
+
+        List<LocalDate> employeelistToCheck = getDaysBetweenDates(employeeVacationList);
+
+        numberOfDays = maxDaysVacations - getTotalNumberOfWorkingDays(employeelistToCheck);
+
+        if (numberOfDays < 0 ) {
+
+            return -1;
+
+        }else{
+
+            return numberOfDays;
+
         }
-            List<LocalDate> listToCheck = getDaysBetweenDates(employeeList);
-            numberOfDays= maxDaysVacations-getTotalNumberOfWorkingDays(listToCheck);
-            if(numberOfDays > maxDaysVacations)
-            {
-              return -1;
-            }else{
-                return numberOfDays;
-            }
     }
 
     /**
@@ -86,7 +140,7 @@ public class VacationUtils {
         List<LocalDate> dateList = new ArrayList<>();
         for (Vacation vacation : vacationList) {
             long days = dateDiffInNumberOfDays(vacation.getVacationStartDay(), vacation.getVacationEndDay());
-            for (int i = 0; i < days; i++) {
+            for (int i = 0; i <= days; i++) {
                 LocalDate d = vacation.getVacationStartDay().plus(i, ChronoUnit.DAYS);
                 dateList.add(d);
             }
@@ -131,9 +185,9 @@ public class VacationUtils {
     public List<LocalDate> getWorkingDaysVacations(List<Vacation> vacationList) {
         List<LocalDate> listToReturn = new ArrayList<>();
 
-            for (LocalDate date : getDaysBetweenDates(vacationList)) {
-                if (dateDiffOfWeekend(date)) {
-                    listToReturn.add(date);
+        for (LocalDate date : getDaysBetweenDates(vacationList)) {
+            if (dateDiffOfWeekend(date)) {
+                listToReturn.add(date);
             }
         }
         return listToReturn;
@@ -154,9 +208,9 @@ public class VacationUtils {
     public List<LocalDate> getDaysOfVacationByMonth(List<Vacation> vacationList, int month) {
         List<LocalDate> listOfDaysToReturn = new ArrayList<>();
 
-            for (LocalDate dayDate : getDaysBetweenDates(vacationList)) {
-                if (dayDate.getMonth().getValue() == month) {
-                    listOfDaysToReturn.add(dayDate);
+        for (LocalDate dayDate : getDaysBetweenDates(vacationList)) {
+            if (dayDate.getMonth().getValue() == month) {
+                listOfDaysToReturn.add(dayDate);
             }
 
         }
@@ -172,22 +226,19 @@ public class VacationUtils {
      * if this vacation exists we return TRUE else we return FALSE
      *
      * @param vacation vacation
-     * @param list list of vacations
+     * @param list     list of vacations
      * @return TRUE or FALSE
      */
-    public boolean checkIfVacationsExist(Vacation vacation, List<Vacation> list)
-    {
-        if (list == null)
-        {
+    public boolean checkIfVacationsExist(Vacation vacation, List<Vacation> list) {
+        if (list == null) {
             return false;
         }
-            for (Vacation vac : list)
-            {
-                if (vac.equals(vacation))
-                    return true;
-            }
-            return false;
+        for (Vacation vac : list) {
+            if (vac.equals(vacation))
+                return true;
         }
+        return false;
+    }
 
 
     /**
@@ -201,17 +252,39 @@ public class VacationUtils {
      * of the conditions are both FALSE the method returns FALSE
      *
      * @param vacationList
-     * @return TRUE,FALSE
+     * @return TRUE, FALSE
      */
-    public boolean checkIfTheVacationIsNull(List<Vacation> vacationList){
-       for(Vacation vacation : vacationList) {
-           if (vacation.getVacationStartDay() == null) {
-               return true;
-           } else if (vacation.getVacationEndDay() == null) {
-               return true;
-           }
-       }
-            return false;
+    public boolean checkIfTheVacationIsNull(List<Vacation> vacationList) {
+        for (Vacation vacation : vacationList) {
+            if (vacation.getVacationStartDay() == null) {
+                return true;
+            } else if (vacation.getVacationEndDay() == null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * This method is an Overloaded method used to test if a vacation is null or not
+     * Returns TRUE or FALSE  .
+     * The arguments must specify a Vacation "vacationSartDate and vacationEndDate".
+     * Both argument names are specifier that is relative to a  vacations period.
+     * This method always returns TRUE if the vacationStartDay is null
+     * if the condition gives FALSE he will test if vacationEndDay is also null
+     * if positive returns TRUE
+     * of the conditions are both FALSE the method returns FALSE
+     *
+     * @param vacation
+     * @return TRUE, FALSE
+     */
+    public boolean checkIfTheVacationIsNull(Vacation vacation) {
+        if (vacation.getVacationStartDay() == null) {
+            return true;
+        } else if (vacation.getVacationEndDay() == null) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -224,12 +297,11 @@ public class VacationUtils {
      * @param vacation
      * @return TRUE or FALSE
      */
-    public boolean checkIfVacationsAreInFuture(Vacation vacation){
-        if(vacation.getVacationStartDay().isAfter(LocalDate.now())){
-           if(vacation.getVacationEndDay().isAfter(vacation.getVacationStartDay()))
-           {
-               return true;
-           }
+    public boolean checkIfVacationsAreInFuture(Vacation vacation) {
+        if (vacation.getVacationStartDay().isAfter(LocalDate.now())) {
+            if (vacation.getVacationEndDay().isAfter(vacation.getVacationStartDay())) {
+                return true;
+            }
         }
         return false;
     }

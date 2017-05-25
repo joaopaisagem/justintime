@@ -32,7 +32,7 @@ public class ProjectController extends WebMvcConfigurerAdapter {
     /***************************************** SAVE AN EMPLOYEE*********************************************/
     /*******************************************************************************************************/
     /*
-	 * METHOD TO MAP AND SHOW EMPLOYEE FORM
+     * METHOD TO MAP AND SHOW EMPLOYEE FORM
 	 */
     @RequestMapping(value = "/newproject", method = RequestMethod.GET)
     public String projectForm(ModelMap model) {

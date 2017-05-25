@@ -1,4 +1,5 @@
 package pt.ipca.justintime.domain;
+
 import lombok.*;
 import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,8 +22,8 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="EMPLOYEE")
-@PrimaryKeyJoinColumn(name="PERSON_ID")
+@Table(name = "EMPLOYEE")
+@PrimaryKeyJoinColumn(name = "PERSON_ID")
 public class Employee extends Person {
 
 

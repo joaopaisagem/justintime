@@ -23,15 +23,23 @@ public class VacationUtilsIT {
 
     @Test
     public void getDaysBetweenDates_nowPlusOneDay_notEmpty() {
-
-        List<LocalDate> result = vacationUtils.getDaysBetweenDates(LocalDate.now(), LocalDate.now().plusDays(1));
+        List<Vacation> vacationList = new ArrayList<>();
+        Vacation vacation = new Vacation();
+        vacation.setVacationStartDay(LocalDate.now());
+        vacation.setVacationEndDay(LocalDate.now().plusDays(1));
+        vacationList.add(vacation);
+        List<LocalDate> result = vacationUtils.getDaysBetweenDates(vacationList);
         Assert.assertTrue(!result.isEmpty());
     }
 
     @Test
     public void getDaysBetweenDates_nowPlusOneDay_returnListSingleValue() {
-
-        List<LocalDate> result = vacationUtils.getDaysBetweenDates(LocalDate.now(), LocalDate.now().plusDays(1));
+        List<Vacation> vacationList = new ArrayList<>();
+        Vacation vacation = new Vacation();
+        vacation.setVacationStartDay(LocalDate.now());
+        vacation.setVacationEndDay(LocalDate.now().plusDays(1));
+        vacationList.add(vacation);
+        List<LocalDate> result = vacationUtils.getDaysBetweenDates(vacationList);
         Assert.assertTrue(result.size() == 1);
     }
 

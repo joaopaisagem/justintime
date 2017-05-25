@@ -29,14 +29,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/resources*/
-/**").permitAll()
- .anyRequest().permitAll();
- }
-
- @Autowired
- public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
- auth
- .inMemoryAuthentication()
- .withUser("user").password("password").roles("USER");
- }
- }*/
+/**
+ * ").permitAll()
+ * .anyRequest().permitAll();
+ * }
+ *
+ * @Autowired public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+ * auth
+ * .inMemoryAuthentication()
+ * .withUser("user").password("password").roles("USER");
+ * }
+ * }
+ */

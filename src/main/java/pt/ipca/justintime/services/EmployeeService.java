@@ -28,6 +28,7 @@ public class EmployeeService {
     private WorkSkillRepository workSkillRepository;
     @Autowired
     private VacationRepository vacationRepository;
+
     //////////////////////////////////////////////////////////
     //               CRUD METHOD`S                         //
     ////////////////////////////////////////////////////////
@@ -129,7 +130,7 @@ public class EmployeeService {
         return employeeVacationList;
     }
 
-    public Employee saveEmployeeVacations(Vacation vacation , Employee emp){
+    public Employee saveEmployeeVacations(Vacation vacation, Employee emp) {
         Employee employee = getEmployeeById(emp.getId());
         List<Vacation> vacationList = employee.getVacationList();
         vacationList.add(vacation);
