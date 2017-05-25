@@ -131,7 +131,7 @@ public class VacationUtils {
      * This method always returns a dateList
      * When this method is called will create a dateList and will do enhanced loop through vacations
      * will get the number of days between the start date and end date
-     * We run a for loop while the i is < then days, we create a localdate ,and we add to the list that day.
+     * We run a for loop while the i is < then days, we create a LocalDate ,and we add to the list that day.
      *
      * @param vacationList list of vacations
      * @return a list of dates "dateList" returns a list with the days between the start and the end
@@ -291,7 +291,7 @@ public class VacationUtils {
      * This method is used to test if the vacations are in future and the user dosen´t insert past dates
      * Returns TRUE or FALSE .
      * The argument must be a Vacation period "vacationSartDate and vacationEndDate".
-     * Verify if vacationSartDate is atleaste after the Localdate.now() "FUTURE"
+     * Verify if vacationSartDate is at least after the Localdate.now() "FUTURE"
      * Verify if the vacationEndDate is after the vacationSartDate so we have a period
      *
      * @param vacation

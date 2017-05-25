@@ -3,8 +3,8 @@
 -- teams
  -- =================================================================================================
  INSERT INTO team(team_name)VALUE('SuicideSquad')
- INSERT INTO team(team_name)VALUE('Cyborg Reapers')
- INSERT INTO team(team_name)VALUE('Sneaky Cyborgs')
+ INSERT INTO team(team_name)VALUE('CyborgReapers')
+ INSERT INTO team(team_name)VALUE('SneakyCyborgs')
 -- =================================================================================================
 -- Address List
 -- Addresses

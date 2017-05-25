@@ -48,8 +48,6 @@ public class VacationController {
 
         vacationForm.addObject("unavailableVacations", employeeService.getAllUnavailableDaysVacations());
 
-        vacationForm.addObject("totalVacations", vacationService.countTotalVacations());
-
         vacationForm.addObject("teams", teamService.getAllTeams());
 
         return vacationForm;
