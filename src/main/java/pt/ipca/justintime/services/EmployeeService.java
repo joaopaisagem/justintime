@@ -52,6 +52,9 @@ public class EmployeeService {
 
     }
 
+    public long getNumberOfTotalEmployees(){
+        return employeeRepository.count();
+    }
     public void updateEmployee(Employee employee) {
 
         vacationRepository.save(employee.getVacationList());
