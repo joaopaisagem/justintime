@@ -25,6 +25,35 @@
 
 <div id="page-wraper">
     <div class="container-fluid">
+        <!-- -->
+        <div class="row">
+            <!-- Top Panels-->
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-comments fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">26</div>
+                                <div>New Comments!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- -->
         <div class="row">
             <div class="col-lg-6 col-md-3">
                 <div class="panel panel-info">
@@ -76,7 +105,7 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-user"></i>
+                                <i class="glyphicon glyphicon-calendar"></i>
                             </div>
                             <div class="col-xs-3 text-right boardtext">
                                 <div></div>
@@ -90,21 +119,21 @@
 
                             <table class="table table-condensed" style="border-collapse:collapse;">
                             <thead>
-                                <tr><th>&nbsp;</th>
-                                    <th>Team Name</th>
+                                <tr>
+                                    <div class="panel-heading">Team Name </div>
                                 </tr>
                             </thead>
                                 <tbody>
                                 <th:block th:each="team : ${teams}">
                                 <tr data-toggle="collapse" th:attr="data-target='#teamName'+${team.teamName}" class="accordion-toggle">
-                                    <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
+                                    <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus-sign"></span></button></td>
                                     <th th:text="${team.teamName}"></th>
                                 </tr>
 
                                 <tr>
                                     <td colspan="6" class="hiddenRow"><div th:id="'teamName'+${team.teamName}" class="accordian-body collapse">
 
-                                            <table class="table table-inverse">
+                                            <table class="table">
                                                 <thead>
                                                 <tr>
                                                     <th> </th>
@@ -119,7 +148,18 @@
                                                     <td th:text="${employee.lastName}"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="6" class="hiddenRow"><div th:id="'vacations'+${employee.firstName}" class="accordian-body collapse"> Ferias</div></td>
+                                                    <td colspan="6" class="hiddenRow"><div th:id="'vacations'+${employee.firstName}" class="accordian-body collapse">
+                                                    <table class="table" th:each="vacation : ${employee.vacationList}">
+                                                        <thead>
+                                                        <th>Start Day</th>
+                                                        <th>End Day</th>
+                                                        </thead>
+                                                        <tbody>
+                                                        <td th:text="${vacation.vacationStartDay}"></td>
+                                                        <td th:text="${vacation.vacationEndDay}"></td>
+                                                        </tbody>
+                                                    </table>
+                                                    </div></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
