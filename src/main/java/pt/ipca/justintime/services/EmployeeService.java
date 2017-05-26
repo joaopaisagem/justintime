@@ -12,6 +12,7 @@ import pt.ipca.justintime.utils.VacationUtils;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class EmployeeService {
@@ -64,74 +65,65 @@ public class EmployeeService {
     //////////////////////////////////////////////////////////
     //         Employee vacation method´s                  //
     ////////////////////////////////////////////////////////
-    public int getAllAvailableDaysVacations() {
-        List<LocalDate> listOfVacations = getAllTotalEmployeeVacations();
-        int contAvailable = 0;
-        for (LocalDate date : listOfVacations) {
-            if (date.isAfter(LocalDate.now())) {
-                contAvailable = contAvailable + 1;
-            }
-        }
-        return contAvailable;
-    }
 
-    public int getAllUnavailableDaysVacations() {
-        List<LocalDate> listOfVacations = getAllTotalEmployeeVacations();
-        int contUnavailable = 0;
-        for (LocalDate date : listOfVacations) {
-            if (date.isBefore(LocalDate.now())) {
-                contUnavailable = contUnavailable + 1;
-            }
-        }
-        return contUnavailable;
-    }
 
     /**
-     * Returns a list of vacation for the current year for each employee
-     * This method Doesn't Receive an argument
-     * Always returns an exception or a list with the vacation
-     * We use a for each loop to get a list of all employees and iterate on each employee
-     * For each employee we will call "getTotalEmployeeVacationsForCurrentYear"
-     * that method receive one employee id and return a list of vacations
+     * This method return a list on integer with all employees available vacation dates
+     * Dosen´t receive any argument
      *
-     * @return the number of vacation  days or exception if there is no employees to search
+     * @return List<Integer>
      */
+    public List<Integer> getAllAvailableDaysVacations(List<Employee> employeeList) {
+        List<Integer> totalAvailableVacation = new ArrayList<>();
+        for (Employee employee: employeeList) {
+            int count = 0;
+            List<LocalDate> vacations = getTotalEmployeeVacation(employee.getVacationList());
+            for(LocalDate date : vacations) {
+               if (date.isAfter(LocalDate.now())) {
+                   count++;
+               }
+           }
+           if(count !=0) {
+               totalAvailableVacation.add(count);
+           }
+        }
+        return totalAvailableVacation;
+    }
+    /**
+     * This method return a list on integer with all employees spent vacation dates
+     * Dosen´t receive any argument
+     *
+     * @return List<Integer>
+     */
+    public List<Integer> getAllUnavailableDaysVacations(List<Employee> employeeList) {
 
-    public List<LocalDate> getAllTotalEmployeeVacations() {
-        List<LocalDate> employeeVacationList = new ArrayList<>();
-        if (employeeRepository.findAll() == null) {
-
-        } else {
-            for (Employee employee : employeeRepository.findAll()) {
-                for (LocalDate date : getEmployeeVacationsForCurrentYear(employee.getId())) {
-                    employeeVacationList.add(date);
+        List<Integer> totalAvailableVacation= new ArrayList<>(employeeList.size());
+        for (Employee employee: employeeList) {
+            int count = 0;
+            List<LocalDate> vacations = getTotalEmployeeVacation(employee.getVacationList());
+            for(LocalDate date : vacations) {
+                if (date.isBefore(LocalDate.now())) {
+                    count++;
                 }
             }
-
+            if(count!=0) {
+                totalAvailableVacation.add(count);
+            }
         }
-        return employeeVacationList;
+        return totalAvailableVacation;
     }
 
     /**
-     * This method returns an int with total number of vacations for current year to one employee
-     * This method receive one  argument that  must specify  one employee id
-     * Always return  -1 if the employee doesn't exist or the number of vacations
+     * Method to get workingDaysVacations for one employee
      *
-     * @param id must be relative to one employee
-     * @return exeption or number of days
+     * @param vacationList employee list
+     * @return List<LocalDate> with working days only
      */
-    public List<LocalDate> getEmployeeVacationsForCurrentYear(Long id) {
-        List<LocalDate> employeeVacationList = new ArrayList<>();
-        if (employeeRepository.findOne(id) == null) {
-
-        } else {
-
-            Employee employee = employeeRepository.findOne(id);
-            employeeVacationList = vacationUtils.getWorkingDaysVacations(employee.getVacationList());
-        }
-
-        return employeeVacationList;
+    private List<LocalDate> getTotalEmployeeVacation(List<Vacation> vacationList){
+        List<LocalDate> workingDaysVacations = vacationUtils.getWorkingDaysVacations(vacationList);
+        return workingDaysVacations;
     }
+
 
     public Employee saveEmployeeVacations(Vacation vacation, Employee emp) {
         Employee employee = getEmployeeById(emp.getId());

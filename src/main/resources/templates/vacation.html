@@ -45,7 +45,7 @@
                    <a href="#">
                         <div class="panel-footer">
                             <span class="pull-left"> Number of Employees</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <span class="pull-right"><i class=""></i></span>
                             <div class="clearfix"></div>
                         </div>
                     </a>
@@ -88,8 +88,8 @@
                                     <td th:text="${employee.firstName}"></td>
                                     <td th:text="${employee.lastName}"></td>
                                     <td th:text="${employee.employeeTeamName.teamName}"></td>
-                                    <td th:text="${availableVacations}"></td>
-                                    <td th:text="${unavailableVacations}"></td>
+                                    <td th:each="available : ${availableVacations}" th:text="${available}"></td>
+                                    <td th:each="unavailable : ${unavailableVacations}" th:text="${unavailable}"></td>
                                 </tr>
                                 </tbody>
                             </table>

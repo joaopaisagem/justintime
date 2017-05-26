@@ -41,12 +41,13 @@ public class VacationController {
     public ModelAndView vacationForm() {
 
         ModelAndView vacationForm = new ModelAndView("vacation");
+        List<Employee> employeeList = employeeService.getAllEmployees();
 
-        vacationForm.addObject("employeeList", employeeService.getAllEmployees());
+        vacationForm.addObject("employeeList",employeeList );
 
-        vacationForm.addObject("availableVacations", employeeService.getAllAvailableDaysVacations());
+        vacationForm.addObject("availableVacations", employeeService.getAllAvailableDaysVacations(employeeList));
 
-        vacationForm.addObject("unavailableVacations", employeeService.getAllUnavailableDaysVacations());
+        vacationForm.addObject("unavailableVacations", employeeService.getAllUnavailableDaysVacations(employeeList));
 
         vacationForm.addObject("totalEmployees",employeeService.getNumberOfTotalEmployees());
 
