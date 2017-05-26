@@ -66,51 +66,13 @@ public class EmployeeService {
     //         Employee vacation method´s                  //
     ////////////////////////////////////////////////////////
 
-
-    /**
-     * This method return a list on integer with all employees available vacation dates
-     * Dosen´t receive any argument
-     *
-     * @return List<Integer>
-     */
-    public List<Integer> getAllAvailableDaysVacations(List<Employee> employeeList) {
-        List<Integer> totalAvailableVacation = new ArrayList<>();
-        for (Employee employee: employeeList) {
-            int count = 0;
-            List<LocalDate> vacations = getTotalEmployeeVacation(employee.getVacationList());
-            for(LocalDate date : vacations) {
-               if (date.isAfter(LocalDate.now())) {
-                   count++;
-               }
-           }
-           if(count !=0) {
-               totalAvailableVacation.add(count);
-           }
-        }
-        return totalAvailableVacation;
-    }
-    /**
-     * This method return a list on integer with all employees spent vacation dates
-     * Dosen´t receive any argument
-     *
-     * @return List<Integer>
-     */
-    public List<Integer> getAllUnavailableDaysVacations(List<Employee> employeeList) {
-
-        List<Integer> totalAvailableVacation= new ArrayList<>(employeeList.size());
-        for (Employee employee: employeeList) {
-            int count = 0;
-            List<LocalDate> vacations = getTotalEmployeeVacation(employee.getVacationList());
-            for(LocalDate date : vacations) {
-                if (date.isBefore(LocalDate.now())) {
-                    count++;
-                }
-            }
-            if(count!=0) {
-                totalAvailableVacation.add(count);
-            }
-        }
-        return totalAvailableVacation;
+public List<Integer> getAllAvailableDaysVacations(List<Employee> employeeList) {
+       List<Integer> list = new ArrayList<>();
+    return list;
+}
+public List<Integer> getAllUnavailableDaysVacations(List<Employee> employeeList) {
+    List<Integer> list = new ArrayList<>();
+    return list;
     }
 
     /**
