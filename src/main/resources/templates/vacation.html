@@ -83,12 +83,13 @@
                                     <th>Spent days</th>
                                 </tr>
                                 </thead>
-                                <tbody th:each="employee : ${employeeList}">
+                                <tbody th:each="employee ,iter: ${employeeList}">
                                 <tr>
                                     <td th:text="${employee.firstName}"></td>
                                     <td th:text="${employee.lastName}"></td>
                                     <td th:text="${employee.employeeTeamName.teamName}"></td>
-
+                                    <th th:text="${availableVacations[iter.index]}"></th>
+                                    <th th:text="${unavailableVacations[iter.index]}"></th>
                                 </tr>
                                 </tbody>
                             </table>
