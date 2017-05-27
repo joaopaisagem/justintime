@@ -9,7 +9,9 @@ import java.util.List;
 
 @Service
 public class ClientService {
-
+    //////////////////////////////////////////////////////////
+    //               CRUD METHOD`S                         //
+    ////////////////////////////////////////////////////////
     @Autowired
     private ClientRepository clientRepository;
 

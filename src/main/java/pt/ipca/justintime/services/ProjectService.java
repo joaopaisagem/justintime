@@ -13,7 +13,9 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-
+    //////////////////////////////////////////////////////////
+    //               CRUD METHOD`S                         //
+    ////////////////////////////////////////////////////////
     public Project saveProject(Project project) {
         return projectRepository.save(project);
     }
@@ -35,4 +37,30 @@ public class ProjectService {
     public void deleteProject(Long id) {
         projectRepository.delete(id);
     }
+
+    //////////////////////////////////////////////////////////
+    //              Project METHOD`S                       //
+    ////////////////////////////////////////////////////////
+
+    public boolean checkIfProjectExists(Project project){
+        List<Project> projectList = projectRepository.findAll();
+        for(Project proj : projectList)
+        {
+            if (proj.equals(project))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean saveProjectForm(Project projectForm)
+    {
+       if(checkIfProjectExists(projectForm))
+       {
+           return false;
+       }
+        saveProject(projectForm);
+        return true;
+    }
+
 }
