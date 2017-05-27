@@ -57,8 +57,11 @@ public class EmployeeService {
         return employeeRepository.count();
     }
     public void updateEmployee(Employee employee) {
-
-        vacationRepository.save(employee.getVacationList());
+        addressRepository.save(employee.getAddressOne());
+        addressRepository.save(employee.getAddressTwo());
+        contactRepository.save(employee.getContactList());
+        workSkillRepository.save(employee.getSkillList());
+       // vacationRepository.save(employee.getVacationList());
         employeeRepository.saveAndFlush(employee);
     }
 

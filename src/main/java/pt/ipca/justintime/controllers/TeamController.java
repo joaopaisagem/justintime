@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ipca.justintime.domain.Team;
@@ -77,6 +78,13 @@ public class TeamController extends WebMvcConfigurerAdapter {
         }
         redirectAttributes.addFlashAttribute("message", "The team was not found");
         return "redirect:/deleteteam";
+    }
+
+    @RequestMapping(value="/seeallteams", method = RequestMethod.GET)
+    public ModelAndView seeAllTeams()
+    {
+        ModelAndView viewteams = new ModelAndView("seeallteams","teams",teamService.getAllTeams());
+        return viewteams;
     }
 
 }

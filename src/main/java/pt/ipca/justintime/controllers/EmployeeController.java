@@ -80,14 +80,17 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
     }
 
     @PostMapping("/editemployee/edit")
-    public String checkEditEmployeeInfo(@Valid Employee employee, BindingResult bindingResult) {
+    public String checkEditEmployeeInfo(@Valid Employee employee, BindingResult bindingResult,ModelMap model) {
 
         if (bindingResult.hasErrors()) {
+
             return "editemployeeform";
         }
 
         employeeService.updateEmployee(employee);
-        return "redirect:/results";
+        model.addAttribute(employee);
+        model.addAttribute("successmsg", "You edit successfull the employee");
+        return "editemployeeform";
     }
 
     @RequestMapping(value = "/searchemployeetoaddvacation", method = RequestMethod.GET)
