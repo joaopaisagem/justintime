@@ -1,0 +1,82 @@
+<fieldset th:fragment="projectform">
+    <div class="form-group">
+        <td><input type="hidden" th:field="*{id}" id="id"/></td>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="selectbasic">State of Project</label>
+        <div class="col-md-4">
+            <select th:field="*{status}" id="selectbasic" name="selectbasic"
+                    class="form-control">
+                <option
+                        th:each="status : ${T(pt.ipca.justintime.domain.SoftwareDevelopmentCicle).values()}"
+                        th:value="${status}" th:text="${status}"></option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="selectbasic">Select
+            Team</label>
+        <div class="col-md-4">
+            <select id="employeeTeamName" name="employeeTeamName" class="form-control">
+                <option th:each="team : ${teamList}" th:value="${team.id}" th:text="${team.teamName}"></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="selectbasic">Select
+            Client</label>
+        <div class="col-md-4">
+            <select id="clientName" name="clientName" class="form-control">
+                <option th:each="client : ${clientList}" th:value="${client.id}" th:text="${client.firstName}"></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="projectName">Project Name</label>
+        <div class="col-md-4">
+            <input th:field="*{projectName}" id="projectName" name="projectName" type="text"
+                   placeholder="ProjectName" class="form-control input-md"/> <span
+                class="help-block" th:if="${#fields.hasErrors('projectName')}"
+                th:errors="*{projectName}"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="projectDescription">Project Description</label>
+        <div class="col-md-4">
+            <textarea th:field="*{projectDescription}" class="form-control" id="projectDescription" name="projectDescription"></textarea>
+            <span class="help-block" th:if="${#fields.hasErrors('projectDescription')}" th:errors="*{projectDescription}"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="projectStartDate">Project Start Date</label>
+        <div class="col-md-4">
+            <input th:field="*{projectStartDate}" id="projectStartDate" name="projectStartDate" type="date" placeholder="projectStartDate" class="form-control input-md"/>
+            <span class="help-block" th:if="${#fields.hasErrors('projectStartDate')}" th:errors="*{projectStartDate}"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="projectEndDate">Estimated End Date </label>
+        <div class="col-md-4">
+            <input th:field="*{projectEndDate}" id="projectEndDate" name="projectEndDate" type="date" placeholder="projectEndDate" class="form-control input-md"/>
+            <span class="help-block" th:if="${#fields.hasErrors('projectEndDate')}" th:errors="*{projectEndDate}"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="submit"></label>
+        <div class="col-md-4">
+            <button type="submit" value="save" id="submit" name="submit"
+                    class="btn btn-primary">Submit
+            </button>
+        </div>
+    </div>
+
+</fieldset>

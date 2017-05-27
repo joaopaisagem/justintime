@@ -1,0 +1,45 @@
+<div class="col-lg-6 col-md-3" th:fragment="employeespanelvacation">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="glyphicon glyphicon-user"></i>
+                </div>
+                <div class="col-xs-3 text-right boardtext">
+                    <div></div>
+                    <span ></span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">All Employee Vacations</div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Team</th>
+                        <th>Available days</th>
+                        <th>Spent days</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="employee ,iter: ${employeeList}">
+                    <tr>
+                        <td th:text="${employee.firstName}"></td>
+                        <td th:text="${employee.lastName}"></td>
+                        <td th:text="${employee.employeeTeamName.teamName}"></td>
+                        <td th:if="${!availableVacations.isEmpty()}" th:text="${availableVacations[iter.index]}"></td>
+                        <td th:if="${!unavailableVacations.isEmpty()}" th:text="${unavailableVacations[iter.index]}"></td>
+                        <td th:if="${availableVacations.isEmpty()}" >0</td>
+                        <td th:if="${unavailableVacations.isEmpty()}" >0</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

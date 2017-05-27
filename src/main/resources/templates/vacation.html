@@ -56,131 +56,21 @@
 
         <!-- -->
         <div class="row">
-            <div class="col-lg-6 col-md-3">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-user"></i>
-                            </div>
-                            <div class="col-xs-3 text-right boardtext">
-                                <div></div>
-                                <span ></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="panel panel-default">
-                            <!-- Default panel contents -->
-                            <div class="panel-heading">All Employee Vacations</div>
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Team</th>
-                                    <th>Available days</th>
-                                    <th>Spent days</th>
-                                </tr>
-                                </thead>
-                                <tbody th:each="employee ,iter: ${employeeList}">
-                                <tr>
-                                    <td th:text="${employee.firstName}"></td>
-                                    <td th:text="${employee.lastName}"></td>
-                                    <td th:text="${employee.employeeTeamName.teamName}"></td>
-                                    <th th:text="${availableVacations[iter.index]}"></th>
-                                    <th th:text="${unavailableVacations[iter.index]}"></th>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
 
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
+           <!--Start of Employees Panel -->
+            <div class="col-lg-6 col-md-3" th:replace="/vacationfragments/employeespanelvacation :: employeespanelvacation">
+
+
             </div>
             <!-- End of All Employees Panel -->
+
             <!-- Start of Teams Panel -->
-            <div class="col-lg-6 col-md-3">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                            </div>
-                            <div class="col-xs-3 text-right boardtext">
-                                <div></div>
-                                <span ></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="panel panel-default">
-                            <!-- Default panel contents -->
+            <div class="col-lg-6 col-md-3" th:replace="/vacationfragments/teamspanelvacation :: teamspanelvacation">
 
-                            <table class="table table-condensed" style="border-collapse:collapse;">
-                            <thead>
-                                <tr>
-                                    <div class="panel-heading">Team Name </div>
-                                </tr>
-                            </thead>
-                                <tbody>
-                                <th:block th:each="team : ${teams}">
-                                <tr data-toggle="collapse" th:attr="data-target='#teamName'+${team.teamName}" class="accordion-toggle">
-                                    <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus-sign"></span></button></td>
-                                    <th th:text="${team.teamName}"></th>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="6" class="hiddenRow"><div th:id="'teamName'+${team.teamName}" class="accordian-body collapse">
-
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th> </th>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody th:each="employee : ${team.employeeList}">
-                                                <tr  data-toggle="collapse" th:attr="data-target='#vacations'+${employee.firstName}" class="accordion-toggle">
-                                                    <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
-                                                    <td th:text="${employee.firstName}"></td>
-                                                    <td th:text="${employee.lastName}"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="6" class="hiddenRow"><div th:id="'vacations'+${employee.firstName}" class="accordian-body collapse">
-                                                    <table class="table" th:each="vacation : ${employee.vacationList}">
-                                                        <thead>
-                                                        <th>Start Day</th>
-                                                        <th>End Day</th>
-                                                        </thead>
-                                                        <tbody>
-                                                        <td th:text="${vacation.vacationStartDay}"></td>
-                                                        <td th:text="${vacation.vacationEndDay}"></td>
-                                                        </tbody>
-                                                    </table>
-                                                    </div></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-
-                                    </div></td>
-                                </tr>
-                                </th:block>
-                                </tbody>
-                            </table>
-
-
-
-                        </div>
-                    </div>
-                </div>
-                <!-- End of All teams Panel -->
             </div>
-
+            <!-- End of Teams Panel -->
+            </div>
         </div>
-    </div>
     <!--End of container fluid-->
 </div>
 <!-- End of Wraper-->

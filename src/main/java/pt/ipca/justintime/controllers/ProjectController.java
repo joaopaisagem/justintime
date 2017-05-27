@@ -37,13 +37,6 @@ public class ProjectController extends WebMvcConfigurerAdapter {
     @RequestMapping(value = "/newproject", method = RequestMethod.GET)
     public String projectForm(ModelMap model) {
         model.addAttribute("project", new Project());
-		/*	model.addAttribute("projectName", "");
-			model.addAttribute("projectDescription", "");
-			model.addAttribute("projectStartDate","");
-			model.addAttribute("projectEndDate","");
-			model.addAttribute("assignedTeam", "");
-			model.addAttribute("status", "");
-			model.addAttribute("client","");*/
         model.addAttribute("teamList", teamService.getAllTeams());
         model.addAttribute("clientList", clientService.getAllClients());
         return "projectform";

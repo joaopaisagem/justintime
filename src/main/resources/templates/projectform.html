@@ -3,63 +3,34 @@
 >
 <head th:replace="/fragments/header :: header"></head>
 <body>
-<form action="#" th:action="@{/newproject}" th:object="${project}" method="post">
-    <div class="form-group">
-        <select th:field="*{status}">
-            <option th:each="status : ${T(pt.ipca.justintime.domain.SoftwareDevelopmentCicle).values()}"
-                    th:value="${status}" th:text="${status}"></option>
-        </select>
+<nav th:replace="/fragments/menu ::menu"></nav>
+<div class="col-lg-12">
+    <h1 class="page-header">
+        Dashboard
+        <small>Add Project</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-tachometer"></i> Dashboard</li>
+        <li class="active"><i class="fa fa-1x fa-briefcase"></i> Add
+            Project
+        </li>
+    </ol>
+</div>
+<div id="page-wraper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+            <form class="form-horizontal" th:action="@{/newproject}" th:object="${project}" method="post">
+            <fieldset th:replace="/projectfragments/projectform :: projectform">
+
+            </fieldset>
+            </form>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-3">
-        <select class="form-control" th:field="*{assignedTeam}">
-            <option value="">Select Team</option>
-            <option th:each="team : ${teamList}"
-                    th:value="${team.id}"
-                    th:text="${team.teamName}"></option>
-        </select>
-    </div>
-    <div class="col-lg-3">
-        <select class="form-control" th:field="*{client}">
-            <option value="">Select a Client</option>
-            <option th:each="client : ${clientList}"
-                    th:value="${client.id}"
-                    th:text="${client.firstName}"></option>
-        </select>
-    </div>
-    <table>
-        <tr>
-            <td>Project Name:</td>
-            <td><input type="text" th:field="*{projectName}"/></td>
-            <td th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}">Project name error</td>
-        </tr>
-        <tr>
-            <td>Description:</td>
-            <td><input type="text" th:field="*{projectDescription}"/></td>
-            <td th:if="${#fields.hasErrors('projectDescription')}" th:errors="*{projectDescription}">Project Description
-                Error
-            </td>
-        </tr>
+</div>
 
-
-        <tr>
-            <td>Project start Date:</td>
-            <td><input type="date" th:field="*{projectStartDate}"/></td>
-            <td th:if="${#fields.hasErrors('projectStartDate')}" th:errors="*{projectStartDate}">Date Error</td>
-        </tr>
-        <tr>
-            <td>Estimated end date:</td>
-            <td><input type="date" th:field="*{projectEndDate}"/></td>
-            <td th:if="${#fields.hasErrors('projectEndDate')}" th:errors="*{projectEndDate}">Date Error</td>
-        </tr>
-
-
-        <tr>
-            <td>
-                <button type="submit" value="save">Submit</button>
-            </td>
-        </tr>
-    </table>
-</form>
+<footer th:replace="/fragments/footer ::footer"></footer>
 
 </body>
 </html>
