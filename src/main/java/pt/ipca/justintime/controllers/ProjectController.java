@@ -5,12 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ipca.justintime.domain.Project;
 import pt.ipca.justintime.services.ClientService;
 import pt.ipca.justintime.services.ProjectService;
@@ -36,26 +33,34 @@ public class ProjectController extends WebMvcConfigurerAdapter {
      * METHOD TO MAP AND SHOW EMPLOYEE FORM
 	 */
     @RequestMapping(value = "/newproject", method = RequestMethod.GET)
-    public String newProjectForm(ModelMap model) {
-        model.addAttribute("project", new Project());
-        model.addAttribute("teamList", teamService.getAllTeams());
-        model.addAttribute("clientList", clientService.getAllClients());
-        return "projectform";
+    public ModelAndView newProjectForm() {
+        ModelAndView projectForm = new ModelAndView("projectform");
+        projectForm.addObject("project", new Project());
+        projectForm.addObject("teamList", teamService.getAllTeams());
+        projectForm.addObject("clientList", clientService.getAllClients());
+        return projectForm;
     }
 
     @RequestMapping(value = "/newproject", method = RequestMethod.POST)
-    public String saveProject(Project project, ModelMap model, RedirectAttributes redirectAttributes) {
-        if( projectService.saveProjectForm(project))
-        {
-             redirectAttributes.addFlashAttribute(project);
-             redirectAttributes.addFlashAttribute("successmessage","You saved the project successfully");
-             return "redirect:/newproject";
-        }else {
-            redirectAttributes.addFlashAttribute(project);
-            redirectAttributes.addFlashAttribute("errormessage","The project already exists");
-            return "redirect:/newproject";
+    public ModelAndView checkNewProjectInfo(@Valid @ModelAttribute("project") Project project, BindingResult bindingResult) {
+        ModelAndView projectForm = new ModelAndView("projectform");
+        projectForm.addObject("project", project);
+        projectForm.addObject("teamList", teamService.getAllTeams());
+        projectForm.addObject("clientList", clientService.getAllClients());
+        if (bindingResult.hasErrors()) {
+            projectForm.addObject("errormessage", "The project have errors please verify all the fields");
+            return projectForm;
+        } else if (projectService.saveProjectForm(project)) {
+            projectForm.addObject("successmessage", "You saved the project successfully");
+            return projectForm;
+        } else {
+            projectForm.addObject("errormessage", "The project already exists");
+            return projectForm;
+
         }
     }
+
+
 
     @GetMapping(value = "/showproject")
     public String showProjectForm(ModelMap model) {

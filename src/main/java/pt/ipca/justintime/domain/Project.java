@@ -1,10 +1,13 @@
 package pt.ipca.justintime.domain;
 
 import lombok.*;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+
 
 /**
  * @author Tiago Silva
@@ -16,31 +19,32 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 public class Project {
 
     @Id
     @GeneratedValue
     private Long id;
-
+    @NotEmpty
     private String projectName;
-
+    @NotEmpty
     private String projectDescription;
-
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date projectStartDate;
-
+    private LocalDate projectStartDate;
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date projectEndDate;
-
+    private LocalDate projectEndDate;
+    @NotNull
     @ManyToOne
     private Client client;
-
+    @NotNull
     @ManyToOne
     private Team assignedTeam;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private SoftwareDevelopmentCicle status;
+
+
 }

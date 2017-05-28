@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ipca.justintime.domain.Employee;
+import pt.ipca.justintime.forms.EmployeeForm;
 import pt.ipca.justintime.repositories.AddressRepository;
 import pt.ipca.justintime.services.EmployeeService;
 import pt.ipca.justintime.services.TeamService;
@@ -33,23 +34,26 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
     @RequestMapping(value = "/newemployee", method = RequestMethod.GET)
     public ModelAndView employeeForm(ModelMap model) {
         ModelAndView employeeForm = new ModelAndView("employeeform");
-        employeeForm.addObject("employee", new Employee());
+        employeeForm.addObject("employeeform", new EmployeeForm());
         employeeForm.addObject("teamList", teamService.getAllTeams());
         return employeeForm;
     }
 
     @RequestMapping(value = "/newemployee", method = RequestMethod.POST)
-    public ModelAndView checkNewEmployeeInfo(@Valid @ModelAttribute("employee") Employee employee, BindingResult bindingResult) {
+    public ModelAndView checkNewEmployeeInfo(@Valid @ModelAttribute("employeeform") EmployeeForm employeeForm, BindingResult bindingResult) {
         ModelAndView mav = new ModelAndView("employeeform");
         mav.addObject("teamList", teamService.getAllTeams());
-        mav.addObject("employeeform", employee);
+        mav.addObject("employeeform", employeeForm);
         if (bindingResult.hasErrors()) {
-            mav.addObject("errorsmsg", "Error saving employee");
+            mav.addObject("errorssmsg", "Error saving employee");
             return mav;
         }
-
-        employeeService.saveEmployee(employee);
-        mav.addObject("successmsg", "Success you save employee");
+        else if( employeeService.saveEmployeeForm(employeeForm))
+        {
+            mav.addObject("successmsg", "Success you save employee");
+            return mav;
+        }
+        mav.addObject("errorssmsg", "The employee already exists");
         return mav;
     }
 

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import pt.ipca.justintime.domain.Contact;
 import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.domain.Vacation;
+import pt.ipca.justintime.factorys.EmployeeFactory;
+import pt.ipca.justintime.forms.EmployeeForm;
 import pt.ipca.justintime.repositories.*;
 import pt.ipca.justintime.utils.VacationUtils;
 
@@ -29,7 +31,8 @@ public class EmployeeService {
     private WorkSkillRepository workSkillRepository;
     @Autowired
     private VacationRepository vacationRepository;
-
+    @Autowired
+    private EmployeeFactory employeeFactory;
     //////////////////////////////////////////////////////////
     //               CRUD METHOD`S                         //
     ////////////////////////////////////////////////////////
@@ -100,5 +103,25 @@ public List<Integer> getAllUnavailableDaysVacations(List<Employee> employeeList)
         return employee;
     }
 
+    public boolean checkIfEmployeeExists(Employee employee){
+        List<Employee> employeeList = getAllEmployees();
+        for(Employee emp : employeeList)
+        if(employee.equals(emp))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean saveEmployeeForm (EmployeeForm employeeForm)
+    {
+        Employee employee = employeeFactory.transformEmployeeFormIntoEmployee(employeeForm);
+         if(checkIfEmployeeExists(employee))
+         {
+             return false;
+         }
+         saveEmployee(employee);
+         return true;
+    }
 
 }

@@ -1,0 +1,197 @@
+<fieldset th:fragment="clientform">
+    <div class="form-group">
+        <td><input type="hidden" th:field="*{id}" id="client.id"/></td>
+    </div>
+    <!-- Select Gender -->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="selectbasic">Gender</label>
+        <div class="col-md-4">
+            <select th:field="*{gender}" id="selectbasic" name="selectbasic"
+                    class="form-control">
+                <option
+                        th:each="state : ${T(pt.ipca.justintime.domain.Gender).values()}"
+                        th:value="${state}" th:text="${state}"></option>
+            </select>
+            <div th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
+        </div>
+    </div>
+    <!-- FirstName input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="First Name">First
+            Name</label>
+        <div class="col-md-4">
+            <input th:field="*{firstName}" id="First Name" name="First Name"
+                   type="text" placeholder="First Name"
+                   class="form-control input-md"/> <span class="help-block"
+                                                         th:if="${#fields.hasErrors('firstName')}"
+                                                         th:errors="*{firstName}"></span>
+        </div>
+    </div>
+
+    <!-- LastName input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="Last Name">Last
+            Name</label>
+        <div class="col-md-4">
+            <input th:field="*{lastName}" id="Last Name" name="Last Name"
+                   type="text" placeholder="Last Name"
+                   class="form-control input-md"/> <span class="help-block"
+                                                         th:if="${#fields.hasErrors('lastName')}"
+                                                         th:errors="*{lastName}"></span>
+        </div>
+    </div>
+    <!-- NIf input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="nif">Nif</label>
+        <div class="col-md-4">
+            <input th:field="*{nif}" id="nif" name="nif" type="text"
+                   placeholder="Nif" class="form-control input-md"/> <span
+                class="help-block" th:if="${#fields.hasErrors('nif')}"
+                th:errors="*{nif}"></span>
+        </div>
+    </div>
+    <!-- Email input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="Email">Email</label>
+        <div class="col-md-4">
+            <input th:field="*{email}" id="email" name="email" type="text"
+                   placeholder="Email" class="form-control input-md"/> <span
+                class="help-block" th:if="${#fields.hasErrors('email')}"
+                th:errors="*{email}"></span>
+        </div>
+    </div>
+    <!-- Principal Street Address input -->
+    <div class="form-group">
+        <label class="col-md-4 control-label"
+               for="addressOne.addressStreet">Principal Address</label>
+        <div class="col-md-4">
+            <input th:field="*{addressOne.addressStreet}"
+                   id="addressOne.addressStreet" name="addressOne.addressStreet"
+                   type="text" placeholder="Address" class="form-control input-md"/>
+            <span class="help-block"
+                  th:if="${#fields.hasErrors('addressOne.addressStreet')}"
+                  th:errors="*{addressOne.addressStreet}"></span>
+        </div>
+    </div>
+    <!-- Principal City Address input -->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="addressOne.city">City</label>
+        <div class="col-md-4">
+            <input th:field="*{addressOne.city}" id="addressOne.city"
+                   name="addressOne.city" type="text" placeholder="City"
+                   class="form-control input-md"/> <span class="help-block"
+                                                         th:if="${#fields.hasErrors('addressOne.city')}"
+                                                         th:errors="*{addressOne.city}"></span>
+        </div>
+    </div>
+    <!-- Principal Country Address input -->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="addressOne.country">Country</label>
+        <div class="col-md-4">
+            <input th:field="*{addressOne.country}" id="addressOne.country"
+                   name="addressOne.country" type="text" placeholder="Country"
+                   class="form-control input-md"/> <span class="help-block"
+                                                         th:if="${#fields.hasErrors('addressOne.country')}"
+                                                         th:errors="*{addressOne.country}"></span>
+        </div>
+    </div>
+    <!-- Principal PostalCode Address input -->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="addressOne.postalCode">Postal
+            Code</label>
+        <div class="col-md-4">
+            <input th:field="*{addressOne.postalCode}"
+                   id="addressOne.postalCode" name="addressOne.postalCode"
+                   type="text" placeholder="PostalCode"
+                   class="form-control input-md"/> <span class="help-block"
+                                                         th:if="${#fields.hasErrors('addressOne.postalCode')}"
+                                                         th:errors="*{addressOne.postalCode}"></span>
+        </div>
+    </div>
+    <!-- Secondary Address -->
+    <div class="form-group">
+        <label class="col-md-4 control-label"
+               for="addressTwo.addressStreet">Secondary Address</label>
+        <div class="col-md-4">
+            <input th:field="*{addressTwo.addressStreet}"
+                   id="addressTwo.addressStreet" name="addressTwo.addressStreet"
+                   type="text" placeholder="Address" class="form-control input-md"/>
+            <span class="help-block"
+                  th:if="${#fields.hasErrors('addressTwo.addressStreet')}"
+                  th:errors="*{addressTwo.addressStreet}"></span>
+        </div>
+    </div>
+    <!-- Secondary City Address input -->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="addressTwo.city">City</label>
+        <div class="col-md-4">
+            <input th:field="*{addressTwo.city}" id="addressTwo.city"
+                   name="addressTwo.city" type="text" placeholder="City"
+                   class="form-control input-md"/> <span class="help-block"
+                                                         th:if="${#fields.hasErrors('addressTwo.city')}"
+                                                         th:errors="*{addressTwo.city}"></span>
+        </div>
+    </div>
+    <!-- Secondaryl Country Address input -->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="addressTwo.country">Country</label>
+        <div class="col-md-4">
+            <input th:field="*{addressTwo.country}" id="addressTwo.country"
+                   name="addressTwo.country" type="text" placeholder="Country"
+                   class="form-control input-md"/> <span class="help-block"
+                                                         th:if="${#fields.hasErrors('addressTwo.country')}"
+                                                         th:errors="*{addressTwo.country}"></span>
+        </div>
+    </div>
+    <!-- Principal PostalCode Address input -->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="addressTwo.postalCode">Postal
+            Code</label>
+        <div class="col-md-4">
+            <input th:field="*{addressTwo.postalCode}"
+                   id="addressTwo.postalCode" name="addressTwo.postalCode"
+                   type="text" placeholder="PostalCode"
+                   class="form-control input-md"/> <span class="help-block"
+                                                         th:if="${#fields.hasErrors('addressTwo.postalCode')}"
+                                                         th:errors="*{addressTwo.postalCode}"></span>
+        </div>
+    </div>
+
+    <!-- Contact Type -->
+    <div class="form-group">
+        <label class="col-md-4 control-label"
+               for="contactList[0].contactName">Contact Type</label>
+        <div class="col-md-4">
+            <input th:field="*{contactList[0].contactName}"
+                   id="contactList[0].contactName"
+                   name="contactList[0].contactName" type="text"
+                   placeholder="Contact Type" class="form-control input-md"/> <span
+                class="help-block"
+                th:if="${#fields.hasErrors('contactList[0].contactName')}"
+                th:errors="*{contactList[0].contactName}"></span>
+        </div>
+    </div>
+    <!-- Contact Type -->
+    <div class="form-group">
+        <label class="col-md-4 control-label"
+               for="contactList[1].contactName">Contact Type</label>
+        <div class="col-md-4">
+            <input th:field="*{contactList[1].contactName}"
+                   id="contactList[1].contactName"
+                   name="contactList[1].contactName" type="text"
+                   placeholder="Contact Type" class="form-control input-md"/> <span
+                class="help-block"
+                th:if="${#fields.hasErrors('contactList[1].contactName')}"
+                th:errors="*{contactList[1].contactName}"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="submit"></label>
+        <div class="col-md-4">
+            <button type="submit" value="save" id="submit" name="submit"
+                    class="btn btn-primary">Submit
+            </button>
+        </div>
+    </div>
+</fieldset>
+

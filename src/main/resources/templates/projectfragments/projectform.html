@@ -33,6 +33,7 @@
             <select id="clientName" name="clientName" class="form-control">
                 <option th:each="client : ${clientList}" th:value="${client.id}" th:text="${client.firstName}"></option>
             </select>
+
         </div>
     </div>
 

@@ -33,40 +33,12 @@ public class Person {
     @GeneratedValue
     private Long id;
 
-    @NotEmpty
     private String firstName;
 
-    @NotEmpty
     private String lastName;
 
-    @NotNull
-    @Min(value = 000000000)
-    @Max(value = 999999999)
     private Integer nif;
-    /**
-     * ^	#start of the line
-     * [_A-Za-z0-9-\\+]+ #  must start with string in the bracket [ ], must contains one or more
-     * (# start of group #1
-     * \\.[_A-Za-z0-9-]+ # follow by a dot "." and string in the bracket [ ], must contains one or more)
-     * *#   end of group #1, this group is optional (*)
-     * ***********************************************
-     *
-     * @# must contains a "@" symbol
-     * [A-Za-z0-9-]+ #follow by string in the bracket [ ], must contains one or more
-     * ************************************************
-     * #start of group #2 - first level checking
-     * \\(.[A-Za-z0-9]+ # follow by a dot "." and string in the bracket [ ], must contains one or more)
-     * #end of group #2, this group is optional (*)
-     * *************************************************
-     * #start of group #3 - second level checking
-     * #\\.[A-Za-z]{2,}  #follow by a dot "." and string in the bracket [ ], with minimum length of 2)
-     * #end of group #3
-     * $#end of the line
-     */
-    @NotEmpty
-    @Email
-    @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
-            message = "Please insert a valid email")
+
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -81,4 +53,22 @@ public class Person {
 
     @OneToMany
     private List<Contact> contactList;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+
+        Person person = (Person) o;
+
+        if (!nif.equals(person.nif)) return false;
+        return email.equals(person.email);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = nif.hashCode();
+        result = 31 * result + email.hashCode();
+        return result;
+    }
 }
