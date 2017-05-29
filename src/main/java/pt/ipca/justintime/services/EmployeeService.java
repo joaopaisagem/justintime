@@ -72,12 +72,48 @@ public class EmployeeService {
     //         Employee vacation method´s                  //
     ////////////////////////////////////////////////////////
 
-public List<Integer> getAllAvailableDaysVacations(List<Employee> employeeList) {
-       List<Integer> list = new ArrayList<>();
+    /**
+     * This Method gives the number of available days the employee have of vacations
+     * @param employeeList employee list
+     * @return list of Integer
+     */
+    public List<Integer> getAllAvailableDaysVacations(List<Employee> employeeList) {
+    List<Integer> list = new ArrayList<>();
+
+    for(Employee employee : employeeList)
+        {
+            int counter =0;
+            List<LocalDate> vacationList =vacationUtils.getWorkingDaysVacations(employee.getVacationList());
+            for (LocalDate date: vacationList ) {
+                if(date.isAfter(LocalDate.now()))
+                {
+                    counter++;
+                }
+            }
+            list.add(counter);
+        }
     return list;
 }
+    /**
+     * This Method gives the number of spent days the employee have from is vacations
+     * @param employeeList employee list
+     * @return list of Integer
+     */
 public List<Integer> getAllUnavailableDaysVacations(List<Employee> employeeList) {
     List<Integer> list = new ArrayList<>();
+
+    for(Employee employee : employeeList)
+    {
+        int counter =0;
+        List<LocalDate> vacationList =vacationUtils.getWorkingDaysVacations(employee.getVacationList());
+        for (LocalDate date: vacationList ) {
+            if(date.isBefore(LocalDate.now()))
+            {
+                counter++;
+            }
+        }
+        list.add(counter);
+    }
     return list;
     }
 

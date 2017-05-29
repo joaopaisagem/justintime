@@ -14,6 +14,7 @@ import pt.ipca.justintime.forms.ClientForm;
 import pt.ipca.justintime.services.ClientService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by Shapeshifter on 28/05/2017.
@@ -32,20 +33,31 @@ public class ClientController extends WebMvcConfigurerAdapter {
 
     @RequestMapping(value = "/newclient", method = RequestMethod.POST)
     public ModelAndView checkNewClientInfo(@Valid @ModelAttribute("clientform") ClientForm clientForm, BindingResult bindingResult) {
-        ModelAndView clientform = new ModelAndView("clientform");
+        ModelAndView cliForm = new ModelAndView("clientform");
         if (bindingResult.hasErrors()) {
-            clientform.addObject("clientform",clientForm);
-            clientform.addObject("errorsmsg", "Error saving Client");
-            return clientform;
+            cliForm.addObject("clientform",clientForm);
+            cliForm.addObject("errorsmsg", "Error saving Client");
+            return cliForm;
         }else if ( clientService.saveClientForm(clientForm)){
-            clientform.addObject("successmsg", "Success you save client");
-            return clientform;
+            cliForm.addObject("successmsg", "Success you save client");
+            return cliForm;
         }
-        clientform.addObject("errorsmsg", "The client already exists");
-        return clientform;
+        cliForm.addObject("errorsmsg", "The client already exists");
+        return cliForm;
     }
 
+    @RequestMapping(value = "/showallclients", method = RequestMethod.GET)
+    public ModelAndView clientsList() {
 
+       ModelAndView showAllClients = new ModelAndView("showallclients","clientsList", clientService.getAllClients());
+       return showAllClients;
+    }
+
+    @RequestMapping(value = "/editclient", method = RequestMethod.GET)
+    public ModelAndView showEditEmployeeForm() {
+        ModelAndView editClient = new ModelAndView("editclient","clientForm",new ClientForm());
+        return editClient;
+    }
 
 
 }

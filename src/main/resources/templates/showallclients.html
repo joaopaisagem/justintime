@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="/fragments/header :: header"></head>
+<body>
+<!-- Navigation Bar -->
+<nav th:replace="/fragments/menu :: menu"></nav>
+<!-- End of navigation Bar -->
+<!-- Page Title -->
+<div class="col-lg-12">
+    <h1 class="page-header">
+        Dashboard
+        <small>Clients</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-tachometer"></i>Dashboard</li>
+        <li class="active"><i
+                class="fa fa-1x fa-calendar"></i>Clients
+        </li>
+    </ol>
+</div>
+<!-- end of page title -->
+<div id="page-wraper">
+    <div class="container-fluid">
+        <!-- -->
+        <div class="row">
+            <div th:replace="/clientfragments/clientspanel :: clientspanel">
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="/fragments/footer ::footer">
+
+</footer>
+</body>
+</html>
+
+
