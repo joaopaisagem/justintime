@@ -12,11 +12,11 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "CLIENT")
-@PrimaryKeyJoinColumn(name = "PERSON_ID")
+@PrimaryKeyJoinColumn(name ="PERSON_ID")
 
 public class Client extends Person {
 
-    @OneToMany
+    @OneToMany(mappedBy = "client")
     private List<Project> projectList = new ArrayList<>();
 
 }

@@ -42,7 +42,7 @@ public class ProjectController extends WebMvcConfigurerAdapter {
     }
 
     @RequestMapping(value = "/newproject", method = RequestMethod.POST)
-    public ModelAndView checkNewProjectInfo(@Valid @ModelAttribute("projectform") Project project, BindingResult bindingResult) {
+    public ModelAndView checkNewProjectInfo(@Valid @ModelAttribute("project") Project project, BindingResult bindingResult) {
         ModelAndView projectForm = new ModelAndView("projectform");
         projectForm.addObject("project", project);
         projectForm.addObject("teamList", teamService.getAllTeams());

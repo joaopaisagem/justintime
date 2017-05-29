@@ -1,4 +1,5 @@
 <fieldset th:fragment="projectform">
+
     <div class="form-group">
         <td><input type="hidden" th:field="*{id}" id="id"/></td>
     </div>
@@ -20,20 +21,18 @@
         <label class="col-md-4 control-label" for="selectbasic">Select
             Team</label>
         <div class="col-md-4">
-            <select id="employeeTeamName" name="employeeTeamName" class="form-control">
-                <option th:each="team : ${teamList}" th:value="${team.teamName}" th:text="${team.teamName}"></option>
+            <select  th:field="*{assignedTeam}" id="employeeTeamName" name="employeeTeamName" class="form-control">
+                <option th:each="team : ${teamList}" th:value="${team.id}" th:text="${team.teamName}"></option>
             </select>
         </div>
     </div>
 
     <div class="form-group">
-        <label class="col-md-4 control-label" for="selectbasic">Select
-            Client</label>
+        <label class="col-md-4 control-label" for="selectbasic">Selec Client</label>
         <div class="col-md-4">
-            <select id="clientName" name="clientName" class="form-control">
-                <option th:each="client : ${clientList}" th:value="${client.firstName}" th:text="${client.firstName}"></option>
+            <select  th:field="*{client}" id="clientName" name="clientName" class="form-control">
+                <option th:each="client : ${clientList}" th:value="${client.id}" th:text="${client.firstName}"></option>
             </select>
-
         </div>
     </div>
 
