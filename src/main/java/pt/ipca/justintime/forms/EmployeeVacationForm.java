@@ -15,7 +15,7 @@ import pt.ipca.justintime.domain.Vacation;
  * Created by TiagoSilva on 22/05/2017.
  */
 public class EmployeeVacationForm {
-    private Employee employee;
-    private Vacation vacation;
+    private EmployeeForm employee;
+    private VacationForm vacation;
 
 }

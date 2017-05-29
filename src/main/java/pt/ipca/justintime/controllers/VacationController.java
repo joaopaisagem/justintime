@@ -12,7 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.domain.Vacation;
+import pt.ipca.justintime.factorys.EmployeeFactory;
+import pt.ipca.justintime.factorys.VacationFactory;
+import pt.ipca.justintime.forms.EmployeeForm;
 import pt.ipca.justintime.forms.EmployeeVacationForm;
+import pt.ipca.justintime.forms.VacationForm;
 import pt.ipca.justintime.services.EmployeeService;
 import pt.ipca.justintime.services.TeamService;
 import pt.ipca.justintime.services.VacationService;
@@ -37,6 +41,10 @@ public class VacationController extends WebMvcConfigurerAdapter {
     private TeamService teamService;
     @Autowired
     private VacationUtils vacationUtils;
+    @Autowired
+    private EmployeeFactory employeeFactory;
+    @Autowired
+    private VacationFactory vacationFactory;
 
     @RequestMapping(value = "/vacation", method = RequestMethod.GET)
     public ModelAndView vacationForm() {
@@ -60,16 +68,17 @@ public class VacationController extends WebMvcConfigurerAdapter {
     @RequestMapping(value = "/searchemployeevacation", method = RequestMethod.GET)
     public String showSearchEmployeeForm(ModelMap model) {
 
-        model.addAttribute("employee", new Employee());
+        model.addAttribute("employee", new EmployeeForm());
         return "searchemployeevacation";
     }
 
     @RequestMapping(value = "/searchemployeevacation", method = RequestMethod.POST)
     public String searchEmployeeForVacationForm(Long id, ModelMap model , RedirectAttributes redirectAttributes) {
 
+
         if (id == null) {
 
-            model.addAttribute("employee", new Employee());
+            model.addAttribute("employee", new EmployeeForm());
 
             model.addAttribute("message", "Employee cannot be null!");
 
@@ -85,9 +94,9 @@ public class VacationController extends WebMvcConfigurerAdapter {
 
             if (numberOfEmployeeVacations == -1) {
 
-                employeeVacationForm.setEmployee(employee);
+                employeeVacationForm.setEmployee(employeeFactory.transformEmployeeIntoEmployeeForm(employee));
 
-                employeeVacationForm.setVacation(new Vacation());
+                employeeVacationForm.setVacation(new VacationForm());
 
                 model.addAttribute("message", "The employee cannot have more vacation days");
 
@@ -99,9 +108,9 @@ public class VacationController extends WebMvcConfigurerAdapter {
 
             } else {
 
-                employeeVacationForm.setEmployee(employee);
+                employeeVacationForm.setEmployee(employeeFactory.transformEmployeeIntoEmployeeForm(employee));
 
-                employeeVacationForm.setVacation(new Vacation());
+                employeeVacationForm.setVacation(new VacationForm());
 
                 model.addAttribute("numberOfEmployeeVacations", numberOfEmployeeVacations);
 
@@ -110,7 +119,7 @@ public class VacationController extends WebMvcConfigurerAdapter {
                 return "addemployeevacation";
             }
         }
-        model.addAttribute("employee", new Employee());
+        model.addAttribute("employee", new EmployeeForm());
 
         model.addAttribute("message", "Employee cannot be found!");
 
@@ -121,33 +130,32 @@ public class VacationController extends WebMvcConfigurerAdapter {
     public String showEmployeeToAddVacation(EmployeeVacationForm form, ModelMap model) {
 
         Employee employee = employeeService.getEmployeeById(form.getEmployee().getId());
-
-        EmployeeVacationForm employeeForm = new EmployeeVacationForm();
-
+        EmployeeVacationForm employeeVacationForm = new EmployeeVacationForm();
+        EmployeeForm employeeForm = employeeFactory.transformEmployeeIntoEmployeeForm(employee);
+        Vacation vacation = vacationFactory.transformVacationFormIntoVacation(form.getVacation());
         List<Vacation> vacationList = new ArrayList<>();
+        vacationList.add(vacation);
 
-        vacationList.add(form.getVacation());
+        employeeVacationForm.setEmployee(employeeForm);
 
-        employeeForm.setEmployee(employee);
 
-        if (vacationUtils.numberOfAvailableDays(employee.getVacationList(),form.getVacation()) == -1) {
+        if (!vacationUtils.checkIfTheVacationIsNull(vacation)) {
 
-            model.addAttribute("employeeVacation", employeeForm);
+            if (vacationUtils.numberOfAvailableDays(employee.getVacationList(),vacation) == -1) {
 
-            model.addAttribute("numberOfEmployeeVacations", "You Exceede the limit");
+                        model.addAttribute("employeeVacation", employeeVacationForm);
 
-            model.addAttribute("errorsmsg", "You cannot add more than 22 days of vacations");
+                        model.addAttribute("numberOfEmployeeVacations", "You Exceede the limit");
 
-            return "addemployeevacation";
+                        model.addAttribute("errorsmsg", "You cannot add more than 22 days of vacations");
 
-        } else {
-                if (!vacationUtils.checkIfTheVacationIsNull(form.getVacation())) {
+                        return "addemployeevacation";
 
-                    if (vacationUtils.checkIfVacationsAreInFuture(form.getVacation())) {
+                    } else if(vacationUtils.checkIfVacationsAreInFuture(vacation)) {
 
-                        if (vacationUtils.checkIfVacationsExist(form.getVacation(), employee.getVacationList())) {
+                        if (vacationUtils.checkIfVacationsExist(vacation, employee.getVacationList())) {
 
-                            model.addAttribute("employeeVacation", employeeForm);
+                            model.addAttribute("employeeVacation", employeeVacationForm);
 
                             model.addAttribute("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
 
@@ -156,10 +164,9 @@ public class VacationController extends WebMvcConfigurerAdapter {
                             return "addemployeevacation";
 
                     } else {
+                            employeeVacationForm.setEmployee(employeeFactory.transformEmployeeIntoEmployeeForm(employeeService.saveEmployeeVacations(vacation, employee)));
 
-                            employeeForm.setEmployee(employeeService.saveEmployeeVacations(form.getVacation(), employee));
-
-                            model.addAttribute("employeeVacation", employeeForm);
+                            model.addAttribute("employeeVacation", employeeVacationForm);
 
                             model.addAttribute("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
 
@@ -169,7 +176,7 @@ public class VacationController extends WebMvcConfigurerAdapter {
 
                     }
                 } else {
-                    model.addAttribute("employeeVacation", employeeForm);
+                    model.addAttribute("employeeVacation", employeeVacationForm);
 
                     model.addAttribute("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
 
@@ -179,7 +186,7 @@ public class VacationController extends WebMvcConfigurerAdapter {
                 }
 
             } else {
-                model.addAttribute("employeeVacation", employeeForm);
+                model.addAttribute("employeeVacation", employeeVacationForm);
 
                 model.addAttribute("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
 
@@ -190,4 +197,4 @@ public class VacationController extends WebMvcConfigurerAdapter {
 
         }
     }
-}
+
