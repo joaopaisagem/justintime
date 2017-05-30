@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.domain.Project;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +22,9 @@ import java.util.List;
 @AllArgsConstructor
 public class TeamForm {
 
+    @NotNull
     private Long id;
-    @NotEmpty
+
     private String teamName;
 
     private List<Employee> employeeList = new ArrayList<>();

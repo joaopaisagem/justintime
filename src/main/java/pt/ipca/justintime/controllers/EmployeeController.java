@@ -65,22 +65,28 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
     }
 
 
-    @RequestMapping(value = "/editemployee", method = RequestMethod.GET)
-    public String showEditEmployeeForm(ModelMap model) {
-        model.addAttribute("employee", new Employee());
-        return "edit";
+    @RequestMapping(value = "/searchemployeetoedit", method = RequestMethod.GET)
+    public ModelAndView showEditEmployeeForm() {
+        ModelAndView modelAndView = new ModelAndView("searchemployeetoedit","employee",new EmployeeForm());
+        return modelAndView;
     }
 
     @RequestMapping(value = "/editemployee", method = RequestMethod.POST)
-    public String showEmployeeToEditById(Long id, ModelMap model, RedirectAttributes redirectAttributes) {
+    public ModelAndView showEmployeeToEditById(Long id, EmployeeForm employeeForm) {
+        ModelAndView editModelAndView = new ModelAndView("editemployeeform" ,"employee", new EmployeeForm());
+        ModelAndView searchModelAndView = new ModelAndView("searchemployeetoedit","employee",new EmployeeForm());
+        if(id ==null)
+        {
+            searchModelAndView.addObject("errormessage","The id cannot be null !");
+            return searchModelAndView;
+        }else
         if (employeeService.getEmployeeById(id) != null) {
-            model.addAttribute("employee", employeeService.getEmployeeById(id));
-            model.addAttribute("teamList", teamService.getAllTeams());
-            return "editemployeeform";
-
+            editModelAndView.addObject("employee", employeeService.getEmployeeById(id));
+            editModelAndView.addObject("teamList", teamService.getAllTeams());
+            return editModelAndView;
         }
-        redirectAttributes.addFlashAttribute("message", "Employee not found!");
-        return "redirect:/editemployee";
+        searchModelAndView.addObject("errormessage", "Employee not found!");
+        return searchModelAndView;
     }
 
     @PostMapping("/editemployee/edit")

@@ -8,14 +8,11 @@
 <!-- Navigation Bar -->
 <nav th:replace="/fragments/menu :: menu"></nav>
 
-<div>
+<div class="col-lg-12">
+    <div class="col-lg-6 col-md-3" th:replace="/teamfragments/showallteamspanel :: showallteamspanel">
 
-    <h1>Teams:</h1>
-    <div th:each="team : ${teams}">
-        <p th:text="${team.id}"></p>
-        <p th:text="${team.teamName}"></p>
     </div>
-</div>
+    </div>
 <footer th:replace="/fragments/footer ::footer"></footer>
 </body>
 </html>

@@ -110,6 +110,7 @@ public class TeamService {
        }
        return false;
    }
+
 private boolean checkIfTeamExists(Long id)
 {
     if (id == null)
@@ -126,6 +127,7 @@ private boolean checkIfTeamExists(Long id)
     }
    return true;
 }
+
 
 
 }

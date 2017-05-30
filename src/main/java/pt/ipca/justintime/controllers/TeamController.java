@@ -48,28 +48,46 @@ public class TeamController extends WebMvcConfigurerAdapter {
 
 
 
+    @RequestMapping(value = "/searchteam", method = RequestMethod.GET)
+    public ModelAndView showEditTeamForm() {
+
+        ModelAndView modelAndView = new ModelAndView("searchteamform","team",new TeamForm());
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/editteam", method = RequestMethod.GET)
-    public String showEditTeamForm(ModelMap model) {
-        model.addAttribute("team", new TeamForm());
-        return "searchteamform";
-    }
-    @RequestMapping(value = "/editteam", method = RequestMethod.POST)
-    public String showTeamToEditById(Long id, ModelMap model) {
-        model.addAttribute("team", teamService.getTeamById(id));
-        return "editteamform";
-    }
+    public ModelAndView checkTeamToEditInfo(@Valid @ModelAttribute("team") TeamForm teamForm, BindingResult bindingResult) {
 
-    @RequestMapping(value = "/editteam/edit", method = RequestMethod.POST)
-    public String checkPersonInfo(@Valid TeamForm team, BindingResult bindingResult) {
-
+        ModelAndView editModelAndView = new ModelAndView("editteamform","team",new TeamForm());
+        ModelAndView searchModelAndView = new ModelAndView("searchteamform","team",new TeamForm());
         if (bindingResult.hasErrors()) {
-            return "editteamform";
+            searchModelAndView.addObject("errormessage","The Team id cannot be null !");
+            return searchModelAndView;
+        }
+        else if (teamService.searchIfExists(teamForm.getId())) {
+
+            editModelAndView.addObject("team",teamService.getTeamById(teamForm.getId()));
+            return editModelAndView;
+    }
+        editModelAndView.addObject("errormessage","The team could not be found!");
+        return editModelAndView;
+    }
+
+    @RequestMapping(value = "/editteam",method = RequestMethod.POST)
+    public ModelAndView editTeam (@Valid @ModelAttribute("team") TeamForm teamForm, BindingResult bindingResult)
+    {   ModelAndView modelAndView = new ModelAndView("editteamform","team",teamForm);
+        if(bindingResult.hasErrors())
+        {
+            modelAndView.addObject("errormessage","There was error on team name ");
+            return modelAndView;
         }
 
-        teamService.updateTeamForm(team);
-        return "redirect:/teamresult";
+        teamService.updateTeamForm(teamForm);
+        modelAndView.addObject("successmessage","The team name was edited!");
+        return modelAndView;
     }
 
+    
     @RequestMapping(value = "/deleteteam", method = RequestMethod.GET)
     public ModelAndView showSearchDeleteTeamForm() {
         ModelAndView modelAndView = new ModelAndView("deleteteamform","team",new TeamForm());
@@ -87,7 +105,7 @@ public class TeamController extends WebMvcConfigurerAdapter {
             modelAndView.addObject("successmessage", "The Team was deleted");
             return modelAndView;
         }
-        modelAndView.addObject("errormessage", "The team was not found or have employees associated to it");
+        modelAndView.addObject("errormessage", "The team was not found or have employees associated to it , if there is employees associated to it you cannot delete the team");
         return modelAndView;
     }
 
