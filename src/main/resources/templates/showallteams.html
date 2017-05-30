@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="/fragments/header :: header">
+
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav th:replace="/fragments/menu :: menu"></nav>
+
+<div>
+
+    <h1>Teams:</h1>
+    <div th:each="team : ${teams}">
+        <p th:text="${team.id}"></p>
+        <p th:text="${team.teamName}"></p>
+    </div>
+</div>
+<footer th:replace="/fragments/footer ::footer"></footer>
+</body>
+</html>

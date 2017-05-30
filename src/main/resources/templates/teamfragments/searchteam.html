@@ -1,0 +1,22 @@
+<fieldset th:fragment="searchemployee">
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="employeeid">Select
+            Employee ID</label>
+        <div class="col-md-4">
+            <input th:field="*{id}" id="employeeid" name="id" type="text"
+                   placeholder="Employee ID" class="form-control input-md"/> <span
+                class="help-block" th:if="${#fields.hasErrors('id')}"
+                th:errors="*{id}"> Id Error</span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="submit"></label>
+        <div class="col-md-4">
+            <button type="submit" value="save" id="submit" name="submit"
+                    class="btn btn-primary">Submit
+            </button>
+        </div>
+    </div>
+</fieldset>

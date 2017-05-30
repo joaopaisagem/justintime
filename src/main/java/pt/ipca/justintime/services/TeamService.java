@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.domain.Team;
+import pt.ipca.justintime.factorys.TeamFactory;
+import pt.ipca.justintime.forms.TeamForm;
 import pt.ipca.justintime.repositories.TeamRepository;
 import pt.ipca.justintime.utils.VacationUtils;
 
@@ -16,7 +18,8 @@ public class TeamService {
 
     @Autowired
     private TeamRepository teamRepository;
-
+    @Autowired
+    private TeamFactory teamFactory;
     @Autowired
     private VacationUtils vacationUtils;
 
@@ -64,34 +67,37 @@ public class TeamService {
         return count;
     }
 
-    /**
-     * Returns a local date list with the days of vacations for the chosen Team.
-     * The arguments must specify a team id .
-     * Argument name are specifier that is relative to id.
-     * This method always returns a List of days for chosen team
-     * We use a for each loop to go through the employee list and get the vacation list for each employee of the team
-     * then for each date we check if the date is for current year if yes we add to a list
-     *
-     * @param id of one team
-     * @return list of days for that team
-     */
-    public List<LocalDate> vacationListForTeam(Long id) {
+    private boolean checkIfTeamExists(Team t){
+         List<Team> teamList = getAllTeams();
+         for(Team team : teamList)
+         {
+             if (t.equals(team))
+             {
+                 return true;
+             }
+         }
+        return false;
+    }
 
-        List<LocalDate> listToReturn = new ArrayList<>();
+  public boolean saveTeamForm(TeamForm teamForm)
+  {
+      Team team = teamFactory.transformTeamFormIntoTeam(teamForm);
+      removeSpacesOnTheTeamName(team.getTeamName());
+      team.setTeamName(removeSpacesOnTheTeamName(team.getTeamName()));
 
-        Team teamToSearch = getTeamById(id);
+     if (checkIfTeamExists(team))
+     {
+         return false;
+     }else {
+         saveTeam(team);
+     }
+        return true;
+  }
 
-        List<Employee> employeeList = teamToSearch.getEmployeeList();
-
-        for (Employee employee : employeeList) {
-
-            List<LocalDate> employeeVacation = vacationUtils.getDatesForCurrentYear(employee.getVacationList());
-
-            for (LocalDate date : employeeVacation) {
-                listToReturn.add(date);
-            }
-        }
-        return listToReturn;
+    private String removeSpacesOnTheTeamName( String teamName)
+    {
+        String result = teamName.replace(" ", "");
+        return result;
     }
 
 

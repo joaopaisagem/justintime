@@ -33,4 +33,19 @@ public class Team {
 
     @OneToMany(mappedBy = "assignedTeam")
     private List<Project> projectList = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Team)) return false;
+
+        Team team = (Team) o;
+
+        return teamName.equals(team.teamName);
+    }
+
+    @Override
+    public int hashCode() {
+        return teamName.hashCode();
+    }
 }

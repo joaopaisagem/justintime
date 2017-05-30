@@ -20,14 +20,19 @@
         </li>
     </ol>
 </div>
+<div th:if="${successmessage != null}">
+    <div class="alert alert-success" th:text="${successmessage}"></div>
+</div>
+<div th:if="${errormessage != null}">
+    <div class="alert alert-danger" th:text="${errormessage}"></div>
+</div>
 <div class="col-lg-12">
     <form class="form-horizontal" action="#" th:action="@{/newteam}" th:object="${team}"
           method="post">
         <fieldset th:replace="/teamfragments/teamform :: teamform"></fieldset>
-
-
     </form>
 </div>
+
 <footer th:replace="/fragments/footer :: footer"></footer>
 </body>
 </html>
