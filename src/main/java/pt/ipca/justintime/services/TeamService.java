@@ -67,17 +67,6 @@ public class TeamService {
         return count;
     }
 
-    private boolean checkIfTeamExists(Team t){
-         List<Team> teamList = getAllTeams();
-         for(Team team : teamList)
-         {
-             if (t.equals(team))
-             {
-                 return true;
-             }
-         }
-        return false;
-    }
 
     public void updateTeamForm(TeamForm teamForm)
     {
@@ -91,7 +80,7 @@ public class TeamService {
       removeSpacesOnTheTeamName(team.getTeamName());
       team.setTeamName(removeSpacesOnTheTeamName(team.getTeamName()));
 
-     if (checkIfTeamExists(team))
+     if (checkIfTeamExists(team.getId()))
      {
          return false;
      }else {
@@ -105,6 +94,38 @@ public class TeamService {
         String result = teamName.replace(" ", "");
         return result;
     }
+
+   public boolean tryToRemoveTeam(TeamForm teamForm){
+       Team team = teamFactory.transformTeamFormIntoTeam(teamForm);
+
+       if(checkIfTeamExists(team.getId()))
+       {
+           try {
+               deleteTeam(team.getId());
+               return true;
+           }catch (Exception e)
+           {
+               return false;
+           }
+       }
+       return false;
+   }
+private boolean checkIfTeamExists(Long id)
+{
+    if (id == null)
+    {
+        return false;
+    }else{
+        try {
+            Team team = getTeamById(id);
+        }catch(Exception e){
+
+        return false;
+        }
+
+    }
+   return true;
+}
 
 
 }

@@ -71,22 +71,26 @@ public class TeamController extends WebMvcConfigurerAdapter {
     }
 
     @RequestMapping(value = "/deleteteam", method = RequestMethod.GET)
-    public String showSearchDeleteTeamForm(ModelMap model) {
-        model.addAttribute("team", new TeamForm());
-        return "deleteteamform";
+    public ModelAndView showSearchDeleteTeamForm() {
+        ModelAndView modelAndView = new ModelAndView("deleteteamform","team",new TeamForm());
+        return modelAndView;
     }
 
     @RequestMapping(value = "/deleteteam", method = RequestMethod.POST)
-    public String deleteTeamById(Long id, RedirectAttributes redirectAttributes) {
+    public ModelAndView deleteTeamById(@Valid @ModelAttribute("team") TeamForm team, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView("deleteteamform","team", team);
+        if (bindingResult.hasErrors())
+        {
 
-        if (teamService.searchIfExists(id) == true) {
-            teamService.deleteTeam(id);
-            redirectAttributes.addFlashAttribute("successmessage", "The Team was deleted");
-            return "redirect:/newteam";
+        }else if (teamService.tryToRemoveTeam(team)) {
+
+            modelAndView.addObject("successmessage", "The Team was deleted");
+            return modelAndView;
         }
-        redirectAttributes.addFlashAttribute("errormessage", "The team was not found");
-        return "redirect:/deleteteam";
+        modelAndView.addObject("errormessage", "The team was not found or have employees associated to it");
+        return modelAndView;
     }
+
 
     @RequestMapping(value="/showallteams", method = RequestMethod.GET)
     public ModelAndView seeAllTeams()
