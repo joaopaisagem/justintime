@@ -79,6 +79,12 @@ public class TeamService {
         return false;
     }
 
+    public void updateTeamForm(TeamForm teamForm)
+    {
+        Team team = teamFactory.transformTeamFormIntoTeam(teamForm);
+        updateTeam(team);
+    }
+
   public boolean saveTeamForm(TeamForm teamForm)
   {
       Team team = teamFactory.transformTeamFormIntoTeam(teamForm);

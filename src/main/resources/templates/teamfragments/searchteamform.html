@@ -1,12 +1,12 @@
-<fieldset th:fragment="searchemployee">
+<fieldset th:fragment="searchteamform">
     <div class="form-group">
-        <label class="col-md-4 control-label" for="employeeid">Select
-            Employee ID</label>
+        <label class="col-md-4 control-label" for="teamId">Select
+            Team ID</label>
         <div class="col-md-4">
-            <input th:field="*{id}" id="employeeid" name="id" type="text"
-                   placeholder="Employee ID" class="form-control input-md"/> <span
+            <input th:field="*{id}" id="teamId" name="id" type="text"
+                   placeholder="Team id" class="form-control input-md"/> <span
                 class="help-block" th:if="${#fields.hasErrors('id')}"
-                th:errors="*{id}"> Id Error</span>
+                th:errors="*{id}"></span>
         </div>
     </div>
 

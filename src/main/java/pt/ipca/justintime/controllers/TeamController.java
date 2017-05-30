@@ -46,33 +46,33 @@ public class TeamController extends WebMvcConfigurerAdapter {
         return newTeamForm;
     }
 
-    @RequestMapping(value = "/editteam", method = RequestMethod.POST)
-    public String showTeamToEditById(Long id, ModelMap model) {
-        model.addAttribute("team", teamService.getTeamById(id));
 
-        return "editteamform";
-    }
 
     @RequestMapping(value = "/editteam", method = RequestMethod.GET)
     public String showEditTeamForm(ModelMap model) {
-        model.addAttribute("team", new Team());
+        model.addAttribute("team", new TeamForm());
         return "searchteamform";
+    }
+    @RequestMapping(value = "/editteam", method = RequestMethod.POST)
+    public String showTeamToEditById(Long id, ModelMap model) {
+        model.addAttribute("team", teamService.getTeamById(id));
+        return "editteamform";
     }
 
     @RequestMapping(value = "/editteam/edit", method = RequestMethod.POST)
-    public String checkPersonInfo(@Valid Team team, BindingResult bindingResult) {
+    public String checkPersonInfo(@Valid TeamForm team, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "editteamform";
         }
 
-        teamService.updateTeam(team);
+        teamService.updateTeamForm(team);
         return "redirect:/teamresult";
     }
 
     @RequestMapping(value = "/deleteteam", method = RequestMethod.GET)
     public String showSearchDeleteTeamForm(ModelMap model) {
-        model.addAttribute("team", new Team());
+        model.addAttribute("team", new TeamForm());
         return "deleteteamform";
     }
 
@@ -81,10 +81,10 @@ public class TeamController extends WebMvcConfigurerAdapter {
 
         if (teamService.searchIfExists(id) == true) {
             teamService.deleteTeam(id);
-            redirectAttributes.addFlashAttribute("message", "The Team was deleted");
+            redirectAttributes.addFlashAttribute("successmessage", "The Team was deleted");
             return "redirect:/newteam";
         }
-        redirectAttributes.addFlashAttribute("message", "The team was not found");
+        redirectAttributes.addFlashAttribute("errormessage", "The team was not found");
         return "redirect:/deleteteam";
     }
 

@@ -3,22 +3,18 @@
 >
 <head th:replace="/fragments/header :: header"></head>
 <body>
+<nav th:replace="/fragments/menu :: menu"></nav>
 
-<form action="#" th:action="@{/editteam}" th:object="${team}" method="post">
-    <table>
-        <tr>
-            <td>ID:</td>
-            <td><input type="text" th:field="*{id}"/></td>
-            <td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">ID Error</td>
-        </tr>
+<div class="col-lg-12" th:replace="/teamfragments/searchteampagetitle :: searchteampagetitle">
+</div>
+<div class="col-lg-12">
+<form class="form-horizontal" th:action="@{/editteam}" th:object="${team}" method="post">
 
-        <tr>
-            <td>
-                <button type="submit" value="search">Search</button>
-            </td>
-        </tr>
-    </table>
+   <fieldset th:replace="/teamfragments/searchteamform :: searchteamform">
+
+   </fieldset>
 </form>
-<div th:text="${message}"></div>
+
+</div>
 </body>
 </html>
