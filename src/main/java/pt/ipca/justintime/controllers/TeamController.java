@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ipca.justintime.domain.Team;
+import pt.ipca.justintime.forms.NewTeamForm;
 import pt.ipca.justintime.forms.TeamForm;
 import pt.ipca.justintime.services.TeamService;
 
@@ -24,13 +25,12 @@ public class TeamController extends WebMvcConfigurerAdapter {
 
     @RequestMapping(value = "/newteam", method = RequestMethod.GET)
     public ModelAndView teamForm() {
-        ModelAndView modelAndView = new ModelAndView("teamform","team",new TeamForm());
-        modelAndView.addObject("teamList", teamService.getAllTeams());
+        ModelAndView modelAndView = new ModelAndView("teamform","team",new NewTeamForm());
         return modelAndView;
     }
 
     @RequestMapping(value = "/newteam", method = RequestMethod.POST)
-    public ModelAndView checkTeamInfo(@Valid @ModelAttribute("team") TeamForm team, BindingResult bindingResult) {
+    public ModelAndView checkTeamInfo(@Valid @ModelAttribute("team") NewTeamForm team, BindingResult bindingResult) {
        ModelAndView newTeamForm = new ModelAndView("teamform");
        newTeamForm.addObject(team);
         if (bindingResult.hasErrors()) {
@@ -69,8 +69,8 @@ public class TeamController extends WebMvcConfigurerAdapter {
             editModelAndView.addObject("team",teamService.getTeamById(teamForm.getId()));
             return editModelAndView;
     }
-        editModelAndView.addObject("errormessage","The team could not be found!");
-        return editModelAndView;
+        searchModelAndView.addObject("errormessage","The team could not be found!");
+        return searchModelAndView;
     }
 
     @RequestMapping(value = "/editteam",method = RequestMethod.POST)

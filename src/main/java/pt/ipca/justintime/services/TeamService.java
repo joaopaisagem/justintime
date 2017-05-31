@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.domain.Team;
 import pt.ipca.justintime.factorys.TeamFactory;
+import pt.ipca.justintime.forms.NewTeamForm;
 import pt.ipca.justintime.forms.TeamForm;
 import pt.ipca.justintime.repositories.TeamRepository;
 import pt.ipca.justintime.utils.VacationUtils;
@@ -24,7 +25,7 @@ public class TeamService {
     private VacationUtils vacationUtils;
 
     //////////////////////////////////////////////////////////
-    //               CRUD METHOD`S                         //
+    //               CRUD METHOD`S   PUBLIC                //
     ////////////////////////////////////////////////////////
     public Team saveTeam(Team team) {
         return teamRepository.save(team);
@@ -52,9 +53,41 @@ public class TeamService {
         return teamRepository.exists(id);
     }
     //////////////////////////////////////////////////////////
-    //                    Team method´s                    //
+    //                    Team method´s PRIVATE            //
     ////////////////////////////////////////////////////////
+    private boolean checkIfTeamExists(Long id)
+    {
+        if (id == null)
+        {
+            return false;
+        }else if (searchIfExists(id)){
+            return true;
+        }
+        return false;
+    }
 
+    private boolean checkIfTeamExistsByName(Team team)
+    {
+        List <Team> teamsList = getAllTeams();
+        for (Team t : teamsList)
+        {
+            if (t.equals(team))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String removeSpacesOnTheTeamName( String teamName)
+    {
+        String result = teamName.replace(" ", "");
+        return result;
+    }
+
+    //////////////////////////////////////////////////////////
+    //               Team METHOD`S PUBLIC                  //
+    ////////////////////////////////////////////////////////
     /**
      * Method to count the number of teams
      *
@@ -74,13 +107,13 @@ public class TeamService {
         updateTeam(team);
     }
 
-  public boolean saveTeamForm(TeamForm teamForm)
+  public boolean saveTeamForm(NewTeamForm teamForm)
   {
-      Team team = teamFactory.transformTeamFormIntoTeam(teamForm);
+      Team team = teamFactory.transformNewTeamFormIntoTeam(teamForm);
       removeSpacesOnTheTeamName(team.getTeamName());
       team.setTeamName(removeSpacesOnTheTeamName(team.getTeamName()));
 
-     if (checkIfTeamExists(team.getId()))
+     if (checkIfTeamExistsByName(team))
      {
          return false;
      }else {
@@ -89,11 +122,7 @@ public class TeamService {
         return true;
   }
 
-    private String removeSpacesOnTheTeamName( String teamName)
-    {
-        String result = teamName.replace(" ", "");
-        return result;
-    }
+
 
    public boolean tryToRemoveTeam(TeamForm teamForm){
        Team team = teamFactory.transformTeamFormIntoTeam(teamForm);
@@ -111,22 +140,6 @@ public class TeamService {
        return false;
    }
 
-private boolean checkIfTeamExists(Long id)
-{
-    if (id == null)
-    {
-        return false;
-    }else{
-        try {
-            Team team = getTeamById(id);
-        }catch(Exception e){
-
-        return false;
-        }
-
-    }
-   return true;
-}
 
 
 
