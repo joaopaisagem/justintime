@@ -241,6 +241,19 @@
                 th:errors="*{contactList[0].contactName}"></span>
         </div>
     </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label"
+               for="contactList[0].contact">Contact</label>
+        <div class="col-md-4">
+            <input th:field="*{contactList[0].contact}"
+                   id="contactList[0].contact"
+                   name="contactList[0].contact" type="text"
+                   placeholder="Contact" class="form-control input-md"/> <span
+                class="help-block"
+                th:if="${#fields.hasErrors('contactList[0].contact')}"
+                th:errors="*{contactList[0].contact}"></span>
+        </div>
+    </div>
     <!-- Contact Type -->
     <div class="form-group">
         <label class="col-md-4 control-label"
@@ -255,6 +268,22 @@
                 th:errors="*{contactList[1].contactName}"></span>
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label"
+               for="contactList[1].contact">Contact</label>
+        <div class="col-md-4">
+            <input th:field="*{contactList[1].contact}"
+                   id="contactList[1].contact"
+                   name="contactList[1].contact" type="text"
+                   placeholder="Contact" class="form-control input-md"/> <span
+                class="help-block"
+                th:if="${#fields.hasErrors('contactList[1].contact')}"
+                th:errors="*{contactList[1].contact}"></span>
+        </div>
+    </div>
+
+
     <div class="form-group">
         <label class="col-md-4 control-label" for="submit"></label>
         <div class="col-md-4">

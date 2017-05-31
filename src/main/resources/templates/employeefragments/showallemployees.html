@@ -1,0 +1,39 @@
+<div class="col-lg-6 col-md-3 col-lg-offset-3" th:fragment="showallemployees">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="glyphicon glyphicon-user"></i>
+                </div>
+                <div class="col-xs-3 text-right boardtext">
+                    <div></div>
+                    <span ></span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">All Employee</div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Team</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="employee ,iter: ${employeesList}">
+                    <tr>
+                        <td th:text="${employee.firstName}"></td>
+                        <td th:text="${employee.lastName}"></td>
+                        <td th:text="${employee.employeeTeamName.teamName}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

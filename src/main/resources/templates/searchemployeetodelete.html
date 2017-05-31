@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="/fragments/header :: header"></head>
+<body>
+<nav th:replace="/fragments/menu ::menu"></nav>
+<div class="col-lg-12" th:replace="/employeefragments/searchemployeetoeditpagetitle :: searchemployeetoeditpagetitle">
+</div>
+<div class="col-lg-12">
+    <form class="form-horizontal" action="#" th:action="@{/deleteemployee}" th:object="${employee}" method="post">
+        <fieldset th:replace="/employeefragments/searchemployee :: searchemployee"></fieldset>
+        <div class="form-group">
+        </div>
+    </form>
+
+</div>
+<footer th:replace="/fragments/footer :: footer"></footer>
+</body>
+</html>

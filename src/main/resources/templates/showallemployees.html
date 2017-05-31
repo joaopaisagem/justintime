@@ -3,18 +3,13 @@
 >
 <head th:replace="/fragments/header :: header"></head>
 <body>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-<div>
+<nav th:replace="/fragments/menu :: menu"></nav>
+<div class="col-lg-12" th:replace="/employeefragments/allemployeespagetitle :: allemployeespagetitle">
 
-    <h1>Employees:</h1>
-    <div th:each="employee : ${employee}">
-        <p th:text="${employee.id}"></p>
-        <p th:text="${employee.firstName}"></p>
-        <p th:text="${employee.lastName}"></p>
-    </div>
 </div>
+<div class="col-lg-6 col-md-3 col-lg-offset-3" th:replace="/employeefragments/showallemployees :: showallemployees">
+</div>
+
+
 </body>
 </html>

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ipca.justintime.domain.Employee;
+import pt.ipca.justintime.factorys.EmployeeFactory;
 import pt.ipca.justintime.forms.EmployeeForm;
 import pt.ipca.justintime.repositories.AddressRepository;
 import pt.ipca.justintime.services.EmployeeService;
@@ -27,7 +28,8 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
     private EmployeeService employeeService;
     @Autowired
     private TeamService teamService;
-
+    @Autowired
+    private EmployeeFactory employeeFactory;
     /*
      * METHOD TO MAP AND SHOW EMPLOYEE FORM
      */
@@ -58,10 +60,12 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
     }
 
     @RequestMapping(value = "showallemployees")
-    public String employeeList(ModelMap model) {
-        List<Employee> employeeList = employeeService.getAllEmployees();
-        model.put("employee", employeeList);
-        return "showallemployees";
+    public ModelAndView employeeList() {
+
+        List<Employee> employeesList = employeeService.getAllEmployees();
+
+        ModelAndView modelAndView = new ModelAndView("showallemployees","employeesList",employeesList);
+        return modelAndView;
     }
 
 
@@ -89,7 +93,7 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
         return searchModelAndView;
     }
 
-    @PostMapping("/editemployee/edit")
+    @RequestMapping(value = "/editemployee/edit",method = RequestMethod.POST)
     public String checkEditEmployeeInfo(@Valid Employee employee, BindingResult bindingResult,ModelMap model) {
 
         if (bindingResult.hasErrors()) {
@@ -103,9 +107,34 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
         return "editemployeeform";
     }
 
-    @RequestMapping(value = "/searchemployeetoaddvacation", method = RequestMethod.GET)
-    public String addEmployeeVacation(ModelMap model) {
-        model.addAttribute("employee", new Employee());
-        return "addemployeevacation";
+    @RequestMapping(value = "/searchemployeetodelete" , method = RequestMethod.GET)
+    public ModelAndView searchEmployeeToDelete (){
+
+        ModelAndView modelAndView = new ModelAndView("searchemployeetodelete","employee", new EmployeeForm());
+        return modelAndView;
     }
+
+    @RequestMapping(value="/deleteemployee", method = RequestMethod.POST)
+    public ModelAndView deleteEmployee (EmployeeForm employeeForm){
+
+        ModelAndView modelAndView = new ModelAndView("searchemployeetodelete", "employee", new EmployeeForm());
+        if(employeeForm.getId() == null)
+        {
+            modelAndView.addObject("errormessage","You must insert a valid id !");
+            return modelAndView;
+        }else if (employeeForm.getId()!= null)
+        {
+            if(employeeService.getEmployeeById(employeeForm.getId())!= null ){
+
+                       employeeService.deleteEmployee(employeeForm);
+                       modelAndView.addObject("successmessage","The employee was deleted");
+                       return modelAndView;
+            }
+        }
+           modelAndView.addObject("errormessage","The employee was not found !");
+           return modelAndView;
+
+    }
+
+    
 }

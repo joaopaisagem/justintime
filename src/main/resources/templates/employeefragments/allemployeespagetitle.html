@@ -1,0 +1,19 @@
+<div class="col-lg-12" th:fragment="allemployeespagetitle">
+    <h1 class="page-header"> Dashboard
+        <small>Employees</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <i class="glyphicon glyphicon-dashboard"></i> Dashboard
+        </li>
+        <li class="active">
+            <i class="glyphicon glyphicon-user"></i>Employees
+        </li>
+    </ol>
+    <div th:if="${successmsg != null}">
+        <div class="alert alert-success" th:text="${successmsg}"></div>
+    </div>
+    <div th:if="${errorssmsg != null}">
+        <div class="alert alert-danger" th:text="${errorsmsg}"></div>
+    </div>
+</div>

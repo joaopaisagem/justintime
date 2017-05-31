@@ -57,14 +57,22 @@ public class EmployeeService {
     }
 
     public long getNumberOfTotalEmployees(){
+
         return employeeRepository.count();
     }
+
+    public void deleteEmployee(EmployeeForm employeeForm){
+
+        Employee employee = employeeFactory.transformEmployeeFormIntoEmployee(employeeForm);
+        employeeRepository.delete(employee);
+    }
+
     public void updateEmployee(Employee employee) {
+
         addressRepository.save(employee.getAddressOne());
         addressRepository.save(employee.getAddressTwo());
         contactRepository.save(employee.getContactList());
         workSkillRepository.save(employee.getSkillList());
-       // vacationRepository.save(employee.getVacationList());
         employeeRepository.saveAndFlush(employee);
     }
 
@@ -139,7 +147,8 @@ public List<Integer> getAllUnavailableDaysVacations(List<Employee> employeeList)
         return employee;
     }
 
-    public boolean checkIfEmployeeExists(Employee employee){
+    public boolean checkIfEmployeeExists(EmployeeForm employeeForm){
+        Employee employee = employeeFactory.transformEmployeeFormIntoEmployee(employeeForm);
         List<Employee> employeeList = getAllEmployees();
         for(Employee emp : employeeList)
         if(employee.equals(emp))
@@ -149,14 +158,15 @@ public List<Integer> getAllUnavailableDaysVacations(List<Employee> employeeList)
         return false;
     }
 
+
     public boolean saveEmployeeForm (EmployeeForm employeeForm)
     {
-        Employee employee = employeeFactory.transformEmployeeFormIntoEmployee(employeeForm);
-         if(checkIfEmployeeExists(employee))
+         if(checkIfEmployeeExists(employeeForm))
          {
              return false;
          }
-         saveEmployee(employee);
+        Employee employee = employeeFactory.transformEmployeeFormIntoEmployee(employeeForm);
+        saveEmployee(employee);
          return true;
     }
 
