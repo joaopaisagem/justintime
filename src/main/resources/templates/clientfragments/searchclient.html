@@ -1,0 +1,22 @@
+<fieldset th:fragment="searchclient">
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="clientid">Select
+            Client ID</label>
+        <div class="col-md-4">
+            <input th:field="*{id}" id="clientid" name="id" type="text"
+                   placeholder="Client ID" class="form-control input-md"/> <span
+                class="help-block" th:if="${#fields.hasErrors('id')}"
+                th:errors="*{id}"></span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="submit"></label>
+        <div class="col-md-4">
+            <button type="submit" value="save" id="submit" name="submit"
+                    class="btn btn-primary">Submit
+            </button>
+        </div>
+    </div>
+</fieldset>

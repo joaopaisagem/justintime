@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="/fragments/header :: header"></head>
+<body>
+<nav th:replace="/fragments/menu ::menu"></nav>
+<div class="col-lg-12" th:replace="/clientfragments/searchclienttoeditpagetitle :: searchclienttoeditpagetitle">
+</div>
+<div class="col-lg-12">
+    <form class="form-horizontal" action="#" th:action="@{/editclient}" th:object="${client}">
+        <fieldset th:replace="/clientfragments/searchclient :: searchclient"></fieldset>
+    </form>
+
+</div>
+<footer th:replace="/fragments/footer :: footer"></footer>
+</body>
+</html>

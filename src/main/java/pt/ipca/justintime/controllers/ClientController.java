@@ -25,7 +25,7 @@ public class ClientController extends WebMvcConfigurerAdapter {
     private ClientService clientService;
 
     @RequestMapping(value = "/newclient", method = RequestMethod.GET)
-    public ModelAndView clientForm(ModelMap model) {
+    public ModelAndView clientForm() {
         ModelAndView clientForm = new ModelAndView("clientform");
         clientForm.addObject("clientform", new ClientForm());
         return clientForm;
@@ -35,10 +35,10 @@ public class ClientController extends WebMvcConfigurerAdapter {
     public ModelAndView checkNewClientInfo(@Valid @ModelAttribute("clientform") ClientForm clientForm, BindingResult bindingResult) {
         ModelAndView cliForm = new ModelAndView("clientform");
         if (bindingResult.hasErrors()) {
-            cliForm.addObject("clientform",clientForm);
+            cliForm.addObject("clientform", clientForm);
             cliForm.addObject("errorsmsg", "Error saving Client");
             return cliForm;
-        }else if ( clientService.saveClientForm(clientForm)){
+        } else if (clientService.saveClientForm(clientForm)) {
             cliForm.addObject("successmsg", "Success you save client");
             return cliForm;
         }
@@ -49,14 +49,72 @@ public class ClientController extends WebMvcConfigurerAdapter {
     @RequestMapping(value = "/showallclients", method = RequestMethod.GET)
     public ModelAndView clientsList() {
 
-       ModelAndView showAllClients = new ModelAndView("showallclients","clientsList", clientService.getAllClients());
-       return showAllClients;
+        ModelAndView showAllClients = new ModelAndView("showallclients", "clientsList", clientService.getAllClients());
+        return showAllClients;
+    }
+
+    @RequestMapping(value = "/searchclienttoedit", method = RequestMethod.GET)
+    public ModelAndView showSearchClientForm() {
+        ModelAndView editClient = new ModelAndView("searchclienttoedit", "client", new ClientForm());
+        return editClient;
     }
 
     @RequestMapping(value = "/editclient", method = RequestMethod.GET)
-    public ModelAndView showEditEmployeeForm() {
-        ModelAndView editClient = new ModelAndView("editclient","clientForm",new ClientForm());
-        return editClient;
+    public ModelAndView showEditClientForm(@Valid @ModelAttribute("editclientform") ClientForm clientForm, BindingResult bindingResult) {
+        ModelAndView searchModelAndView = new ModelAndView("searchclienttoedit", "client", new ClientForm());
+        ModelAndView editModelAndView = new ModelAndView("editclientform", "client", new ClientForm());
+        if (clientForm.getId() == null) {
+            searchModelAndView.addObject("errormessage", "The id cannot be null !");
+            return searchModelAndView;
+        } else if (clientService.getClientById(clientForm.getId()) != null) {
+            editModelAndView.addObject(clientService.getClientById(clientForm.getId()));
+            return editModelAndView;
+        }
+        searchModelAndView.addObject("errormessage", "The client could not be found!");
+        return searchModelAndView;
+    }
+
+    @RequestMapping(value = "/editclient", method = RequestMethod.POST)
+    public ModelAndView editClientForm(@Valid @ModelAttribute("clientForm") ClientForm clientForm, BindingResult bindingResult) {
+
+        ModelAndView modelAndView = new ModelAndView("editclientform");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("client", clientForm);
+            modelAndView.addObject("errormessage", "Please verify all the fields !");
+        } else
+            modelAndView.addObject("client", clientService.editClientForm(clientForm));
+        modelAndView.addObject("successmessage", "The client was edited !");
+        return modelAndView;
+
+    }
+
+    @RequestMapping(value = "/searchclienttodelete" , method = RequestMethod.GET)
+    public ModelAndView searchClientToDelete (){
+
+        ModelAndView modelAndView = new ModelAndView("searchclienttodelete","client", new ClientForm());
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/deleteclient", method = RequestMethod.POST)
+    public ModelAndView deleteEmployee (ClientForm clientForm){
+
+        ModelAndView modelAndView = new ModelAndView("searchclienttodelete", "client", new ClientForm());
+        if(clientForm.getId() == null)
+        {
+            modelAndView.addObject("errormessage","You must insert a valid id !");
+            return modelAndView;
+        }else if (clientForm.getId()!= null)
+        {
+            if(clientService.getClientById(clientForm.getId())!= null ){
+
+                clientService.deleteClient(clientForm.getId());
+                modelAndView.addObject("successmessage","The Client was deleted");
+                return modelAndView;
+            }
+        }
+        modelAndView.addObject("errormessage","The Client was not found !");
+        return modelAndView;
+
     }
 
 

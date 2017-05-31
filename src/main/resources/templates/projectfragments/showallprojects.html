@@ -1,0 +1,89 @@
+<div class="col-lg-6 col-md-3 col-lg-offset-3" th:fragment="showallprojects">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="fa fa-pie-chart fa-5x"></i>
+                </div>
+                <div class="col-xs-3 text-right boardtext">
+                    <div></div>
+                    <span ></span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+
+                <table class="table table-condensed" style="border-collapse:collapse;">
+                    <thead>
+                    <tr>
+                        <div class="panel-heading">Projects </div>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="project : ${projectsList}">
+                        <tr data-toggle="collapse" th:attr="data-target='#project'+${project.id}" class="accordion-toggle">
+                            <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus-sign"></span></button></td>
+                            <th>Project Name: <span th:text="${project.projectName}"></span></th>
+                            <th>Assigned Team: <span th:text="${project.assignedTeam.teamName}"></span></th>
+                            <th class="warning">State: <span th:text="${project.status}"></span></th>
+                        </tr>
+
+                        <tr>
+                            <td colspan="6" class="hiddenRow"><div th:id="'project'+${project.id}" class="accordian-body collapse">
+
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Client Name</th>
+                                        <th>Client Contact</th>
+                                        <th>Start Date</th>
+                                        <th>Estimated End Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td ><span th:text="${project.client.firstName}"></span><span th:text="${project.client.lastName}"></span></td>
+                                        <td>Email: <span th:text="${project.client.email}"></span></td>
+                                        <td class="info" th:text="${project.projectStartDate}"></td>
+                                        <td class="info" th:text="${project.projectEndDate}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><span th:text="${project.client.contactList[0].contactName}">: </span><span th:text="${project.client.contactList[0].contact}"></span></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><span th:text="${project.client.contactList[1].contactName}">: </span><span th:text="${project.client.contactList[1].contact}"></span></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                                <table>
+                                    <thead>
+                                    <th>Description</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td th:text="${project.projectDescription}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div></td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -61,7 +61,7 @@ public class ProjectController extends WebMvcConfigurerAdapter {
     }
 
 
-    @GetMapping(value = "/showproject")
+    @RequestMapping(value = "/showproject",method = RequestMethod.GET)
     public String showProjectForm(ModelMap model) {
         model.addAttribute("project", new Project());
         return "showproject";
@@ -73,7 +73,7 @@ public class ProjectController extends WebMvcConfigurerAdapter {
         return "showproject";
     }
 
-    @GetMapping(value = "/editproject")
+    @RequestMapping(value = "/editproject", method= RequestMethod.GET)
     public String showEditProjectForm(ModelMap model) {
         model.addAttribute("project", new Project());
         return "searcheditproject";
@@ -88,7 +88,7 @@ public class ProjectController extends WebMvcConfigurerAdapter {
         return "editprojectform";
     }
 
-    @PostMapping("/editproject/edit")
+    @RequestMapping(value = "/editproject/edit",method = RequestMethod.POST)
     public String checkPersonInfo(@Valid Project project, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -97,6 +97,15 @@ public class ProjectController extends WebMvcConfigurerAdapter {
 
         projectService.updateProject(project);
         return "redirect:/projectresult";
+    }
+
+    @RequestMapping(value ="/showallprojects", method = RequestMethod.GET)
+    public ModelAndView showAllProjects(){
+
+        ModelAndView modelAndView = new ModelAndView("showallprojects");
+        modelAndView.addObject("projectsList",projectService.getAllProjects());
+        return modelAndView;
+
     }
 
 
