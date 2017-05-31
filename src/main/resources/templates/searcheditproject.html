@@ -3,23 +3,13 @@
 >
 <head th:replace="/fragments/header :: header"></head>
 <body>
+<div class="col-lg-12" th:replace="projectfragments/searchprojectpagetitle :: searchprojectpagetitle"></div>
+<div class="col-lg-12">
+<form class="form-horizontal" th:action="@{/editproject}" th:object="${project}" method="post">
+<fieldset th:replace="/projectfragments/searchprojectform :: searchprojectform">
 
-<form action="#" th:action="@{/editproject}" th:object="${project}" method="post">
-
-    <table>
-        <tr>
-            <td>ID:</td>
-            <td><input type="text" th:field="*{id}"/></td>
-            <td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">ID Error</td>
-        </tr>
-
-        <tr>
-            <td>
-                <button type="submit" value="search">Search</button>
-            </td>
-        </tr>
-    </table>
+</fieldset>
 </form>
-
+</div>
 </body>
 </html>
