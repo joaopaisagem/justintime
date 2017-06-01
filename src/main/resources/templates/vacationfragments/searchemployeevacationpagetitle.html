@@ -1,0 +1,19 @@
+<div class="col-lg-12" th:fragment="searchemployeevacationpagetitle">
+    <h1 class="page-header"> Dashboard
+        <small>Employees</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <i class="fa fa-tachometer"></i> Dashboard
+        </li>
+        <li>
+            <i class="fa fa-user-circle-o fa-3x"></i> Search Employees
+        </li>
+    </ol>
+    <div th:if="${successmessage != null}">
+        <div class="alert alert-success" th:text="${successmessage}"></div>
+    </div>
+    <div th:if="${errormessage != null}">
+        <div class="alert alert-danger" th:text="${errormessage}"></div>
+    </div>
+</div>

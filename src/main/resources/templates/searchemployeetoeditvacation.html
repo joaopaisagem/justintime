@@ -4,11 +4,11 @@
 <head th:replace="/fragments/header :: header"></head>
 <body>
 <nav th:replace="/fragments/menu ::menu"></nav>
-<div class="col-lg-12" th:replace="/vacationfragments/searchemployeevacationpagetitle :: searchemployeevacationpagetitle">
+<div class="col-lg-12" th:replace="/vacationfragments/searchemployeevacationpagetitle:: searchemployeevacationpagetitle">
 
 </div>
 <div class="col-lg-12">
-    <form class="form-horizontal" action="#" th:action="@{/searchemployeevacation}" th:object="${employee}"
+    <form class="form-horizontal" action="#" th:action="@{/editemployeevacation}" th:object="${employee}"
           method="post">
         <fieldset th:replace="/employeefragments/searchemployee :: searchemployee"></fieldset>
     </form>

@@ -5,14 +5,14 @@
 
                         <div class="panel panel-default panel-horizontal">
                             <div class="panel-heading text-center">
-                                <span><h3>Project Name</h3></span>
-                                <span th:text="${project.projectName}"></span>
+                                <span><h3>Project Name : </h3><h2 th:text="${project.projectName}"></h2> </span>
+                                <span>Start Date:</span> <span th:text="${project.projectStartDate}"></span><span>End Date:</span><span th:text="${project.projectEndDate}"></span>
                                 <hr />
                             </div>
                             <div class="panel-body">
 
                                 <div class="col-xs-12 col-md-12 section-box">
-                                    <div style="padding-top: 10px;">johndoe@tasktick.com</div>
+                                    <div style="padding-top: 10px;">Assigned Team : <span th:text="project.assignedTeam.teamName"></span></div>
                                     <h2>
                                         Description <span class="glyphicon glyphicon-new-window">
                                 </span>
@@ -22,7 +22,7 @@
                                     <hr />
                                     <div class="row rating-desc">
                                         <div class="col-md-12">
-                                            <span class="glyphicon glyphicon-comment"></span>Client : <span th:text="${project.client.firstName}"></span><span class="separator">|</span>
+                                            <span class="glyphicon glyphicon-comment"></span> Client : <span th:text="${project.client.firstName}"></span><span th:text="${project.client.lastName}"></span><span class="separator">|</span>
                                         </div>
                                     </div>
                                 </div>
