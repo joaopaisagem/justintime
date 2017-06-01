@@ -3,37 +3,15 @@
 >
 <head th:replace="/fragments/header :: header"></head>
 <body>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-<form action="#" th:action="@{/showproject}" th:object="${project}" method="POST">
+<nav th:replace="/fragments/menu :: menu"></nav>
 
-    <table>
-        <tr>
-            <td>ID:</td>
-            <td><input type="text" th:field="*{id}"/></td>
-            <td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">ID Error</td>
-        </tr>
-
-        <tr>
-            <td>
-                <button type="submit" value="search">Search</button>
-            </td>
-        </tr>
-    </table>
-</form>
-<div>
-
-    <h1>Project:</h1>
-
-    <p th:text="${project.id}"></p>
-    <p th:text="${project.projectName}"></p>
-    <p th:text="${project.projectDescription}"></p>
-    <p th:text="${project.projectStartDate}"></p>
-    <p th:text="${project.projectEndDate}"></p>
-    <p th:each="team: ${project.assignedTeam}" th:text="${team.teamName}"></p>
+<div class="col-md-12" th:replace="/projectfragments/showprojectpagetitle :: showprojectpagetitle">
 
 </div>
+<div class="container">
+<div th:replace="projectfragments/showproject :: showproject">
+</div>
+</div>
+<footer th:replace="/fragments/footer :: footer"></footer>
 </body>
 </html>

@@ -36,13 +36,13 @@ public class ClientController extends WebMvcConfigurerAdapter {
         ModelAndView cliForm = new ModelAndView("clientform");
         if (bindingResult.hasErrors()) {
             cliForm.addObject("clientform", clientForm);
-            cliForm.addObject("errorsmsg", "Error saving Client");
+            cliForm.addObject("errormessage", "Error saving Client");
             return cliForm;
         } else if (clientService.saveClientForm(clientForm)) {
-            cliForm.addObject("successmsg", "Success you save client");
+            cliForm.addObject("successmessage", "Success you save client");
             return cliForm;
         }
-        cliForm.addObject("errorsmsg", "The client already exists");
+        cliForm.addObject("errormessage", "The client already exists");
         return cliForm;
     }
 

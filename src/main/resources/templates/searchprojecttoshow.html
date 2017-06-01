@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="/fragments/header :: header"></head>
+<body>
+<nav th:replace="/fragments/menu :: menu"></nav>
+
+<div class="col-md-12" th:replace="/projectfragments/searchprojectpagetitle :: searchprojectpagetitle">
+
+</div>
+<div class="col-md-12">
+
+<form action="#" th:action="@{/showproject}" th:object="${project}" method="POST">
+
+   <fieldset th:replace="/projectfragments/searchprojectform :: searchprojectform">
+
+   </fieldset>
+</form>
+</div>
+<footer th:replace="/fragments/footer :: footer"></footer>
+</body>
+</html>
