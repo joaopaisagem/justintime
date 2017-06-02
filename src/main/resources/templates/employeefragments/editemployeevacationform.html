@@ -1,10 +1,11 @@
-<th:block th:each="vacation : ${vacationList}">
+
 <fieldset th:fragment="editemployeevacationform">
+
     <div class="form-group">
         <label class="col-md-4 control-label" for="VacationStartDay">Start
             Date</label>
         <div class="col-md-4">
-            <input th:field="${vacation.vacationStartDay}" id="VacationStartDay"
+            <input th:field="*{vacation.vacationStartDay}" id="VacationStartDay"
                    name="VacationStartDay" type="date" placeholder="VacationStartDay"
                    class="form-control input-md"/>
         </div>
@@ -14,7 +15,7 @@
         <label class="col-md-4 control-label" for="VacationEndDay">End
             Date</label>
         <div class="col-md-4">
-            <input th:field="${vacation.vacationEndDay}" id="VacationEndDay"
+            <input th:field="*{vacation.vacationEndDay}" id="VacationEndDay"
                    name="VacationEndDay" type="date" placeholder="VacationEndDay"
                    class="form-control input-md"/>
         </div>
@@ -32,4 +33,3 @@
     </div>
 
 </fieldset>
-</th:block>

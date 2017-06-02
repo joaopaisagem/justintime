@@ -15,6 +15,7 @@ import pt.ipca.justintime.domain.Vacation;
 import pt.ipca.justintime.factorys.EmployeeFactory;
 import pt.ipca.justintime.factorys.VacationFactory;
 import pt.ipca.justintime.forms.EmployeeForm;
+import pt.ipca.justintime.forms.EmployeeVacationEditForm;
 import pt.ipca.justintime.forms.EmployeeVacationForm;
 import pt.ipca.justintime.forms.VacationForm;
 import pt.ipca.justintime.services.EmployeeService;
@@ -198,7 +199,6 @@ public class VacationController extends WebMvcConfigurerAdapter {
     public ModelAndView searchEmployeeToEditVacations(){
 
         ModelAndView modelAndView = new ModelAndView("searchemployeetoeditvacation","employee", new EmployeeForm());
-
         return modelAndView;
 
     }
@@ -206,7 +206,7 @@ public class VacationController extends WebMvcConfigurerAdapter {
     @RequestMapping(value = "/editemployeevacation",method = RequestMethod.POST)
     public ModelAndView editEmployeeVacations(EmployeeForm form){
 
-        ModelAndView searchModelAndView = new ModelAndView("searchemployeetoeditvacation","employee", new EmployeeForm());
+        ModelAndView searchModelAndView = new ModelAndView("searchemployeetoeditvacation","employee", form);
         ModelAndView editModelAndView = new ModelAndView("editemployeevacations");
         if(form.getId()==null)
         {
@@ -216,7 +216,12 @@ public class VacationController extends WebMvcConfigurerAdapter {
         {
             if(employeeService.getEmployeeById(form.getId())!=null)
             {
-
+                EmployeeForm employeeForm = employeeFactory.transformEmployeeIntoEmployeeForm(employeeService.getEmployeeById(form.getId()));
+                EmployeeVacationEditForm employeeVacationForm = new EmployeeVacationEditForm();
+                employeeVacationForm.setEmployee(employeeForm);
+                employeeVacationForm.setVacationList(employeeForm.getVacationList());
+                editModelAndView.addObject("employeevacationForm", employeeVacationForm);
+                return editModelAndView;
             }
         }
         searchModelAndView.addObject("errormessage","The employee dosen´t exist");

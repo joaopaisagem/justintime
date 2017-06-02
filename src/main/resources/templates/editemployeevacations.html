@@ -37,9 +37,8 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title">Select days to edit</h3>
                             </div>
-                            <div class="panel-body">
-                                <form class="form-horizontal" th:action="@{/addemployeevacation}" method="post"
-                                      th:object="${employee}">
+                            <div class="panel-body"  th:each="vacation : ${employee.vacationList}">
+                                <form class="form-horizontal" th:action="@{/addemployeevacation}" method="post" th:object="employeevacationForm">
 
                                     <fieldset th:replace="/employeefragments/editemployeevacationform :: editemployeevacationform">
 
