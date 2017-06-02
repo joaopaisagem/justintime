@@ -203,7 +203,7 @@ public class VacationController extends WebMvcConfigurerAdapter {
     public ModelAndView editEmployeeVacations(EmployeeForm form){
 
         ModelAndView searchModelAndView = new ModelAndView("searchemployeetoeditvacation","employee", form);
-        ModelAndView editModelAndView = new ModelAndView("editemployeevacations");
+        ModelAndView editModelAndView = new ModelAndView("selectemployeevacationtoeditform","employeevacationform",new EmployeeForm());
         if(form.getId()==null)
         {
             searchModelAndView.addObject("errormessage","You need to insert a valid Id");
@@ -213,9 +213,9 @@ public class VacationController extends WebMvcConfigurerAdapter {
             if(employeeService.getEmployeeById(form.getId())!=null)
             {
                 EmployeeForm employeeForm = employeeFactory.transformEmployeeIntoEmployeeForm(employeeService.getEmployeeById(form.getId()));
-                EmployeeVacationForm employeeVacationForm = new EmployeeVacationForm();
-                employeeVacationForm.setEmployee(employeeForm);
-                editModelAndView.addObject("employeevacationform", employeeVacationForm);
+                List<Vacation> vacationList = employeeForm.getVacationList();
+
+                editModelAndView.addObject("employee", employeeForm);
                 return editModelAndView;
             }
         }
