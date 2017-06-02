@@ -3,10 +3,8 @@ package pt.ipca.justintime.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -15,7 +13,6 @@ import pt.ipca.justintime.domain.Vacation;
 import pt.ipca.justintime.factorys.EmployeeFactory;
 import pt.ipca.justintime.factorys.VacationFactory;
 import pt.ipca.justintime.forms.EmployeeForm;
-import pt.ipca.justintime.forms.EmployeeVacationEditForm;
 import pt.ipca.justintime.forms.EmployeeVacationForm;
 import pt.ipca.justintime.forms.VacationForm;
 import pt.ipca.justintime.services.EmployeeService;
@@ -23,7 +20,6 @@ import pt.ipca.justintime.services.TeamService;
 import pt.ipca.justintime.services.VacationService;
 import pt.ipca.justintime.utils.VacationUtils;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -203,7 +199,7 @@ public class VacationController extends WebMvcConfigurerAdapter {
 
     }
 
-    @RequestMapping(value = "/editemployeevacation",method = RequestMethod.POST)
+    @RequestMapping(value = "/searchemployeetoeditvacations",method = RequestMethod.POST)
     public ModelAndView editEmployeeVacations(EmployeeForm form){
 
         ModelAndView searchModelAndView = new ModelAndView("searchemployeetoeditvacation","employee", form);
@@ -217,15 +213,21 @@ public class VacationController extends WebMvcConfigurerAdapter {
             if(employeeService.getEmployeeById(form.getId())!=null)
             {
                 EmployeeForm employeeForm = employeeFactory.transformEmployeeIntoEmployeeForm(employeeService.getEmployeeById(form.getId()));
-                EmployeeVacationEditForm employeeVacationForm = new EmployeeVacationEditForm();
+                EmployeeVacationForm employeeVacationForm = new EmployeeVacationForm();
                 employeeVacationForm.setEmployee(employeeForm);
-                employeeVacationForm.setVacationList(employeeForm.getVacationList());
-                editModelAndView.addObject("employeevacationForm", employeeVacationForm);
+                editModelAndView.addObject("employeevacationform", employeeVacationForm);
                 return editModelAndView;
             }
         }
         searchModelAndView.addObject("errormessage","The employee dosen´t exist");
         return searchModelAndView;
+
+    }
+    @RequestMapping(value = "/editemployeevacation",method = RequestMethod.POST)
+    public ModelAndView saveEmployeeVacations(EmployeeForm form)
+    {
+        ModelAndView modelAndView = new ModelAndView("editemployeevacations");
+        return modelAndView;
 
     }
 
