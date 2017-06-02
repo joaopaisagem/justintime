@@ -58,8 +58,6 @@ public class VacationController extends WebMvcConfigurerAdapter {
 
         vacationForm.addObject("unavailableVacations", employeeService.getAllUnavailableDaysVacations(employeeList));
 
-        vacationForm.addObject("totalEmployees",employeeService.getNumberOfTotalEmployees());
-
         vacationForm.addObject("teams", teamService.getAllTeams());
 
         return vacationForm;
@@ -206,21 +204,19 @@ public class VacationController extends WebMvcConfigurerAdapter {
     }
 
     @RequestMapping(value = "/editemployeevacation",method = RequestMethod.POST)
-    public ModelAndView editEmployeeVacations(EmployeeForm employeeForm){
+    public ModelAndView editEmployeeVacations(EmployeeForm form){
 
         ModelAndView searchModelAndView = new ModelAndView("searchemployeetoeditvacation","employee", new EmployeeForm());
-        ModelAndView editModelAndView = new ModelAndView("editemployeevacations","employee", new EmployeeForm());
-        if(employeeForm.getId()==null)
+        ModelAndView editModelAndView = new ModelAndView("editemployeevacations");
+        if(form.getId()==null)
         {
             searchModelAndView.addObject("errormessage","You need to insert a valid Id");
             return searchModelAndView;
-        }else if (employeeForm.getId()!=null)
+        }else if (form.getId()!=null)
         {
-            if(employeeService.getEmployeeById(employeeForm.getId())!=null)
+            if(employeeService.getEmployeeById(form.getId())!=null)
             {
 
-                editModelAndView.addObject("employee",employeeService.getEmployeeById(employeeForm.getId()));
-                return editModelAndView;
             }
         }
         searchModelAndView.addObject("errormessage","The employee dosen´t exist");
