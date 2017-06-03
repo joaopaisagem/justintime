@@ -3,6 +3,8 @@ package pt.ipca.justintime.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -203,7 +205,7 @@ public class VacationController extends WebMvcConfigurerAdapter {
     public ModelAndView editEmployeeVacations(EmployeeForm form){
 
         ModelAndView searchModelAndView = new ModelAndView("searchemployeetoeditvacation","employee", form);
-        ModelAndView editModelAndView = new ModelAndView("selectemployeevacationtoeditform","employeevacationform",new EmployeeForm());
+        ModelAndView editModelAndView = new ModelAndView("selectemployeevacationtoeditform");
         if(form.getId()==null)
         {
             searchModelAndView.addObject("errormessage","You need to insert a valid Id");
@@ -212,10 +214,10 @@ public class VacationController extends WebMvcConfigurerAdapter {
         {
             if(employeeService.getEmployeeById(form.getId())!=null)
             {
-                EmployeeForm employeeForm = employeeFactory.transformEmployeeIntoEmployeeForm(employeeService.getEmployeeById(form.getId()));
-                List<Vacation> vacationList = employeeForm.getVacationList();
-
-                editModelAndView.addObject("employee", employeeForm);
+                EmployeeVacationForm employeeVacationForm = new EmployeeVacationForm();
+                employeeVacationForm.setEmployee( employeeFactory.transformEmployeeIntoEmployeeForm(employeeService.getEmployeeById(form.getId())));
+                employeeVacationForm.setVacation(new VacationForm());
+                editModelAndView.addObject("employeeVacationForm", employeeVacationForm);
                 return editModelAndView;
             }
         }
@@ -224,7 +226,7 @@ public class VacationController extends WebMvcConfigurerAdapter {
 
     }
     @RequestMapping(value = "/editemployeevacation",method = RequestMethod.POST)
-    public ModelAndView saveEmployeeVacations(EmployeeForm form)
+    public ModelAndView saveEmployeeVacations(EmployeeVacationForm employeeVacationForm , BindingResult bindingResult)
     {
         ModelAndView modelAndView = new ModelAndView("editemployeevacations");
         return modelAndView;

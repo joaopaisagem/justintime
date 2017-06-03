@@ -19,10 +19,10 @@
                         <div class="row">
                             <div class="col-xs-3">
                                 <i class="glyphicon glyphicon-user"></i> <span
-                                    class="boardtext" th:text="${employee.firstName}"></span> <span
-                                    class="boardtext" th:text="${employee.lastName}"></span> <span
+                                    class="boardtext" th:text="${employeeVacationForm.employee.firstName}"></span> <span
+                                    class="boardtext" th:text="${employeeVacationForm.employee.lastName}"></span> <span
                                     class="boardtext"
-                                    th:text="${employee.employeeTeamName.teamName}"></span>
+                                    th:text="${employeeVacationForm.employee.employeeTeamName.teamName}"></span>
                             </div>
 
                             <div class="col-xs-9 text-right boardtext">
@@ -38,7 +38,7 @@
                                 <h3 class="panel-title">Select days to edit</h3>
                             </div>
                             <div class="panel-body">
-                                <form class="form-horizontal" th:action="@{/editemployeevacation}" method="post" th:object="${employee}">
+                                <form class="form-horizontal" th:action="@{/editemployeevacation}" method="post" th:object="${employeeVacationForm}">
 
                                     <fieldset th:replace="/employeefragments/selectemployeevacationtoeditform :: selectemployeevacationtoeditform">
 
@@ -51,7 +51,10 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <div class="panel panel-default" th:each="vacation, vacationStat : ${employee.vacationList}">
+                        <div class="panel-footer" th:if="${employeeVacationForm.employee.vacationList.isEmpty()}">
+                            There are no vacations to edit!
+                        </div>
+                        <div class="panel panel-default" th:each="vacation, vacationStat : ${employeeVacationForm.employee.vacationList}">
                             <p th:text="${vacation.id}"></p>
                             <p th:text="${vacation.vacationStartDay}"  ></p>
                             <p th:text="${vacation.vacationEndDay}"  ></p>

@@ -2,12 +2,18 @@
 <fieldset th:fragment="selectemployeevacationtoeditform">
 
     <div class="form-group">
+        <div class="col-md-4">
+            <input type="hidden" th:field="*{employee.id}" id="emplpoyeeid" name="id"  class="form-control input-md"/>
+        </div>
+    </div>
+
+    <div class="form-group">
         <label class="col-md-4 control-label" for="vacationid">Select vacation ID</label>
         <div class="col-md-4">
-            <input th:field="*{id}" id="vacationid" name="id" type="text"
-                   placeholder="Employee ID" class="form-control input-md"/> <span
-                class="help-block" th:if="${#fields.hasErrors('id')}"
-                th:errors="*{id}"> Id Error</span>
+            <input th:field="*{vacation.id}" id="vacationid" name="id" type="text"
+                   placeholder="Vacation ID" class="form-control input-md"/> <span
+                class="help-block" th:if="${#fields.hasErrors('vacation.id')}"
+                th:errors="*{vacation.id}"></span>
         </div>
     </div>
 
