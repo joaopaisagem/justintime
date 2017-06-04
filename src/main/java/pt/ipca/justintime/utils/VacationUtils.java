@@ -48,19 +48,6 @@ public class VacationUtils {
         return false;
     }
 
-    public List<LocalDate> getDatesForCurrentYear(List<Vacation> vacationList) {
-
-        List<Vacation> listToReturn = new ArrayList<>();
-        for (Vacation vacation : vacationList) {
-            if (vacation.getVacationStartDay().getYear() == LocalDate.now().getYear()) {
-                if (vacation.getVacationEndDay().getYear() == LocalDate.now().getYear()) {
-                    listToReturn.add(vacation);
-                }
-
-            }
-        }
-        return getDaysBetweenDates(listToReturn);
-    }
 
     /**
      * This method will check if the employee can add more vacations to is list
@@ -248,30 +235,6 @@ public class VacationUtils {
 
 
     /**
-     * This method is used to test if a vacation is null or not
-     * Returns TRUE or FALSE  .
-     * The arguments must specify a Vacation "vacationSartDate and vacationEndDate".
-     * Both argument names are specifier that is relative to a  vacations period.
-     * This method always returns TRUE if the vacationStartDay is null
-     * if the condition gives FALSE he will test if vacationEndDay is also null
-     * if positive returns TRUE
-     * of the conditions are both FALSE the method returns FALSE
-     *
-     * @param vacationList
-     * @return TRUE, FALSE
-     */
-    public boolean checkIfTheVacationIsNull(List<Vacation> vacationList) {
-        for (Vacation vacation : vacationList) {
-            if (vacation.getVacationStartDay() == null) {
-                return true;
-            } else if (vacation.getVacationEndDay() == null) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * This method is an Overloaded method used to test if a vacation is null or not
      * Returns TRUE or FALSE  .
      * The arguments must specify a Vacation "vacationSartDate and vacationEndDate".
@@ -311,5 +274,14 @@ public class VacationUtils {
         }
         return false;
     }
+
+    /**
+     * Returns a proportion (n out of a total) as a percentage, in a float.
+     */
+        public float getPercentage(int n, int total) {
+        float proportion = ((float) n) / ((float) total);
+        return proportion * 100;
+    }
+
 
 }

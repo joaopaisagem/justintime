@@ -130,16 +130,6 @@ public class EmployeeService {
         return list;
     }
 
-    /**
-     * Method to get workingDaysVacations for one employee
-     *
-     * @param vacationList employee list
-     * @return List<LocalDate> with working days only
-     */
-    private List<LocalDate> getTotalEmployeeVacation(List<Vacation> vacationList) {
-        List<LocalDate> workingDaysVacations = vacationUtils.getWorkingDaysVacations(vacationList);
-        return workingDaysVacations;
-    }
 
 
     public Employee saveEmployeeVacations(Vacation vacation, Employee emp) {
@@ -187,6 +177,25 @@ public class EmployeeService {
         }
         return false;
     }
+
+
+
+    public float getPercentageOfEmployeesWithVacationInCurrentMonth()
+    {
+        List<Employee> employeeList = getAllEmployees();
+        int numberOfEmployees = (int)getNumberOfTotalEmployees();
+        int count= 0;
+        for (Employee employee : employeeList){
+
+         List<LocalDate> list = vacationUtils.getDaysOfVacationByMonth(employee.getVacationList(),LocalDate.now().getMonth().getValue());
+         if(!list.isEmpty())
+            {
+                count++;
+            }
+        }
+       return vacationUtils.getPercentage(count,numberOfEmployees);
+    }
+
 
 
 }

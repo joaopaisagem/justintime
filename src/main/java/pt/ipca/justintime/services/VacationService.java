@@ -41,19 +41,6 @@ public class VacationService {
         return vacationRepository.findOne(id);
     }
 
-    public List<Vacation> getAllVacations() {
-        return vacationRepository.findAll();
-
-    }
-
-    public void updateVacation(Vacation vacation) {
-        vacationRepository.saveAndFlush(vacation);
-    }
-
-    public Long countTotalVacations() {
-
-        return vacationRepository.count();
-    }
 
     public boolean updateEmployeeVacations(EmployeeVacationForm employeeVacationForm)
     {

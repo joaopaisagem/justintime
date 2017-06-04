@@ -23,47 +23,6 @@
 <div id="page-wraper">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-4 col-md-6 ">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-user"></i>
-                            </div>
-                            <div class="col-xs-9 text-right boardtext">
-
-                                <div>Number of Teams</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <span class="pull-left"></span>
-                        <span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-tasks"></i>
-                            </div>
-                            <div class="col-xs-9 text-right boardtext">
-                                <div>Number of Projects</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Top Panels-->
             <div class="col-lg-4 col-md-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -72,18 +31,27 @@
                                 <i class="fa fa-comments fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge" th:text="${totalEmployees}"></div>
-                                <div></div>
+                                <div class="panel-title"> Number of Employees</div>
+                                &nbsp;
+                                <div class="panel-title" th:text="${totalEmployees}"></div>
                             </div>
                         </div>
                     </div>
-                    <a href="#">
                         <div class="panel-footer">
-                            <span class="pull-left"> Number of Employees</span>
-                            <span class="pull-right"><i class=""></i></span>
+                            <div class="row form-group">
+                            <span class="pull-left panel-title">Employees with vacation this month!</span>
+                                &nbsp;
+                            </div>
+                            <div class="row form-group">
+                            <div class="progress">
+                                &nbsp;
+                                <div th:text="${vacationToCurrentMonth}" class="progress-bar panel-title" role="progressbar" th:attr="aria-valuenow=${vacationToCurrentMonth}" aria-valuemin="0" aria-valuemax="100" th:style="'width:'+ ${vacationToCurrentMonth}+'%;'">
+
+                                </div>
+                            </div>
+                            </div>
                             <div class="clearfix"></div>
                         </div>
-                    </a>
                 </div>
 
             </div>

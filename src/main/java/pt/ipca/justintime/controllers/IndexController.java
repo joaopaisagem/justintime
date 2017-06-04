@@ -23,6 +23,7 @@ public class IndexController extends WebMvcConfigurerAdapter {
     public ModelAndView projectForm() {
         ModelAndView view = new ModelAndView("index");
         view.addObject("totalEmployees", employeeService.getNumberOfTotalEmployees());
+        view.addObject("vacationToCurrentMonth",employeeService.getPercentageOfEmployeesWithVacationInCurrentMonth());
         return view;
     }
 }
