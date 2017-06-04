@@ -6,7 +6,12 @@ import pt.ipca.justintime.domain.Project;
 import pt.ipca.justintime.repositories.ProjectRepository;
 
 import java.util.List;
-
+/**
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
+ */
 @Service
 public class ProjectService {
 

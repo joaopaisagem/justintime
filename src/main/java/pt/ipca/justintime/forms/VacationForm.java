@@ -7,14 +7,18 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-
+/**
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-/**
- * Created by tiagosilva on 29/05/17.
- */
+
+
 public class VacationForm {
 
     private Long id;

@@ -5,7 +5,10 @@ import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.forms.EmployeeForm;
 
 /**
- * Created by Tiago Silva on 28/05/2017.
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
  */
 @Component
 public class EmployeeFactory {

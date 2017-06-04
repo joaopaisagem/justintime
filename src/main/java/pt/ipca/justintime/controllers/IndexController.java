@@ -7,7 +7,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import pt.ipca.justintime.services.EmployeeService;
-
+/**
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
+ */
 @Controller
 public class IndexController extends WebMvcConfigurerAdapter {
 

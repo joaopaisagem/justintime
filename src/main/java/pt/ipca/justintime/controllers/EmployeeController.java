@@ -19,6 +19,12 @@ import pt.ipca.justintime.services.TeamService;
 
 import javax.validation.Valid;
 import java.util.List;
+/**
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
+ */
 
 @SessionAttributes(
         {"employeeform"})

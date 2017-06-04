@@ -24,7 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Utilizador
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
  */
 
 @Controller
@@ -258,6 +261,24 @@ public class VacationController extends WebMvcConfigurerAdapter {
 
     }
 
+    @RequestMapping(value = "/editemployeevacation", method = RequestMethod.POST)
+    public ModelAndView saveEmployeeVacations(EmployeeVacationForm employeeVacationForm) {
+        ModelAndView modelAndView = new ModelAndView("editemployeevacations", "employeeVacation", employeeVacationForm);
 
+        if (vacationService.updateEmployeeVacations(employeeVacationForm)) {
+            Employee employee = employeeService.getEmployeeById(employeeVacationForm.getEmployee().getId());
+            EmployeeForm employeeForm = employeeFactory.transformEmployeeIntoEmployeeForm(employee);
+            employeeVacationForm.setEmployee(employeeForm);
+            modelAndView.addObject("successmessage", "The Vacation was edited successfully");
+            return modelAndView;
+        } else {
+            Employee employee = employeeService.getEmployeeById(employeeVacationForm.getEmployee().getId());
+            EmployeeForm employeeForm = employeeFactory.transformEmployeeIntoEmployeeForm(employee);
+            employeeVacationForm.setEmployee(employeeForm);
+            modelAndView.addObject("errormessage", "It was not possible to edit the vacations! Please try again");
+            return modelAndView;
+
+        }
+    }
 }
 

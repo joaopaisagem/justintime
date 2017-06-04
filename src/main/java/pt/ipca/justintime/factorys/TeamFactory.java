@@ -6,7 +6,10 @@ import pt.ipca.justintime.forms.NewTeamForm;
 import pt.ipca.justintime.forms.TeamForm;
 
 /**
- * Created by Utilizador on 30/05/2017.
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
  */
 @Component
 public class TeamFactory {

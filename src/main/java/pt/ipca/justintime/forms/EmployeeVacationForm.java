@@ -10,7 +10,10 @@ import lombok.Setter;
 @Getter
 @Setter
 /**
- * Created by TiagoSilva on 22/05/2017.
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
  */
 public class EmployeeVacationForm {
     private EmployeeForm employee;

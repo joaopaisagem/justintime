@@ -8,7 +8,10 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by tiagosilva on 01/06/17.
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
  */
 @Getter
 @Setter

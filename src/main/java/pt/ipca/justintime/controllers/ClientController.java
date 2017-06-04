@@ -14,7 +14,10 @@ import pt.ipca.justintime.services.ClientService;
 import javax.validation.Valid;
 
 /**
- * Created by Shapeshifter on 28/05/2017.
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
  */
 @Controller
 public class ClientController extends WebMvcConfigurerAdapter {

@@ -5,8 +5,12 @@ import pt.ipca.justintime.domain.Vacation;
 import pt.ipca.justintime.forms.VacationForm;
 
 /**
- * Created by tiagosilva on 29/05/17.
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
  */
+
 @Component
 public class VacationFactory {
 

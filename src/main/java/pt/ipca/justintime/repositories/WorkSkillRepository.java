@@ -4,7 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import pt.ipca.justintime.domain.WorkSkill;
 
 /**
- * Created by tiagosilva on 17/05/17.
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
  */
 public interface WorkSkillRepository extends JpaRepository<WorkSkill, Long> {
 

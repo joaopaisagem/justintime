@@ -1,5 +1,10 @@
 package pt.ipca.justintime.domain;
-
+/**
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
+ */
 
 import lombok.*;
 
@@ -11,7 +16,6 @@ import javax.persistence.Id;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 public class WorkSkill {
 

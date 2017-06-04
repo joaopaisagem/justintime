@@ -11,7 +11,12 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
+ */
 @Getter
 @Setter
 @NoArgsConstructor

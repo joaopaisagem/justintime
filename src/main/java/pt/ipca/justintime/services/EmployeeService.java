@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.domain.Vacation;
 import pt.ipca.justintime.factorys.EmployeeFactory;
+import pt.ipca.justintime.factorys.VacationFactory;
 import pt.ipca.justintime.forms.EmployeeForm;
 import pt.ipca.justintime.forms.EmployeeVacationForm;
 import pt.ipca.justintime.repositories.*;
@@ -14,7 +15,12 @@ import pt.ipca.justintime.utils.VacationUtils;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
+ */
 @Service
 public class EmployeeService {
 

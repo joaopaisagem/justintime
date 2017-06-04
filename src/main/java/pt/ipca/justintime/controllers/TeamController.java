@@ -13,7 +13,12 @@ import pt.ipca.justintime.forms.TeamForm;
 import pt.ipca.justintime.services.TeamService;
 
 import javax.validation.Valid;
-
+/**
+ * @author Tiago Silva
+ * @class LESI-PL 3º Ano
+ * @number a7809
+ * @email a7809@alunos.ipca.pt
+ */
 @Controller
 public class TeamController extends WebMvcConfigurerAdapter {
 
