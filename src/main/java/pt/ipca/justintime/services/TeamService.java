@@ -2,13 +2,17 @@ package pt.ipca.justintime.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.domain.Team;
+import pt.ipca.justintime.domain.Vacation;
 import pt.ipca.justintime.factorys.TeamFactory;
 import pt.ipca.justintime.forms.NewTeamForm;
 import pt.ipca.justintime.forms.TeamForm;
 import pt.ipca.justintime.repositories.TeamRepository;
 import pt.ipca.justintime.utils.VacationUtils;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * @author Tiago Silva
@@ -132,5 +136,26 @@ public class TeamService {
         return false;
     }
 
+    public List<Team> getTeamsWithVacationsForCurrentMonth(){
+
+        List<Team> teamList =  new ArrayList<>();
+
+        for (Team team : getAllTeams())
+        {
+            int cont = 0;
+            for(Employee employee : team.getEmployeeList())
+            {
+                List<LocalDate> localDateList = vacationUtils.getDaysOfVacationByMonth(employee.getVacationList(), LocalDate.now().getMonth().getValue());
+                if (!localDateList.isEmpty()){
+                    cont++;
+                }
+            }
+            if(cont !=0)
+            {
+                teamList.add(team);
+            }
+        }
+        return teamList;
+    }
 
 }
