@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-xs-3 text-right boardtext">
                     <div></div>
-                    <span ></span>
+                    <span></span>
                 </div>
             </div>
         </div>
@@ -18,49 +18,54 @@
                 <table class="table table-condensed" style="border-collapse:collapse;">
                     <thead>
                     <tr>
-                        <div class="panel-heading">Clients </div>
+                        <div class="panel-heading">Clients</div>
                     </tr>
                     </thead>
                     <tbody>
                     <th:block th:each="client : ${clientsList}">
-                        <tr data-toggle="collapse" th:attr="data-target='#client'+${client.id}" class="accordion-toggle">
-                            <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus-sign"></span></button></td>
+                        <tr data-toggle="collapse" th:attr="data-target='#client'+${client.id}"
+                            class="accordion-toggle">
+                            <td>
+                                <button class="btn btn-default btn-xs"><span
+                                        class="glyphicon glyphicon-plus-sign"></span></button>
+                            </td>
                             <td th:text="${client.id}"></td>
                             <td th:text="${client.firstName}"></td>
                             <td th:text="${client.lastName}"></td>
                         </tr>
 
                         <tr>
-                            <td colspan="6" class="hiddenRow"><div th:id="'client'+${client.id}" class="accordian-body collapse">
+                            <td colspan="6" class="hiddenRow">
+                                <div th:id="'client'+${client.id}" class="accordian-body collapse">
 
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Project Name</th>
-                                        <th>Assigned Team</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody th:each="project : ${client.projectList}">
-                                    <tr >
-                                        <td th:text="${project.projectName}"></td>
-                                        <td th:text="${project.assignedTeam.teamName}"></td>
-                                        <td th:text="${project.projectStartDate}"></td>
-                                        <td th:text="${project. projectEndDate}"></td>
-                                        <td th:text="${project.status}"></td>
-                                    </tr>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Project Name</th>
+                                            <th>Assigned Team</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody th:each="project : ${client.projectList}">
+                                        <tr>
+                                            <td th:text="${project.projectName}"></td>
+                                            <td th:text="${project.assignedTeam.teamName}"></td>
+                                            <td th:text="${project.projectStartDate}"></td>
+                                            <td th:text="${project. projectEndDate}"></td>
+                                            <td th:text="${project.status}"></td>
+                                        </tr>
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
 
-                            </div></td>
+                                </div>
+                            </td>
                         </tr>
                     </th:block>
                     </tbody>
                 </table>
-
 
 
             </div>

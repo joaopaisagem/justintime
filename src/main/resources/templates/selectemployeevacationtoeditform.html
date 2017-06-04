@@ -38,9 +38,11 @@
                                 <h3 class="panel-title">Select days to edit</h3>
                             </div>
                             <div class="panel-body">
-                                <form class="form-horizontal" th:action="@{/editemployeevacation}" method="post" th:object="${employeeVacationForm}">
+                                <form class="form-horizontal" th:action="@{/editemployeevacation}" method="get"
+                                      th:object="${employeeVacationForm}">
 
-                                    <fieldset th:replace="/employeefragments/selectemployeevacationtoeditform :: selectemployeevacationtoeditform">
+                                    <fieldset
+                                            th:replace="/employeefragments/selectemployeevacationtoeditform :: selectemployeevacationtoeditform">
 
 
                                     </fieldset>
@@ -54,10 +56,11 @@
                         <div class="panel-footer" th:if="${employeeVacationForm.employee.vacationList.isEmpty()}">
                             There are no vacations to edit!
                         </div>
-                        <div class="panel panel-default" th:each="vacation, vacationStat : ${employeeVacationForm.employee.vacationList}">
+                        <div class="panel panel-default"
+                             th:each="vacation, vacationStat : ${employeeVacationForm.employee.vacationList}">
                             <p th:text="${vacation.id}"></p>
-                            <p th:text="${vacation.vacationStartDay}"  ></p>
-                            <p th:text="${vacation.vacationEndDay}"  ></p>
+                            <p th:text="${vacation.vacationStartDay}"></p>
+                            <p th:text="${vacation.vacationEndDay}"></p>
 
                         </div>
                     </div>

@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-xs-3 text-right boardtext">
                     <div></div>
-                    <span ></span>
+                    <span></span>
                 </div>
             </div>
         </div>
@@ -18,56 +18,69 @@
                 <table class="table table-condensed" style="border-collapse:collapse;">
                     <thead>
                     <tr>
-                        <div class="panel-heading">Team Name </div>
+                        <div class="panel-heading">Team Name</div>
                     </tr>
                     </thead>
                     <tbody>
                     <th:block th:each="team : ${teams}">
-                        <tr data-toggle="collapse" th:attr="data-target='#teamName'+${team.teamName}" class="accordion-toggle">
-                            <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus-sign"></span></button></td>
+                        <tr data-toggle="collapse" th:attr="data-target='#teamName'+${team.teamName}"
+                            class="accordion-toggle">
+                            <td>
+                                <button class="btn btn-default btn-xs"><span
+                                        class="glyphicon glyphicon-plus-sign"></span></button>
+                            </td>
                             <th th:text="${team.teamName}"></th>
                         </tr>
 
                         <tr>
-                            <td colspan="6" class="hiddenRow"><div th:id="'teamName'+${team.teamName}" class="accordian-body collapse">
+                            <td colspan="6" class="hiddenRow">
+                                <div th:id="'teamName'+${team.teamName}" class="accordian-body collapse">
 
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th> </th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody th:each="employee : ${team.employeeList}">
-                                    <tr  data-toggle="collapse" th:attr="data-target='#vacations'+${employee.firstName}" class="accordion-toggle">
-                                        <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
-                                        <td th:text="${employee.firstName}"></td>
-                                        <td th:text="${employee.lastName}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6" class="hiddenRow"><div th:id="'vacations'+${employee.firstName}" class="accordian-body collapse">
-                                            <table class="table" th:each="vacation : ${employee.vacationList}">
-                                                <thead>
-                                                <th>Start Day</th>
-                                                <th>End Day</th>
-                                                </thead>
-                                                <tbody>
-                                                <td th:text="${vacation.vacationStartDay}"></td>
-                                                <td th:text="${vacation.vacationEndDay}"></td>
-                                                </tbody>
-                                            </table>
-                                        </div></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody th:each="employee : ${team.employeeList}">
+                                        <tr data-toggle="collapse"
+                                            th:attr="data-target='#vacations'+${employee.firstName}"
+                                            class="accordion-toggle">
+                                            <td>
+                                                <button class="btn btn-default btn-xs"><span
+                                                        class="glyphicon glyphicon-eye-open"></span></button>
+                                            </td>
+                                            <td th:text="${employee.firstName}"></td>
+                                            <td th:text="${employee.lastName}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="hiddenRow">
+                                                <div th:id="'vacations'+${employee.firstName}"
+                                                     class="accordian-body collapse">
+                                                    <table class="table" th:each="vacation : ${employee.vacationList}">
+                                                        <thead>
+                                                        <th>Start Day</th>
+                                                        <th>End Day</th>
+                                                        </thead>
+                                                        <tbody>
+                                                        <td th:text="${vacation.vacationStartDay}"></td>
+                                                        <td th:text="${vacation.vacationEndDay}"></td>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
 
-                            </div></td>
+                                </div>
+                            </td>
                         </tr>
                     </th:block>
                     </tbody>
                 </table>
-
 
 
             </div>

@@ -11,7 +11,7 @@ import pt.ipca.justintime.forms.TeamForm;
 @Component
 public class TeamFactory {
 
-    public Team transformTeamFormIntoTeam(TeamForm teamForm){
+    public Team transformTeamFormIntoTeam(TeamForm teamForm) {
 
         Team team = new Team();
         team.setId(teamForm.getId());
@@ -22,7 +22,7 @@ public class TeamFactory {
         return team;
     }
 
-    public Team transformNewTeamFormIntoTeam(NewTeamForm teamForm){
+    public Team transformNewTeamFormIntoTeam(NewTeamForm teamForm) {
 
         Team team = new Team();
         team.setId(teamForm.getId());
@@ -34,8 +34,7 @@ public class TeamFactory {
     }
 
 
-
-    public TeamForm transformTeamIntoTeamForm ( Team team){
+    public TeamForm transformTeamIntoTeamForm(Team team) {
         TeamForm teamForm = new TeamForm();
 
         teamForm.setId(team.getId());

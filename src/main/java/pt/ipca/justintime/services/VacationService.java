@@ -37,4 +37,6 @@ public class VacationService {
 
         return vacationRepository.count();
     }
+
+
 }

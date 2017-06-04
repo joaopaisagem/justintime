@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
 import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.domain.Project;
 
@@ -30,5 +29,5 @@ public class TeamForm {
     private List<Employee> employeeList = new ArrayList<>();
 
     private List<Project> projectList = new ArrayList<>();
-    
+
 }

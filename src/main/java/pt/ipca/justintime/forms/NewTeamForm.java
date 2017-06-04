@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.domain.Project;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 

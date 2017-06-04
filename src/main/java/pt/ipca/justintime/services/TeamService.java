@@ -2,7 +2,6 @@ package pt.ipca.justintime.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.domain.Team;
 import pt.ipca.justintime.factorys.TeamFactory;
 import pt.ipca.justintime.forms.NewTeamForm;
@@ -10,8 +9,6 @@ import pt.ipca.justintime.forms.TeamForm;
 import pt.ipca.justintime.repositories.TeamRepository;
 import pt.ipca.justintime.utils.VacationUtils;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,35 +49,30 @@ public class TeamService {
     public boolean searchIfExists(Long id) {
         return teamRepository.exists(id);
     }
+
     //////////////////////////////////////////////////////////
     //                    Team method´s PRIVATE            //
     ////////////////////////////////////////////////////////
-    private boolean checkIfTeamExists(Long id)
-    {
-        if (id == null)
-        {
+    private boolean checkIfTeamExists(Long id) {
+        if (id == null) {
             return false;
-        }else if (searchIfExists(id)){
+        } else if (searchIfExists(id)) {
             return true;
         }
         return false;
     }
 
-    private boolean checkIfTeamExistsByName(Team team)
-    {
-        List <Team> teamsList = getAllTeams();
-        for (Team t : teamsList)
-        {
-            if (t.equals(team))
-            {
+    private boolean checkIfTeamExistsByName(Team team) {
+        List<Team> teamsList = getAllTeams();
+        for (Team t : teamsList) {
+            if (t.equals(team)) {
                 return true;
             }
         }
         return false;
     }
 
-    private String removeSpacesOnTheTeamName( String teamName)
-    {
+    private String removeSpacesOnTheTeamName(String teamName) {
         String result = teamName.replace(" ", "");
         return result;
     }
@@ -88,6 +80,7 @@ public class TeamService {
     //////////////////////////////////////////////////////////
     //               Team METHOD`S PUBLIC                  //
     ////////////////////////////////////////////////////////
+
     /**
      * Method to count the number of teams
      *
@@ -101,46 +94,38 @@ public class TeamService {
     }
 
 
-    public void updateTeamForm(TeamForm teamForm)
-    {
+    public void updateTeamForm(TeamForm teamForm) {
         Team team = teamFactory.transformTeamFormIntoTeam(teamForm);
         updateTeam(team);
     }
 
-  public boolean saveTeamForm(NewTeamForm teamForm)
-  {
-      Team team = teamFactory.transformNewTeamFormIntoTeam(teamForm);
-      removeSpacesOnTheTeamName(team.getTeamName());
-      team.setTeamName(removeSpacesOnTheTeamName(team.getTeamName()));
+    public boolean saveTeamForm(NewTeamForm teamForm) {
+        Team team = teamFactory.transformNewTeamFormIntoTeam(teamForm);
+        removeSpacesOnTheTeamName(team.getTeamName());
+        team.setTeamName(removeSpacesOnTheTeamName(team.getTeamName()));
 
-     if (checkIfTeamExistsByName(team))
-     {
-         return false;
-     }else {
-         saveTeam(team);
-     }
+        if (checkIfTeamExistsByName(team)) {
+            return false;
+        } else {
+            saveTeam(team);
+        }
         return true;
-  }
+    }
 
 
+    public boolean tryToRemoveTeam(TeamForm teamForm) {
+        Team team = teamFactory.transformTeamFormIntoTeam(teamForm);
 
-   public boolean tryToRemoveTeam(TeamForm teamForm){
-       Team team = teamFactory.transformTeamFormIntoTeam(teamForm);
-
-       if(checkIfTeamExists(team.getId()))
-       {
-           try {
-               deleteTeam(team.getId());
-               return true;
-           }catch (Exception e)
-           {
-               return false;
-           }
-       }
-       return false;
-   }
-
-
+        if (checkIfTeamExists(team.getId())) {
+            try {
+                deleteTeam(team.getId());
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
+    }
 
 
 }

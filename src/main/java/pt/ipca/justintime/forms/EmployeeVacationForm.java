@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pt.ipca.justintime.domain.Employee;
-import pt.ipca.justintime.domain.Vacation;
 
 @AllArgsConstructor
 @NoArgsConstructor

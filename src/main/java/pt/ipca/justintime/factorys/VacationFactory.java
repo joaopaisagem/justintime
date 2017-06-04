@@ -10,8 +10,7 @@ import pt.ipca.justintime.forms.VacationForm;
 @Component
 public class VacationFactory {
 
-    public VacationForm transformVacationIntoVacationForm(Vacation vacation)
-    {
+    public VacationForm transformVacationIntoVacationForm(Vacation vacation) {
         VacationForm vacationForm = new VacationForm();
         vacationForm.setId(vacation.getId());
         vacationForm.setVacationStartDay(vacation.getVacationStartDay());
@@ -20,17 +19,15 @@ public class VacationFactory {
         return vacationForm;
     }
 
-    public Vacation transformVacationFormIntoVacation(VacationForm vacationForm)
-    {
+    public Vacation transformVacationFormIntoVacation(VacationForm vacationForm) {
         Vacation vacation = new Vacation();
 
         vacation.setId(vacationForm.getId());
         vacation.setVacationStartDay(vacationForm.getVacationStartDay());
         vacation.setVacationEndDay(vacationForm.getVacationEndDay());
 
-        return  vacation;
+        return vacation;
     }
-
 
 
 }

@@ -10,24 +10,22 @@ import pt.ipca.justintime.forms.ClientForm;
 @Component
 public class ClientFactory {
 
- public Client transformClientFormToClient(ClientForm clientForm)
- {
-    Client client = new Client();
-    client.setId(clientForm.getId());
-    client.setFirstName(clientForm.getFirstName());
-    client.setLastName(clientForm.getLastName());
-    client.setEmail(clientForm.getEmail());
-    client.setNif(clientForm.getNif());
-    client.setGender(clientForm.getGender());
-    client.setAddressOne(clientForm.getAddressOne());
-    client.setAddressTwo(clientForm.getAddressTwo());
-    client.setContactList(clientForm.getContactList());
-    client.setProjectList(clientForm.getProjectList());
-    return client;
- }
+    public Client transformClientFormToClient(ClientForm clientForm) {
+        Client client = new Client();
+        client.setId(clientForm.getId());
+        client.setFirstName(clientForm.getFirstName());
+        client.setLastName(clientForm.getLastName());
+        client.setEmail(clientForm.getEmail());
+        client.setNif(clientForm.getNif());
+        client.setGender(clientForm.getGender());
+        client.setAddressOne(clientForm.getAddressOne());
+        client.setAddressTwo(clientForm.getAddressTwo());
+        client.setContactList(clientForm.getContactList());
+        client.setProjectList(clientForm.getProjectList());
+        return client;
+    }
 
-    public ClientForm transformClientToClientForm(Client client)
-    {
+    public ClientForm transformClientToClientForm(Client client) {
         ClientForm clientForm = new ClientForm();
         clientForm.setId(client.getId());
         clientForm.setFirstName(client.getFirstName());
@@ -41,8 +39,6 @@ public class ClientFactory {
         clientForm.setProjectList(client.getProjectList());
         return clientForm;
     }
-
-
 
 
 }

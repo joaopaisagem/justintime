@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-xs-3 text-right boardtext">
                     <div></div>
-                    <span ></span>
+                    <span></span>
                 </div>
             </div>
         </div>
@@ -31,9 +31,10 @@
                         <td th:text="${employee.lastName}"></td>
                         <td th:text="${employee.employeeTeamName.teamName}"></td>
                         <td th:if="${!availableVacations.isEmpty()}" th:text="${availableVacations[iter.index]}"></td>
-                        <td th:if="${!unavailableVacations.isEmpty()}" th:text="${unavailableVacations[iter.index]}"></td>
-                        <td th:if="${availableVacations.isEmpty()}" >0</td>
-                        <td th:if="${unavailableVacations.isEmpty()}" >0</td>
+                        <td th:if="${!unavailableVacations.isEmpty()}"
+                            th:text="${unavailableVacations[iter.index]}"></td>
+                        <td th:if="${availableVacations.isEmpty()}">0</td>
+                        <td th:if="${unavailableVacations.isEmpty()}">0</td>
                     </tr>
                     </tbody>
                 </table>

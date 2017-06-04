@@ -10,8 +10,7 @@ import pt.ipca.justintime.forms.EmployeeForm;
 @Component
 public class EmployeeFactory {
 
-    public Employee transformEmployeeFormIntoEmployee(EmployeeForm employeeForm)
-    {
+    public Employee transformEmployeeFormIntoEmployee(EmployeeForm employeeForm) {
         Employee employee = new Employee();
 
         employee.setId(employeeForm.getId());
@@ -32,8 +31,7 @@ public class EmployeeFactory {
         return employee;
     }
 
-    public EmployeeForm transformEmployeeIntoEmployeeForm(Employee employee)
-    {
+    public EmployeeForm transformEmployeeIntoEmployeeForm(Employee employee) {
         EmployeeForm employeeForm = new EmployeeForm();
 
         employeeForm.setId(employee.getId());

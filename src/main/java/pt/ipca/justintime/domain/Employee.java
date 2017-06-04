@@ -1,14 +1,14 @@
 package pt.ipca.justintime.domain;
 
-import lombok.*;
-import org.hibernate.annotations.Where;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.Table;
 
 /**
  * @author Tiago Silva

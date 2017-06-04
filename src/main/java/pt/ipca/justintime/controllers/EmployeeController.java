@@ -5,14 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.factorys.EmployeeFactory;
 import pt.ipca.justintime.forms.EmployeeForm;
-import pt.ipca.justintime.repositories.AddressRepository;
 import pt.ipca.justintime.services.EmployeeService;
 import pt.ipca.justintime.services.TeamService;
 
@@ -30,6 +31,7 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
     private TeamService teamService;
     @Autowired
     private EmployeeFactory employeeFactory;
+
     /*
      * METHOD TO MAP AND SHOW EMPLOYEE FORM
      */
@@ -49,9 +51,7 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
         if (bindingResult.hasErrors()) {
             mav.addObject("errorssmsg", "Error saving employee");
             return mav;
-        }
-        else if( employeeService.saveEmployeeForm(employeeForm))
-        {
+        } else if (employeeService.saveEmployeeForm(employeeForm)) {
             mav.addObject("successmsg", "Success you save employee");
             return mav;
         }
@@ -64,27 +64,25 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
 
         List<Employee> employeesList = employeeService.getAllEmployees();
 
-        ModelAndView modelAndView = new ModelAndView("showallemployees","employeesList",employeesList);
+        ModelAndView modelAndView = new ModelAndView("showallemployees", "employeesList", employeesList);
         return modelAndView;
     }
 
 
     @RequestMapping(value = "/searchemployeetoedit", method = RequestMethod.GET)
     public ModelAndView showEditEmployeeForm() {
-        ModelAndView modelAndView = new ModelAndView("searchemployeetoedit","employee",new EmployeeForm());
+        ModelAndView modelAndView = new ModelAndView("searchemployeetoedit", "employee", new EmployeeForm());
         return modelAndView;
     }
 
     @RequestMapping(value = "/editemployee", method = RequestMethod.POST)
     public ModelAndView showEmployeeToEditById(Long id, EmployeeForm employeeForm) {
-        ModelAndView editModelAndView = new ModelAndView("editemployeeform" ,"employee", new EmployeeForm());
-        ModelAndView searchModelAndView = new ModelAndView("searchemployeetoedit","employee",new EmployeeForm());
-        if(id ==null)
-        {
-            searchModelAndView.addObject("errormessage","The id cannot be null !");
+        ModelAndView editModelAndView = new ModelAndView("editemployeeform", "employee", new EmployeeForm());
+        ModelAndView searchModelAndView = new ModelAndView("searchemployeetoedit", "employee", new EmployeeForm());
+        if (id == null) {
+            searchModelAndView.addObject("errormessage", "The id cannot be null !");
             return searchModelAndView;
-        }else
-        if (employeeService.getEmployeeById(id) != null) {
+        } else if (employeeService.getEmployeeById(id) != null) {
             editModelAndView.addObject("employee", employeeService.getEmployeeById(id));
             editModelAndView.addObject("teamList", teamService.getAllTeams());
             return editModelAndView;
@@ -93,8 +91,8 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
         return searchModelAndView;
     }
 
-    @RequestMapping(value = "/editemployee/edit",method = RequestMethod.POST)
-    public String checkEditEmployeeInfo(@Valid Employee employee, BindingResult bindingResult,ModelMap model) {
+    @RequestMapping(value = "/editemployee/edit", method = RequestMethod.POST)
+    public String checkEditEmployeeInfo(@Valid Employee employee, BindingResult bindingResult, ModelMap model) {
 
         if (bindingResult.hasErrors()) {
 
@@ -107,34 +105,32 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
         return "editemployeeform";
     }
 
-    @RequestMapping(value = "/searchemployeetodelete" , method = RequestMethod.GET)
-    public ModelAndView searchEmployeeToDelete (){
+    @RequestMapping(value = "/searchemployeetodelete", method = RequestMethod.GET)
+    public ModelAndView searchEmployeeToDelete() {
 
-        ModelAndView modelAndView = new ModelAndView("searchemployeetodelete","employee", new EmployeeForm());
+        ModelAndView modelAndView = new ModelAndView("searchemployeetodelete", "employee", new EmployeeForm());
         return modelAndView;
     }
 
-    @RequestMapping(value="/deleteemployee", method = RequestMethod.POST)
-    public ModelAndView deleteEmployee (EmployeeForm employeeForm){
+    @RequestMapping(value = "/deleteemployee", method = RequestMethod.POST)
+    public ModelAndView deleteEmployee(EmployeeForm employeeForm) {
 
         ModelAndView modelAndView = new ModelAndView("searchemployeetodelete", "employee", new EmployeeForm());
-        if(employeeForm.getId() == null)
-        {
-            modelAndView.addObject("errormessage","You must insert a valid id !");
+        if (employeeForm.getId() == null) {
+            modelAndView.addObject("errormessage", "You must insert a valid id !");
             return modelAndView;
-        }else if (employeeForm.getId()!= null)
-        {
-            if(employeeService.getEmployeeById(employeeForm.getId())!= null ){
+        } else if (employeeForm.getId() != null) {
+            if (employeeService.getEmployeeById(employeeForm.getId()) != null) {
 
-                       employeeService.deleteEmployee(employeeForm);
-                       modelAndView.addObject("successmessage","The employee was deleted");
-                       return modelAndView;
+                employeeService.deleteEmployee(employeeForm);
+                modelAndView.addObject("successmessage", "The employee was deleted");
+                return modelAndView;
             }
         }
-           modelAndView.addObject("errormessage","The employee was not found !");
-           return modelAndView;
+        modelAndView.addObject("errormessage", "The employee was not found !");
+        return modelAndView;
 
     }
 
-    
+
 }

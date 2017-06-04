@@ -2,19 +2,16 @@ package pt.ipca.justintime.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import pt.ipca.justintime.domain.Client;
 import pt.ipca.justintime.forms.ClientForm;
 import pt.ipca.justintime.services.ClientService;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Created by Shapeshifter on 28/05/2017.
@@ -88,31 +85,29 @@ public class ClientController extends WebMvcConfigurerAdapter {
 
     }
 
-    @RequestMapping(value = "/searchclienttodelete" , method = RequestMethod.GET)
-    public ModelAndView searchClientToDelete (){
+    @RequestMapping(value = "/searchclienttodelete", method = RequestMethod.GET)
+    public ModelAndView searchClientToDelete() {
 
-        ModelAndView modelAndView = new ModelAndView("searchclienttodelete","client", new ClientForm());
+        ModelAndView modelAndView = new ModelAndView("searchclienttodelete", "client", new ClientForm());
         return modelAndView;
     }
 
-    @RequestMapping(value="/deleteclient", method = RequestMethod.POST)
-    public ModelAndView deleteEmployee (ClientForm clientForm){
+    @RequestMapping(value = "/deleteclient", method = RequestMethod.POST)
+    public ModelAndView deleteEmployee(ClientForm clientForm) {
 
         ModelAndView modelAndView = new ModelAndView("searchclienttodelete", "client", new ClientForm());
-        if(clientForm.getId() == null)
-        {
-            modelAndView.addObject("errormessage","You must insert a valid id !");
+        if (clientForm.getId() == null) {
+            modelAndView.addObject("errormessage", "You must insert a valid id !");
             return modelAndView;
-        }else if (clientForm.getId()!= null)
-        {
-            if(clientService.getClientById(clientForm.getId())!= null ){
+        } else if (clientForm.getId() != null) {
+            if (clientService.getClientById(clientForm.getId()) != null) {
 
                 clientService.deleteClient(clientForm.getId());
-                modelAndView.addObject("successmessage","The Client was deleted");
+                modelAndView.addObject("successmessage", "The Client was deleted");
                 return modelAndView;
             }
         }
-        modelAndView.addObject("errormessage","The Client was not found !");
+        modelAndView.addObject("errormessage", "The Client was not found !");
         return modelAndView;
 
     }

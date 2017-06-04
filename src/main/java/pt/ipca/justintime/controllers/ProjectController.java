@@ -3,10 +3,11 @@ package pt.ipca.justintime.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import pt.ipca.justintime.domain.Project;
@@ -64,34 +65,32 @@ public class ProjectController extends WebMvcConfigurerAdapter {
     }
 
 
-    @RequestMapping(value = "/showproject",method = RequestMethod.GET)
+    @RequestMapping(value = "/showproject", method = RequestMethod.GET)
     public ModelAndView showProjectForm() {
-        ModelAndView modelAndView = new ModelAndView("searchprojecttoshow","project",new SearchProjectForm());
+        ModelAndView modelAndView = new ModelAndView("searchprojecttoshow", "project", new SearchProjectForm());
         return modelAndView;
     }
 
     @RequestMapping(value = "/showproject", method = RequestMethod.POST)
-    public ModelAndView showProjectById(@Valid @ModelAttribute("searchProjectForm")SearchProjectForm searchProjectForm , BindingResult bindingResult) {
-        ModelAndView searchModelAndView = new ModelAndView("searchprojecttoshow","project", searchProjectForm);
-        ModelAndView showModelAndView = new ModelAndView("showproject","project", new ProjectForm());
-        if(bindingResult.hasErrors())
-        {
-            searchModelAndView.addObject("errormessage","You need to insert a Id to search");
+    public ModelAndView showProjectById(@Valid @ModelAttribute("searchProjectForm") SearchProjectForm searchProjectForm, BindingResult bindingResult) {
+        ModelAndView searchModelAndView = new ModelAndView("searchprojecttoshow", "project", searchProjectForm);
+        ModelAndView showModelAndView = new ModelAndView("showproject", "project", new ProjectForm());
+        if (bindingResult.hasErrors()) {
+            searchModelAndView.addObject("errormessage", "You need to insert a Id to search");
             return searchModelAndView;
-        }else if (searchProjectForm.getId() != null)
-        {
+        } else if (searchProjectForm.getId() != null) {
             Project project = projectService.getProjectById(searchProjectForm.getId());
             if (project != null) {
                 showModelAndView.addObject("project", project);
                 return showModelAndView;
             }
 
-        }else
-        searchModelAndView.addObject("errormessage","There is no project with that id!");
+        } else
+            searchModelAndView.addObject("errormessage", "There is no project with that id!");
         return searchModelAndView;
     }
 
-    @RequestMapping(value = "/editproject", method= RequestMethod.GET)
+    @RequestMapping(value = "/editproject", method = RequestMethod.GET)
     public String showEditProjectForm(ModelMap model) {
         model.addAttribute("project", new Project());
         return "searcheditproject";
@@ -106,7 +105,7 @@ public class ProjectController extends WebMvcConfigurerAdapter {
         return "editprojectform";
     }
 
-    @RequestMapping(value = "/editproject/edit",method = RequestMethod.POST)
+    @RequestMapping(value = "/editproject/edit", method = RequestMethod.POST)
     public String checkPersonInfo(@Valid Project project, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -117,11 +116,11 @@ public class ProjectController extends WebMvcConfigurerAdapter {
         return "redirect:/projectresult";
     }
 
-    @RequestMapping(value ="/showallprojects", method = RequestMethod.GET)
-    public ModelAndView showAllProjects(){
+    @RequestMapping(value = "/showallprojects", method = RequestMethod.GET)
+    public ModelAndView showAllProjects() {
 
         ModelAndView modelAndView = new ModelAndView("showallprojects");
-        modelAndView.addObject("projectsList",projectService.getAllProjects());
+        modelAndView.addObject("projectsList", projectService.getAllProjects());
         return modelAndView;
 
     }

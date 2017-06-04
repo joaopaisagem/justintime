@@ -11,11 +11,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-            <form class="form-horizontal" th:action="@{/newproject}" th:object="${project}" method="post">
-            <fieldset th:replace="/projectfragments/projectform :: projectform">
+                <form class="form-horizontal" th:action="@{/newproject}" th:object="${project}" method="post">
+                    <fieldset th:replace="/projectfragments/projectform :: projectform">
 
-            </fieldset>
-            </form>
+                    </fieldset>
+                </form>
                 <div th:text="${successmessage}"></div>
                 <div th:text="${errormessage}"></div>
             </div>

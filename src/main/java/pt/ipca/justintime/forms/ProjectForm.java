@@ -10,10 +10,8 @@ import pt.ipca.justintime.domain.Client;
 import pt.ipca.justintime.domain.SoftwareDevelopmentCicle;
 import pt.ipca.justintime.domain.Team;
 
-import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 

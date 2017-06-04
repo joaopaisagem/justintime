@@ -81,17 +81,17 @@ public class VacationUtils {
 
         numberOfDays = maxDaysVacations - getTotalNumberOfWorkingDays(employeelistToCheck);
 
-        numberOfDays = numberOfDays-getTotalNumberOfWorkingDays(formVacations);
+        numberOfDays = numberOfDays - getTotalNumberOfWorkingDays(formVacations);
 
-            if (numberOfDays < 0 ) {
+        if (numberOfDays < 0) {
 
-                return -1;
+            return -1;
 
-            }else{
+        } else {
 
-                return numberOfDays;
+            return numberOfDays;
 
-            }
+        }
     }
 
     /**
@@ -100,6 +100,7 @@ public class VacationUtils {
      * Returns numberOfDays if the value still in the range and he can add more vacations
      * Returns -1 if the employee exceed the maxDaysVacations
      * The argument must specify a vacation List
+     *
      * @param employeeVacationList
      * @return
      */
@@ -112,11 +113,11 @@ public class VacationUtils {
 
         numberOfDays = maxDaysVacations - getTotalNumberOfWorkingDays(employeelistToCheck);
 
-        if (numberOfDays < 0 ) {
+        if (numberOfDays < 0) {
 
             return -1;
 
-        }else{
+        } else {
 
             return numberOfDays;
 

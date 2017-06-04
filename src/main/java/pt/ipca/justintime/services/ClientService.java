@@ -2,12 +2,9 @@ package pt.ipca.justintime.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pt.ipca.justintime.domain.Address;
 import pt.ipca.justintime.domain.Client;
-import pt.ipca.justintime.domain.Employee;
 import pt.ipca.justintime.factorys.ClientFactory;
 import pt.ipca.justintime.forms.ClientForm;
-import pt.ipca.justintime.forms.EmployeeForm;
 import pt.ipca.justintime.repositories.AddressRepository;
 import pt.ipca.justintime.repositories.ClientRepository;
 import pt.ipca.justintime.repositories.ContactRepository;
@@ -53,19 +50,18 @@ public class ClientService {
 
     public Client updateClient(Client client) {
 
-         addressRepository.save(client.getAddressOne());
+        addressRepository.save(client.getAddressOne());
 
 
-         addressRepository.save(client.getAddressTwo());
+        addressRepository.save(client.getAddressTwo());
 
 
-         contactRepository.save(client.getContactList());
+        contactRepository.save(client.getContactList());
 
-         return clientRepository.saveAndFlush(client);
+        return clientRepository.saveAndFlush(client);
     }
 
-    public void deleteClient(Long id)
-    {
+    public void deleteClient(Long id) {
         clientRepository.delete(id);
     }
 
@@ -77,21 +73,18 @@ public class ClientService {
     private boolean checkIfClientExists(Client client) {
 
         List<Client> clientsList = clientRepository.findAll();
-        for(Client client1 : clientsList)
-        {
-            if (client.equals(client1))
-            {
+        for (Client client1 : clientsList) {
+            if (client.equals(client1)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean saveClientForm (ClientForm clientForm){
+    public boolean saveClientForm(ClientForm clientForm) {
 
         Client client = clientFactory.transformClientFormToClient(clientForm);
-        if (checkIfClientExists(client))
-        {
+        if (checkIfClientExists(client)) {
             return false;
         }
         saveClient(client);
@@ -102,12 +95,10 @@ public class ClientService {
 
         Client client = clientFactory.transformClientFormToClient(clientForm);
 
-        ClientForm form =clientFactory.transformClientToClientForm(updateClient(client));
+        ClientForm form = clientFactory.transformClientToClientForm(updateClient(client));
 
-         return form;
+        return form;
     }
-
-
 
 
 }

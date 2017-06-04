@@ -1,4 +1,5 @@
 package pt.ipca.justintime.forms;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,6 @@ import pt.ipca.justintime.domain.Contact;
 import pt.ipca.justintime.domain.Gender;
 import pt.ipca.justintime.domain.Project;
 
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Max;

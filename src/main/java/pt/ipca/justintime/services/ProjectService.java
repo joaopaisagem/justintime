@@ -42,23 +42,20 @@ public class ProjectService {
     //              Project METHOD`S                       //
     ////////////////////////////////////////////////////////
 
-    public boolean checkIfProjectExists(Project project){
+    public boolean checkIfProjectExists(Project project) {
         List<Project> projectList = projectRepository.findAll();
-        for(Project proj : projectList)
-        {
-            if (proj.equals(project))
-            {
+        for (Project proj : projectList) {
+            if (proj.equals(project)) {
                 return true;
             }
         }
         return false;
     }
-    public boolean saveProjectForm(Project projectForm)
-    {
-       if(checkIfProjectExists(projectForm))
-       {
-           return false;
-       }
+
+    public boolean saveProjectForm(Project projectForm) {
+        if (checkIfProjectExists(projectForm)) {
+            return false;
+        }
         saveProject(projectForm);
         return true;
     }
