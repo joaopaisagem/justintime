@@ -41,7 +41,6 @@
                         <div class="panel-footer">
                             <div class="row form-group">
                             <span class="pull-left panel-title">Employees with vacation this month!</span>
-                                &nbsp;
                             </div>
                             <div class="row form-group">
                             <div class="progress">
@@ -67,19 +66,32 @@
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div class="panel-title"> Number of Teams</div>
-
+                                &nbsp;
                                 <div class="panel-title" th:text="${totalNumberOfTeams}"></div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
                         <div class="row form-group">
-                            <span class="pull-left panel-title">Teams with vacation this month!</span>
+                            <span th:if="${!getTeamsWithVacationsForCurrentMonth.isEmpty()}" class="pull-left panel-title">Teams with vacation this month!</span>
+                            <span th:if="${getTeamsWithVacationsForCurrentMonth.isEmpty()}" class="pull-left panel-title">There are no teams this month with vacations!</span>
                         </div>
                         <div class="row form-group">
                             <div>
+                                <div th:each="team : ${getTeamsWithVacationsForCurrentMonth}">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Team Name</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td th:text="${team.teamName}"></td>
+                                        </tr>
 
-                                <div th:text="${getTeamsWithVacationsForCurrentMonth}">
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
