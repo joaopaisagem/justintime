@@ -19,6 +19,7 @@ import javax.validation.Valid;
  * @number a7809
  * @email a7809@alunos.ipca.pt
  */
+
 @Controller
 public class ClientController extends WebMvcConfigurerAdapter {
     @Autowired
