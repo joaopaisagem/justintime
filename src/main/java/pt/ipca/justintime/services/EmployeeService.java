@@ -112,15 +112,18 @@ public class EmployeeService {
      * updates the employee from database
      * dosent have a return type
      *
-     * @param employee
+     * @param employee to edit
+     * @return edited employee
      */
-    public void updateEmployee(Employee employee) {
+    public Employee updateEmployee(Employee employee) {
 
         addressRepository.save(employee.getAddressOne());
         addressRepository.save(employee.getAddressTwo());
         contactRepository.save(employee.getContactList());
         workSkillRepository.save(employee.getSkillList());
-        employeeRepository.saveAndFlush(employee);
+
+        return employeeRepository.saveAndFlush(employee);
+
     }
 
     /**

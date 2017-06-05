@@ -157,7 +157,6 @@ public class TeamController extends WebMvcConfigurerAdapter {
 
             return modelAndView;
         }
-
         teamService.updateTeamForm(teamForm);
         modelAndView.addObject("successmessage", "The team name was edited!");
 

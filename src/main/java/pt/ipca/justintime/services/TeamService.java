@@ -115,6 +115,7 @@ public class TeamService {
     public void updateTeamForm(TeamForm teamForm) {
 
         Team team = teamFactory.transformTeamFormIntoTeam(teamForm);
+        team.setTeamName(removeSpacesOnTheTeamName(team.getTeamName()));
         updateTeam(team);
     }
 

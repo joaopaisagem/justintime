@@ -129,7 +129,7 @@ public class ClientController extends WebMvcConfigurerAdapter {
      * @return searchModelAndView , editModelAndView
      */
     @RequestMapping(value = "/editclient", method = RequestMethod.GET)
-    public ModelAndView showEditClientForm(@Valid @ModelAttribute("editclientform") ClientForm clientForm) {
+    public ModelAndView showEditClientForm(ClientForm clientForm) {
 
         ModelAndView searchModelAndView = new ModelAndView("searchclienttoedit", "client", new ClientForm());
         ModelAndView editModelAndView = new ModelAndView("editclientform", "client", new ClientForm());
@@ -137,16 +137,15 @@ public class ClientController extends WebMvcConfigurerAdapter {
         if (clientForm.getId() == null) {
 
             searchModelAndView.addObject("errormessage", "The id cannot be null !");
-
+            searchModelAndView.addObject("client",clientForm);
             return searchModelAndView;
         } else if (clientService.getClientById(clientForm.getId()) != null) {
 
-            editModelAndView.addObject(clientService.getClientById(clientForm.getId()));
-
+            editModelAndView.addObject("client",clientService.getClientById(clientForm.getId()));
             return editModelAndView;
         }
         searchModelAndView.addObject("errormessage", "The client could not be found!");
-
+        searchModelAndView.addObject("client",clientForm);
         return searchModelAndView;
     }
 

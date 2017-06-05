@@ -85,15 +85,15 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
 
         if (bindingResult.hasErrors()) {
 
-            mav.addObject("errorssmsg", "Error saving employee");
+            mav.addObject("errormessage", "Error saving employee");
 
             return mav;
         } else if (employeeService.saveEmployeeForm(employeeForm)) {
 
-            mav.addObject("successmsg", "Success you save employee");
+            mav.addObject("successmessage", "Success you save employee");
             return mav;
         }
-        mav.addObject("errorssmsg", "The employee already exists");
+        mav.addObject("errormessage", "The employee already exists");
 
         return mav;
     }
@@ -144,7 +144,7 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
     @RequestMapping(value = "/editemployee", method = RequestMethod.POST)
     public ModelAndView showEmployeeToEditById(Long id) {
 
-        ModelAndView editModelAndView = new ModelAndView("editemployeeform", "employee", new EmployeeForm());
+        ModelAndView editModelAndView = new ModelAndView("editemployeeform");
         ModelAndView searchModelAndView = new ModelAndView("searchemployeetoedit", "employee", new EmployeeForm());
 
         if (id == null) {
@@ -184,7 +184,9 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
     @RequestMapping(value = "/editemployee/edit", method = RequestMethod.POST)
     public ModelAndView checkEditEmployeeInfo(@Valid EmployeeForm employeeForm, BindingResult bindingResult) {
 
-        ModelAndView modelAndView = new ModelAndView("editemployeeform");
+        Employee employee = employeeFactory.transformEmployeeFormIntoEmployee(employeeForm);
+        ModelAndView modelAndView = new ModelAndView("editemployeeform","employee", employeeForm);
+        modelAndView.addObject("teamList", teamService.getAllTeams());
 
         if (bindingResult.hasErrors()) {
 
@@ -193,10 +195,8 @@ public class EmployeeController extends WebMvcConfigurerAdapter {
 
             return modelAndView;
         }
-        Employee employee = employeeFactory.transformEmployeeFormIntoEmployee(employeeForm);
-        employeeService.updateEmployee(employee);
-        Employee editedEmployee = employeeService.getEmployeeById(employee.getId());
-        modelAndView.addObject("employee",editedEmployee);
+
+        modelAndView.addObject("employee",employeeService.updateEmployee(employee));
         modelAndView.addObject("successmessage", "You edit successfull the employee");
 
         return modelAndView;
