@@ -28,9 +28,9 @@ public class ClientController extends WebMvcConfigurerAdapter {
 
 
     /**
-     * This method dosen´t receive any arguments
-     * Is used to show the client form to the user
-     * It created a ModelAndView  with the viewname:clienform
+     * This method doesnt receive any arguments
+     * Show the client form to the user
+     * Create a ModelAndView  with the viewname:clienform
      * We construct a new ClientForm() and return the view
      *
      * @return the view for a new client
@@ -46,19 +46,19 @@ public class ClientController extends WebMvcConfigurerAdapter {
 
     /**
      * This method received two arguments
-     * The first one is the client submited on the clientform method
+     * The first one is the client submitted on the clientform method
      * The second argument is BindingResult
      * The BindingResult is a general interface that represents binding results.
      * Extends the interface for error registration capabilities, allowing for a Validator to be applied, and adds binding-specific analysis and model building.
      * Serves as result holder for a DataBinder, obtained via the DataBinder.getBindingResult() method.
      * BindingResult implementations can also be used directly, for example to invoke a Validator on it (e.g. as part of a unit test).
-     * It created a ModelAndView  with the  viewname: clientform
+     * Create a ModelAndView  with the  viewname: clientform
      * The client submitted must pass all validation fromt the bean ClientForm()
      * If the bindingResult has errors return the clientform with bindingResult Errors , and an error message
      * If there is no errors we try to save the client , if case of success we return the clientform with the client saved and with a success message
      * in case of this client exists we return the clientform with error message
      *
-     * @param clientForm the new client to be saved
+     * @param clientForm    the new client to be saved
      * @param bindingResult represents binding results from the model ClientForm()
      * @return view with clientform
      */
@@ -66,6 +66,7 @@ public class ClientController extends WebMvcConfigurerAdapter {
     public ModelAndView checkNewClientInfo(@Valid @ModelAttribute("clientform") ClientForm clientForm, BindingResult bindingResult) {
 
         ModelAndView cliForm = new ModelAndView("clientform");
+
         if (bindingResult.hasErrors()) {
 
             cliForm.addObject("clientform", clientForm);
@@ -86,7 +87,7 @@ public class ClientController extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * This method dosen´t recieve any arguments
+     * This method doesnt recieve any arguments
      * It cereates a ModelAndView with viewName:showallclients , modelName: clientsList , getAllClients()
      *
      * @return a view with all clients
@@ -100,7 +101,7 @@ public class ClientController extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * This method dosen´t recieve any arguments
+     * This method doesnt recieve any arguments
      * It cereates a ModelAndView with viewName: searchclienttoedit , modelName: client , ClientForm()
      *
      * @return the view to search for a client id
@@ -113,9 +114,10 @@ public class ClientController extends WebMvcConfigurerAdapter {
         return editClient;
     }
 
-    /**This method received one arguments
-     * The argument is the id submited on the clientform by the showSearchClientForm method
-     * Its created two ModelAndView variables
+    /**
+     * This method received one arguments
+     * The argument is the id submitted on the clientform by the showSearchClientForm method
+     * Create two ModelAndView variables
      * The first one its searchModelAndView that is used to return the searchform again in case of errors
      * The second one its editModelAndView that is used to return the client to edit
      * It checks if the clientform ID is null , if true returns the searchform again with error message
@@ -131,6 +133,7 @@ public class ClientController extends WebMvcConfigurerAdapter {
 
         ModelAndView searchModelAndView = new ModelAndView("searchclienttoedit", "client", new ClientForm());
         ModelAndView editModelAndView = new ModelAndView("editclientform", "client", new ClientForm());
+
         if (clientForm.getId() == null) {
 
             searchModelAndView.addObject("errormessage", "The id cannot be null !");
@@ -149,18 +152,18 @@ public class ClientController extends WebMvcConfigurerAdapter {
 
     /**
      * This method receive two arguments
-     * The first one is the client submited by showEditClientForm() method
+     * The first one is the client submitted by showEditClientForm() method
      * The second argument is BindingResult
      * The BindingResult is a general interface that represents binding results.
      * Extends the interface for error registration capabilities, allowing for a Validator to be applied, and adds binding-specific analysis and model building.
      * Serves as result holder for a DataBinder, obtained via the DataBinder.getBindingResult() method.
      * BindingResult implementations can also be used directly, for example to invoke a Validator on it (e.g. as part of a unit test).
-     * It creats a ModelAndView  with the  viewname: editclientform
+     * Create a ModelAndView  with the  viewname: editclientform
      * The client submitted must pass all validation fromt the bean ClientForm()
      * If the bindingResult has errors return the clientform with bindingResult Errors , and  error message
      * If there is no errors we update the client and return the clientform with the client updated and with a success message
      *
-     * @param clientForm the edited client
+     * @param clientForm    the edited client
      * @param bindingResult the validation from bean ClientForm()
      * @return modelAndView: editclientform
      */
@@ -168,6 +171,7 @@ public class ClientController extends WebMvcConfigurerAdapter {
     public ModelAndView editClientForm(@Valid @ModelAttribute("clientForm") ClientForm clientForm, BindingResult bindingResult) {
 
         ModelAndView modelAndView = new ModelAndView("editclientform");
+
         if (bindingResult.hasErrors()) {
 
             modelAndView.addObject("client", clientForm);
@@ -176,13 +180,13 @@ public class ClientController extends WebMvcConfigurerAdapter {
             return modelAndView;
         } else
             modelAndView.addObject("client", clientService.editClientForm(clientForm));
-            modelAndView.addObject("successmessage", "The client was edited !");
+        modelAndView.addObject("successmessage", "The client was edited !");
 
-            return modelAndView;
+        return modelAndView;
     }
 
     /**
-     * This method dosen´t recieve any arguments
+     * This method doesnt recieve any arguments
      * It cereates a ModelAndView with viewName: searchclienttodelete , modelName: client , ClientForm()
      *
      * @return modelAndView to search the client by id
@@ -198,7 +202,7 @@ public class ClientController extends WebMvcConfigurerAdapter {
     /**
      * This method receive one argument
      * The argument is a clientForm and brings only the id of the client to delete
-     * it creates a ModelandView "searchclienttodelete"
+     * Create a ModelandView "searchclienttodelete"
      * if the id is null we return a error message with the view to searchclienttodelete
      * otherwise it checks if the client exists , if true  delete the client and return success message
      * if false return a error message and the view to searchclienttodelete
@@ -210,6 +214,7 @@ public class ClientController extends WebMvcConfigurerAdapter {
     public ModelAndView deleteEmployee(ClientForm clientForm) {
 
         ModelAndView modelAndView = new ModelAndView("searchclienttodelete", "client", new ClientForm());
+
         if (clientForm.getId() == null) {
 
             modelAndView.addObject("errormessage", "You must insert a valid id !");
@@ -229,5 +234,5 @@ public class ClientController extends WebMvcConfigurerAdapter {
 
         return modelAndView;
     }
-    
+
 }

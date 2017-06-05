@@ -23,8 +23,15 @@ public class IndexController extends WebMvcConfigurerAdapter {
     @Autowired
     private TeamService teamService;
 
+    /**
+     * This method only retrieve the index view with statistics and some random information
+     *
+     * @return view
+     */
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView projectForm() {
+
         ModelAndView view = new ModelAndView("index");
         view.addObject("totalEmployees", employeeService.getNumberOfTotalEmployees());
         view.addObject("vacationToCurrentMonth",employeeService.getPercentageOfEmployeesWithVacationInCurrentMonth());

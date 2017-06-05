@@ -46,6 +46,15 @@ public class VacationController extends WebMvcConfigurerAdapter {
     @Autowired
     private VacationFactory vacationFactory;
 
+    /**
+     * This method dosent recieve any arguments
+     * Creates a ModelAndView to show vacations
+     * Creates a list of employees
+     * Add 4 objects to ModelAndview
+     * employeeList. availablevacations , unavailablevacations , teams
+
+     * @return view
+     */
     @RequestMapping(value = "/vacation", method = RequestMethod.GET)
     public ModelAndView vacationForm() {
 
@@ -53,25 +62,42 @@ public class VacationController extends WebMvcConfigurerAdapter {
         List<Employee> employeeList = employeeService.getAllEmployees();
 
         vacationForm.addObject("employeeList", employeeList);
-
         vacationForm.addObject("availableVacations", employeeService.getAllAvailableDaysVacations(employeeList));
-
         vacationForm.addObject("unavailableVacations", employeeService.getAllUnavailableDaysVacations(employeeList));
-
         vacationForm.addObject("teams", teamService.getAllTeams());
 
         return vacationForm;
     }
 
+    /**
+     * This method dosent receive any arguments
+     * Creates a ModelAndView to search employee
+     *
+     * @return modelAndView
+     */
     @RequestMapping(value = "/searchemployeevacation", method = RequestMethod.GET)
     public ModelAndView showSearchEmployeeForm() {
 
         ModelAndView modelAndView = new ModelAndView("searchemployeevacation", "employee", new EmployeeForm());
+
         return modelAndView;
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be one employee id
+     * Creates two ModelAndView (searchModelAndView ,addModelAndView)
+     * checks if the id is null, if true return error message with searchModelAndView
+     * if id != null checks if employee exists if true checks the number of vacations the employee have
+     * if numberOfEmployeeVacations == -1  return addModelAndView with error message , this employee exceed the limit of vacations
+     * else save the vacations in the employee and return addModelAndView
+     * if employee dosent exists return searchModelAndView with error message
+     *
+     * @param id employee id to add vacations
+     * @return searchModelAndView, addModelAndView
+     */
     @RequestMapping(value = "/searchemployeevacation", method = RequestMethod.POST)
-    public ModelAndView searchEmployeeForVacationForm(Long id, EmployeeForm employeeForm, RedirectAttributes redirectAttributes) {
+    public ModelAndView searchEmployeeForVacationForm(Long id) {
 
         ModelAndView searchModelAndView = new ModelAndView("searchemployeevacation", "employee", new EmployeeForm());
         ModelAndView addModelAndView = new ModelAndView("addemployeevacation", "employee", new EmployeeForm());
@@ -81,49 +107,44 @@ public class VacationController extends WebMvcConfigurerAdapter {
             searchModelAndView.addObject("errormessage", "Employee cannot be null!");
 
             return searchModelAndView;
-
         } else if (employeeService.getEmployeeById(id) != null) {
 
             Employee employee = employeeService.getEmployeeById(id);
-
             int numberOfEmployeeVacations = vacationUtils.numberOfAvailableDays(employee.getVacationList());
-
             EmployeeVacationForm employeeVacationForm = new EmployeeVacationForm();
 
             if (numberOfEmployeeVacations == -1) {
 
                 employeeVacationForm.setEmployee(employeeFactory.transformEmployeeIntoEmployeeForm(employee));
-
                 employeeVacationForm.setVacation(new VacationForm());
 
                 addModelAndView.addObject("errormessage", "The employee cannot have more vacation days");
-
                 addModelAndView.addObject("numberOfEmployeeVacations", "0");
-
                 addModelAndView.addObject("employeeVacation", employeeVacationForm);
 
                 return addModelAndView;
-
             } else {
 
                 employeeVacationForm.setEmployee(employeeFactory.transformEmployeeIntoEmployeeForm(employee));
-
                 employeeVacationForm.setVacation(new VacationForm());
 
                 addModelAndView.addObject("numberOfEmployeeVacations", numberOfEmployeeVacations);
-
                 addModelAndView.addObject("employeeVacation", employeeVacationForm);
 
                 return addModelAndView;
             }
         }
-        //addModelAndView.addObject("employee", new EmployeeForm());
-
         searchModelAndView.addObject("errormessage", "Employee cannot be found!");
 
         return searchModelAndView;
     }
 
+    /**
+     *
+     * @param form
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/addemployeevacation", method = RequestMethod.POST)
     public String showEmployeeToAddVacation(EmployeeVacationForm form, ModelMap model) {
 
@@ -133,7 +154,6 @@ public class VacationController extends WebMvcConfigurerAdapter {
         Vacation vacation = vacationFactory.transformVacationFormIntoVacation(form.getVacation());
         List<Vacation> vacationList = new ArrayList<>();
         vacationList.add(vacation);
-
         employeeVacationForm.setEmployee(employeeForm);
 
 
@@ -142,9 +162,7 @@ public class VacationController extends WebMvcConfigurerAdapter {
             if (vacationUtils.numberOfAvailableDays(employee.getVacationList(), vacation) == -1) {
 
                 model.addAttribute("employeeVacation", employeeVacationForm);
-
                 model.addAttribute("numberOfEmployeeVacations", "You Exceede the limit");
-
                 model.addAttribute("errormessage", "You cannot add more than 22 days of vacations");
 
                 return "addemployeevacation";
@@ -154,9 +172,7 @@ public class VacationController extends WebMvcConfigurerAdapter {
                 if (vacationUtils.checkIfVacationsExist(vacation, employee.getVacationList())) {
 
                     model.addAttribute("employeeVacation", employeeVacationForm);
-
                     model.addAttribute("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
-
                     model.addAttribute("errormessage", "The vacations you selected are already in you vacation period");
 
                     return "addemployeevacation";
@@ -165,35 +181,30 @@ public class VacationController extends WebMvcConfigurerAdapter {
                     employeeVacationForm.setEmployee(employeeFactory.transformEmployeeIntoEmployeeForm(employeeService.saveEmployeeVacations(vacation, employee)));
 
                     model.addAttribute("employeeVacation", employeeVacationForm);
-
                     model.addAttribute("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
-
                     model.addAttribute("successmessage", "Success you save vacations in your employee");
 
                     return "addemployeevacation";
-
                 }
             } else {
+
                 model.addAttribute("employeeVacation", employeeVacationForm);
-
                 model.addAttribute("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
-
                 model.addAttribute("errormessage", "you need to insert dates in the future");
 
                 return "addemployeevacation";
             }
 
         } else {
+
             model.addAttribute("employeeVacation", employeeVacationForm);
-
             model.addAttribute("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
-
             model.addAttribute("errormessage", "you need to insert a start date and end date");
 
             return "addemployeevacation";
         }
-
     }
+
 
     @RequestMapping(value = "/searchemployeetoeditvacations", method = RequestMethod.GET)
     public ModelAndView searchEmployeeToEditVacations() {
