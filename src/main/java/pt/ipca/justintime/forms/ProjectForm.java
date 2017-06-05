@@ -29,23 +29,27 @@ import java.time.LocalDate;
 public class ProjectForm {
 
     private Long id;
+
     @NotEmpty
     private String projectName;
+
     @NotEmpty
     private String projectDescription;
+
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectStartDate;
+
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectEndDate;
+
     @NotNull
     private Client client;
+
     @NotNull
     private Team assignedTeam;
 
     @Enumerated(EnumType.STRING)
     private SoftwareDevelopmentCicle status;
-
-
 }

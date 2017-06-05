@@ -22,5 +22,6 @@ public class WorkSkill {
     @Id
     @GeneratedValue
     private Long id;
+
     private String nameOfSkill;
 }

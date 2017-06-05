@@ -13,6 +13,14 @@ import pt.ipca.justintime.forms.ClientForm;
 @Component
 public class ClientFactory {
 
+    /**
+     * This method receive one argument
+     * The argument must be ClientForm
+     * Transform one ClientForm into a client
+     *
+     * @param clientForm a clientForm to transform in client
+     * @return client
+     */
     public Client transformClientFormToClient(ClientForm clientForm) {
         Client client = new Client();
         client.setId(clientForm.getId());
@@ -28,6 +36,14 @@ public class ClientFactory {
         return client;
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be Client
+     * Transform one Client into a ClientForm
+     *
+     * @param client  to transform in clientform
+     * @return clientForm
+     */
     public ClientForm transformClientToClientForm(Client client) {
         ClientForm clientForm = new ClientForm();
         clientForm.setId(client.getId());
@@ -42,6 +58,5 @@ public class ClientFactory {
         clientForm.setProjectList(client.getProjectList());
         return clientForm;
     }
-
 
 }

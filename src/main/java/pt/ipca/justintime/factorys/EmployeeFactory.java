@@ -13,7 +13,16 @@ import pt.ipca.justintime.forms.EmployeeForm;
 @Component
 public class EmployeeFactory {
 
+    /**
+     * This method receive one argument
+     * The argument must be EmployeeForm
+     * Transform one EmployeeForm into a Employee
+     *
+     * @param employeeForm to transform in employee
+     * @return employee
+     */
     public Employee transformEmployeeFormIntoEmployee(EmployeeForm employeeForm) {
+
         Employee employee = new Employee();
 
         employee.setId(employeeForm.getId());
@@ -34,7 +43,16 @@ public class EmployeeFactory {
         return employee;
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be one Employee
+     * Transform one Employee into a EmployeeForm
+     *
+     * @param employee  to transform into employeeForm
+     * @return employeeForm
+     */
     public EmployeeForm transformEmployeeIntoEmployeeForm(Employee employee) {
+
         EmployeeForm employeeForm = new EmployeeForm();
 
         employeeForm.setId(employee.getId());

@@ -18,7 +18,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 
-
 public class VacationForm {
 
     private Long id;
@@ -28,5 +27,4 @@ public class VacationForm {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate vacationEndDay;
-
 }

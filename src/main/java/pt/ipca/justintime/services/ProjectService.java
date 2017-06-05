@@ -18,50 +18,96 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    //////////////////////////////////////////////////////////
-    //               CRUD METHOD`S                         //
-    ////////////////////////////////////////////////////////
+    /**
+     * This method receive one argument
+     * The argument must be a Project
+     * Save a project into database
+     *
+     * @param project to save
+     * @return saved project
+     */
     public Project saveProject(Project project) {
+
         return projectRepository.save(project);
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be a Long id
+     * Gets from database a project by id
+     *
+     * @param id project id
+     * @return project
+     */
     public Project getProjectById(Long id) {
+
         return projectRepository.findOne(id);
     }
 
+    /**
+     * This method dosent receive arguments
+     * Gets all projects from database
+     *
+     * @return List<Project>
+     */
     public List<Project> getAllProjects() {
+
         return projectRepository.findAll();
-
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be a project
+     * updates the project
+     * dosent return any type
+     *
+     * @param project project to update
+     */
     public void updateProject(Project project) {
+
         projectRepository.saveAndFlush(project);
-
     }
 
-    public void deleteProject(Long id) {
-        projectRepository.delete(id);
-    }
-
-    //////////////////////////////////////////////////////////
-    //              Project METHOD`S                       //
-    ////////////////////////////////////////////////////////
-
+    /**
+     * This method receive one argument
+     * The argument must be a project
+     * Checks if the project exists
+     *
+     * @param project to check
+     * @return TRUE , FALSE
+     */
     public boolean checkIfProjectExists(Project project) {
+
         List<Project> projectList = projectRepository.findAll();
         for (Project proj : projectList) {
+
             if (proj.equals(project)) {
+
                 return true;
             }
         }
+
         return false;
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be a project
+     * Checks if the project exists
+     * if returns false means the project exists so it dosent save
+     * if return true save the project into database
+     *
+     * @param projectForm project to save
+     * @return TRUE, FALSE
+     */
     public boolean saveProjectForm(Project projectForm) {
+
         if (checkIfProjectExists(projectForm)) {
+
             return false;
         }
         saveProject(projectForm);
+
         return true;
     }
 

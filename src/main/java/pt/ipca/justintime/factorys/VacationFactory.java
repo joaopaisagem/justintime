@@ -14,7 +14,16 @@ import pt.ipca.justintime.forms.VacationForm;
 @Component
 public class VacationFactory {
 
+    /**
+     * This method receive one argument
+     * The argument must be one vacation
+     * Transform the vacation into vacationForm
+     *
+     * @param vacation
+     * @return vacationForm
+     */
     public VacationForm transformVacationIntoVacationForm(Vacation vacation) {
+
         VacationForm vacationForm = new VacationForm();
         vacationForm.setId(vacation.getId());
         vacationForm.setVacationStartDay(vacation.getVacationStartDay());
@@ -23,7 +32,16 @@ public class VacationFactory {
         return vacationForm;
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be one vacationForm
+     * Transform the vacationForm into vacation
+     *
+     * @param vacationForm
+     * @return vacation
+     */
     public Vacation transformVacationFormIntoVacation(VacationForm vacationForm) {
+
         Vacation vacation = new Vacation();
 
         vacation.setId(vacationForm.getId());

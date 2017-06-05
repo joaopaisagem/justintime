@@ -24,6 +24,7 @@ import java.util.List;
 public class NewTeamForm {
 
     private Long id;
+
     @NotEmpty
     private String teamName;
 

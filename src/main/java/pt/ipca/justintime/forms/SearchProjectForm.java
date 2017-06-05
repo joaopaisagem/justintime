@@ -22,6 +22,4 @@ public class SearchProjectForm {
 
     @NotNull
     private Long id;
-
-
 }

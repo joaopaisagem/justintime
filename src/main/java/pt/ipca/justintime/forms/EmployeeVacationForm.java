@@ -16,7 +16,8 @@ import lombok.Setter;
  * @email a7809@alunos.ipca.pt
  */
 public class EmployeeVacationForm {
-    private EmployeeForm employee;
-    private VacationForm vacation;
 
+    private EmployeeForm employee;
+
+    private VacationForm vacation;
 }

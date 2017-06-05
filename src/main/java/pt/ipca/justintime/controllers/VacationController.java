@@ -140,14 +140,28 @@ public class VacationController extends WebMvcConfigurerAdapter {
     }
 
     /**
+     * This method receive one argument
+     * The argument must be one employeeVacationForm
+     * Creates a ModelAndView viewName:addemployeevacation
+     * getEmployeeById , creates new employeeVacationForm , transform employee to employeeform
+     * Transform vacationForm into vacation
+     * Creates a list of vacations for checks
+     * Sets the employeeForm to employeevacationForm.setEmployee
+     * Calls a method checkIfTheVacationIsNull( vacation )
+     * if false calls method numberOfAvailableDays ( vacationlist , vacation ) to get the number of available days for the employee
+     * if numberOfAvailableDays == -1 the employee cannot have more vacation days ans returns modelAndView
+     * checks if the dates insert by user are in future atleaste 1 day, from localdate.now() - checkIfVacationsAreInFuture(vacation)
+     * if true checkIfVacationsExist( vacation , vacationlist)
+     * if checkIfVacationsExist gives true returns modelAndView with error message
+     * if false saves vacation into the employee
      *
-     * @param form
-     * @param model
-     * @return
+     * @param form EmployeeVacationForm
+     * @return modelAndview
      */
     @RequestMapping(value = "/addemployeevacation", method = RequestMethod.POST)
-    public String showEmployeeToAddVacation(EmployeeVacationForm form, ModelMap model) {
+    public ModelAndView showEmployeeToAddVacation(EmployeeVacationForm form) {
 
+        ModelAndView modelAndView = new ModelAndView("addemployeevacation");
         Employee employee = employeeService.getEmployeeById(form.getEmployee().getId());
         EmployeeVacationForm employeeVacationForm = new EmployeeVacationForm();
         EmployeeForm employeeForm = employeeFactory.transformEmployeeIntoEmployeeForm(employee);
@@ -161,135 +175,188 @@ public class VacationController extends WebMvcConfigurerAdapter {
 
             if (vacationUtils.numberOfAvailableDays(employee.getVacationList(), vacation) == -1) {
 
-                model.addAttribute("employeeVacation", employeeVacationForm);
-                model.addAttribute("numberOfEmployeeVacations", "You Exceede the limit");
-                model.addAttribute("errormessage", "You cannot add more than 22 days of vacations");
+                modelAndView.addObject("employeeVacation", employeeVacationForm);
+                modelAndView.addObject("numberOfEmployeeVacations", "You Exceede the limit");
+                modelAndView.addObject("errormessage", "You cannot add more than 22 days of vacations");
 
-                return "addemployeevacation";
+                return modelAndView;
 
             } else if (vacationUtils.checkIfVacationsAreInFuture(vacation)) {
 
                 if (vacationUtils.checkIfVacationsExist(vacation, employee.getVacationList())) {
 
-                    model.addAttribute("employeeVacation", employeeVacationForm);
-                    model.addAttribute("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
-                    model.addAttribute("errormessage", "The vacations you selected are already in you vacation period");
+                    modelAndView.addObject("employeeVacation", employeeVacationForm);
+                    modelAndView.addObject("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
+                    modelAndView.addObject("errormessage", "The vacations you selected are already in you vacation period");
 
-                    return "addemployeevacation";
+                    return modelAndView;
 
                 } else {
                     employeeVacationForm.setEmployee(employeeFactory.transformEmployeeIntoEmployeeForm(employeeService.saveEmployeeVacations(vacation, employee)));
 
-                    model.addAttribute("employeeVacation", employeeVacationForm);
-                    model.addAttribute("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
-                    model.addAttribute("successmessage", "Success you save vacations in your employee");
+                    modelAndView.addObject("employeeVacation", employeeVacationForm);
+                    modelAndView.addObject("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
+                    modelAndView.addObject("successmessage", "Success you save vacations in your employee");
 
-                    return "addemployeevacation";
+                    return modelAndView;
                 }
             } else {
 
-                model.addAttribute("employeeVacation", employeeVacationForm);
-                model.addAttribute("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
-                model.addAttribute("errormessage", "you need to insert dates in the future");
+                modelAndView.addObject("employeeVacation", employeeVacationForm);
+                modelAndView.addObject("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
+                modelAndView.addObject("errormessage", "you need to insert dates in the future");
 
-                return "addemployeevacation";
+                return modelAndView;
             }
 
         } else {
 
-            model.addAttribute("employeeVacation", employeeVacationForm);
-            model.addAttribute("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
-            model.addAttribute("errormessage", "you need to insert a start date and end date");
+            modelAndView.addObject("employeeVacation", employeeVacationForm);
+            modelAndView.addObject("numberOfEmployeeVacations", vacationUtils.numberOfAvailableDays(employee.getVacationList()));
+            modelAndView.addObject("errormessage", "you need to insert a start date and end date");
 
-            return "addemployeevacation";
+            return modelAndView;
         }
     }
 
-
+    /**
+     * This method dosent receive any argument
+     * Creates a ModelAndView with viewname:searchemployeetoeditvacation and model EmployeeForm
+     *
+     * @return modelAndView to search employee
+     */
     @RequestMapping(value = "/searchemployeetoeditvacations", method = RequestMethod.GET)
     public ModelAndView searchEmployeeToEditVacations() {
 
         ModelAndView modelAndView = new ModelAndView("searchemployeetoeditvacation", "employee", new EmployeeForm());
-        return modelAndView;
 
+        return modelAndView;
     }
 
+    /**
+     * This method recieve one argument
+     * The argument must be EmployeeForm that contains the id passed in the method searchEmployeeToEditVacations
+     * Creates two ModelAndView searchModelAndView viewName:searchemployeetoeditvacation and editModelAndView viewname:selectemployeevacationtoeditform
+     * checks if the id passed on the argument is null
+     * if true returns searchModelAndView with error message
+     * if false  will check if the employee exists
+     * if true  return editModelAndView else returns searchModelAndView with errormessage
+     *
+     * @param form EmployeeForm with id
+     * @return searchModelAndView , editModelAndView
+     */
     @RequestMapping(value = "/searchemployeetoeditvacations", method = RequestMethod.POST)
     public ModelAndView editEmployeeVacations(EmployeeForm form) {
 
         ModelAndView searchModelAndView = new ModelAndView("searchemployeetoeditvacation", "employee", form);
         ModelAndView editModelAndView = new ModelAndView("selectemployeevacationtoeditform");
+
         if (form.getId() == null) {
+
             searchModelAndView.addObject("errormessage", "You need to insert a valid Id");
+
             return searchModelAndView;
         } else if (form.getId() != null) {
+
             if (employeeService.getEmployeeById(form.getId()) != null) {
+
                 EmployeeVacationForm employeeVacationForm = new EmployeeVacationForm();
                 employeeVacationForm.setEmployee(employeeFactory.transformEmployeeIntoEmployeeForm(employeeService.getEmployeeById(form.getId())));
                 employeeVacationForm.setVacation(new VacationForm());
+
                 editModelAndView.addObject("employeeVacationForm", employeeVacationForm);
+
                 return editModelAndView;
             }
         }
         searchModelAndView.addObject("errormessage", "The employee dosen´t exist");
-        return searchModelAndView;
 
+        return searchModelAndView;
     }
 
+    /**
+     * This method receives an argument
+     * The argument must be EmployeeVacationForm
+     * Creates two ModelAndView editModelAndView viewName: editemployeevacations and modelAndView viewname:selectemployeevacationtoeditform
+     * checks if the vacation id passed on the argument is null
+     * if true returns modelAndview with error message
+     * if false check if vacation exists
+     * if true return modelAndView with error message
+     * if false returns editModelAndView with the vacation to edit
+     *
+     * @param employeeVacationForm brings an employeeForm  and a vacationForm
+     * @return modelAndView , editModelAndView
+     */
     @RequestMapping(value = "/editemployeevacation", method = RequestMethod.GET)
     public ModelAndView changeEmployeeVacations(EmployeeVacationForm employeeVacationForm) {
+
         ModelAndView modelAndView = new ModelAndView("selectemployeevacationtoeditform", "employeeVacationForm", employeeVacationForm);
         ModelAndView editModelAndView = new ModelAndView("editemployeevacations");
         EmployeeVacationForm vacationsToEdit = new EmployeeVacationForm();
         Employee employee = employeeService.getEmployeeById(employeeVacationForm.getEmployee().getId());
         EmployeeForm employeeForm = employeeFactory.transformEmployeeIntoEmployeeForm(employee);
         employeeVacationForm.setEmployee(employeeForm);
+
         if (employeeVacationForm.getVacation().getId() == null) {
+
             modelAndView.addObject("errormessage", "the vacation id cannot be null !");
+
             return modelAndView;
 
         } else if (employeeVacationForm.getVacation().getId() != null) {
 
             if (employeeService.checkIfVacationExistOnTheEmployee(employeeVacationForm)) {
 
-
                 Vacation vacation = vacationService.getVacationById(employeeVacationForm.getVacation().getId());
-
                 VacationForm vacationForm = vacationFactory.transformVacationIntoVacationForm(vacation);
-
                 vacationsToEdit.setEmployee(employeeForm);
-
                 vacationsToEdit.setVacation(vacationForm);
 
                 editModelAndView.addObject("employeeVacation", vacationsToEdit);
+
                 return editModelAndView;
             }
-
         }
         modelAndView.addObject("errormessage", "the vacation dosent exist on the employee!");
 
         return modelAndView;
-
     }
 
+    /**
+     * This method receive the EmployeevacationForm edited
+     * Creates ModelAndView viewName:"editemployeevacations"
+     * try to update the employeevacations if true returns
+     * if true return modelAndView with success message
+     * if false returns modelAndView wirh error message
+     *
+     * @param employeeVacationForm employe with vacation edited
+     * @return modelAndView with success message or error message
+     */
     @RequestMapping(value = "/editemployeevacation", method = RequestMethod.POST)
     public ModelAndView saveEmployeeVacations(EmployeeVacationForm employeeVacationForm) {
+
         ModelAndView modelAndView = new ModelAndView("editemployeevacations", "employeeVacation", employeeVacationForm);
 
         if (vacationService.updateEmployeeVacations(employeeVacationForm)) {
+
             Employee employee = employeeService.getEmployeeById(employeeVacationForm.getEmployee().getId());
             EmployeeForm employeeForm = employeeFactory.transformEmployeeIntoEmployeeForm(employee);
             employeeVacationForm.setEmployee(employeeForm);
+
             modelAndView.addObject("successmessage", "The Vacation was edited successfully");
+
             return modelAndView;
         } else {
+
             Employee employee = employeeService.getEmployeeById(employeeVacationForm.getEmployee().getId());
             EmployeeForm employeeForm = employeeFactory.transformEmployeeIntoEmployeeForm(employee);
             employeeVacationForm.setEmployee(employeeForm);
-            modelAndView.addObject("errormessage", "It was not possible to edit the vacations! Please try again");
-            return modelAndView;
 
+            modelAndView.addObject("errormessage", "It was not possible to edit the vacations! Please try again");
+
+            return modelAndView;
         }
     }
+
 }
 

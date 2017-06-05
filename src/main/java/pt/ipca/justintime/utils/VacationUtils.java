@@ -42,12 +42,14 @@ public class VacationUtils {
      * @return TRUE, FALSE
      */
     private boolean dateDiffOfWeekend(LocalDate date) {
+
         if (date.getDayOfWeek().getValue() != 6 && date.getDayOfWeek().getValue() != 7 && date.getYear() == LocalDate.now().getYear()) {
+
             return true;
         }
+
         return false;
     }
-
 
     /**
      * This method will check if the employee can add more vacations to is list
@@ -62,17 +64,11 @@ public class VacationUtils {
     public int numberOfAvailableDays(List<Vacation> employeeList, Vacation formVacation) {
 
         int numberOfDays = 0;
-
         List<Vacation> formVacationDays = new ArrayList<>();
-
         formVacationDays.add(formVacation);
-
         List<LocalDate> employeelistToCheck = getDaysBetweenDates(employeeList);
-
         List<LocalDate> formVacations = getDaysBetweenDates(formVacationDays);
-
         numberOfDays = maxDaysVacations - getTotalNumberOfWorkingDays(employeelistToCheck);
-
         numberOfDays = numberOfDays - getTotalNumberOfWorkingDays(formVacations);
 
         if (numberOfDays < 0) {
@@ -82,7 +78,6 @@ public class VacationUtils {
         } else {
 
             return numberOfDays;
-
         }
     }
 
@@ -99,10 +94,7 @@ public class VacationUtils {
     public int numberOfAvailableDays(List<Vacation> employeeVacationList) {
 
         int numberOfDays = 0;
-
-
         List<LocalDate> employeelistToCheck = getDaysBetweenDates(employeeVacationList);
-
         numberOfDays = maxDaysVacations - getTotalNumberOfWorkingDays(employeelistToCheck);
 
         if (numberOfDays < 0) {
@@ -112,7 +104,6 @@ public class VacationUtils {
         } else {
 
             return numberOfDays;
-
         }
     }
 
@@ -130,14 +121,18 @@ public class VacationUtils {
      * @return a list of dates "dateList" returns a list with the days between the start and the end
      */
     public List<LocalDate> getDaysBetweenDates(List<Vacation> vacationList) {
+
         List<LocalDate> dateList = new ArrayList<>();
         for (Vacation vacation : vacationList) {
+
             long days = dateDiffInNumberOfDays(vacation.getVacationStartDay(), vacation.getVacationEndDay());
             for (int i = 0; i <= days; i++) {
+
                 LocalDate d = vacation.getVacationStartDay().plus(i, ChronoUnit.DAYS);
                 dateList.add(d);
             }
         }
+
         return dateList;
     }
 
@@ -154,12 +149,16 @@ public class VacationUtils {
      * @return the number of working days "count"
      */
     public int getTotalNumberOfWorkingDays(List<LocalDate> dateList) {
+
         int cont = 0;
         for (LocalDate date : dateList) {
+
             if (dateDiffOfWeekend(date)) {
+
                 cont++;
             }
         }
+
         return cont;
     }
 
@@ -176,10 +175,13 @@ public class VacationUtils {
      * @return list of local dates.
      */
     public List<LocalDate> getWorkingDaysVacations(List<Vacation> vacationList) {
+
         List<LocalDate> listToReturn = new ArrayList<>();
 
         for (LocalDate date : getDaysBetweenDates(vacationList)) {
+
             if (dateDiffOfWeekend(date)) {
+
                 listToReturn.add(date);
             }
         }
@@ -199,14 +201,17 @@ public class VacationUtils {
      * @return list of local date for the chosen month
      */
     public List<LocalDate> getDaysOfVacationByMonth(List<Vacation> vacationList, int month) {
+
         List<LocalDate> listOfDaysToReturn = new ArrayList<>();
 
         for (LocalDate dayDate : getDaysBetweenDates(vacationList)) {
+
             if (dayDate.getMonth().getValue() == month) {
+
                 listOfDaysToReturn.add(dayDate);
             }
-
         }
+
         return listOfDaysToReturn;
     }
 
@@ -223,13 +228,19 @@ public class VacationUtils {
      * @return TRUE or FALSE
      */
     public boolean checkIfVacationsExist(Vacation vacation, List<Vacation> list) {
+
         if (list == null) {
+
             return false;
         }
         for (Vacation vac : list) {
-            if (vac.equals(vacation))
+
+            if (vac.equals(vacation)) {
+
                 return true;
+            }
         }
+
         return false;
     }
 
@@ -248,11 +259,15 @@ public class VacationUtils {
      * @return TRUE, FALSE
      */
     public boolean checkIfTheVacationIsNull(Vacation vacation) {
+
         if (vacation.getVacationStartDay() == null) {
+
             return true;
         } else if (vacation.getVacationEndDay() == null) {
+
             return true;
         }
+
         return false;
     }
 
@@ -267,11 +282,15 @@ public class VacationUtils {
      * @return TRUE or FALSE
      */
     public boolean checkIfVacationsAreInFuture(Vacation vacation) {
+
         if (vacation.getVacationStartDay().isAfter(LocalDate.now())) {
+
             if (vacation.getVacationEndDay().isAfter(vacation.getVacationStartDay())) {
+
                 return true;
             }
         }
+
         return false;
     }
 
@@ -279,9 +298,10 @@ public class VacationUtils {
      * Returns a proportion (n out of a total) as a percentage, in a float.
      */
         public float getPercentage(int n, int total) {
+
         float proportion = ((float) n) / ((float) total);
+
         return proportion * 100;
     }
-
 
 }

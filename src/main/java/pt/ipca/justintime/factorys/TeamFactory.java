@@ -14,6 +14,14 @@ import pt.ipca.justintime.forms.TeamForm;
 @Component
 public class TeamFactory {
 
+    /**
+     * This method receive one argument
+     * The argument must be TeamForm
+     * Transform one TeamForm into a form
+     *
+     * @param teamForm to transform into team
+     * @return team
+     */
     public Team transformTeamFormIntoTeam(TeamForm teamForm) {
 
         Team team = new Team();
@@ -25,6 +33,14 @@ public class TeamFactory {
         return team;
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be NewTeamForm
+     * Transform one NewTeamForm into a form
+     *
+     * @param teamForm to transform into team
+     * @return team
+     */
     public Team transformNewTeamFormIntoTeam(NewTeamForm teamForm) {
 
         Team team = new Team();
@@ -34,18 +50,6 @@ public class TeamFactory {
         team.setProjectList(teamForm.getProjectList());
 
         return team;
-    }
-
-
-    public TeamForm transformTeamIntoTeamForm(Team team) {
-        TeamForm teamForm = new TeamForm();
-
-        teamForm.setId(team.getId());
-        teamForm.setTeamName(team.getTeamName());
-        teamForm.setEmployeeList(team.getEmployeeList());
-        teamForm.setProjectList(team.getProjectList());
-
-        return teamForm;
     }
 
 
