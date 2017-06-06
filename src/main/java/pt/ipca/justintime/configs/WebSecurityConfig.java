@@ -10,7 +10,6 @@ package pt.ipca.justintime.configs;
         import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
         import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-
 /**
  * @author Tiago Silva
  * @class LESI-PL 3º Ano
@@ -18,6 +17,7 @@ package pt.ipca.justintime.configs;
  * @email a7809@alunos.ipca.pt
  */
 /*
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/").hasAnyRole("USER", "ADMIN")
+               // .antMatchers("/").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/login").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
