@@ -281,4 +281,34 @@ public class TeamService {
         return teamList;
     }
 
+    /**
+     * Method that dosent receive any argument
+     * Gets all teams without vacations in the current month "LocalDate.Now()"
+     *
+     * @return List<Team>
+     */
+    public List<Team> getTeamsWithoutVacationsThisMonth(){
+
+        List<Team> teamList =  new ArrayList<>();
+
+        for (Team team : getAllTeams()) {
+
+            int cont = 0;
+            for(Employee employee : team.getEmployeeList())
+            {
+                List<LocalDate> localDateList = vacationUtils.getDaysOfVacationByMonth(employee.getVacationList(), LocalDate.now().getMonth().getValue());
+                if (localDateList.isEmpty()){
+
+                    cont++;
+                }
+            }
+            if(cont == team.getEmployeeList().size() )
+            {
+                teamList.add(team);
+            }
+        }
+
+        return teamList;
+    }
+
 }

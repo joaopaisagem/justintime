@@ -47,7 +47,7 @@ public class ProjectController extends WebMvcConfigurerAdapter {
 
         ModelAndView projectForm = new ModelAndView("projectform");
         projectForm.addObject("project", new Project());
-        projectForm.addObject("teamList", teamService.getAllTeams());
+        projectForm.addObject("teamList", teamService.getTeamsWithoutVacationsThisMonth());
         projectForm.addObject("clientList", clientService.getAllClients());
 
         return projectForm;
@@ -77,7 +77,7 @@ public class ProjectController extends WebMvcConfigurerAdapter {
 
         ModelAndView projectForm = new ModelAndView("projectform");
         projectForm.addObject("project", project);
-        projectForm.addObject("teamList", teamService.getAllTeams());
+        projectForm.addObject("teamList", teamService.getTeamsWithoutVacationsThisMonth());
         projectForm.addObject("clientList", clientService.getAllClients());
 
         if (bindingResult.hasErrors()) {
@@ -197,7 +197,7 @@ public class ProjectController extends WebMvcConfigurerAdapter {
             if(projectService.getProjectById(id)!=null)
             {
                 editModelAndView.addObject("project", projectService.getProjectById(id));
-                editModelAndView.addObject("teamList", teamService.getAllTeams());
+                editModelAndView.addObject("teamList", teamService.getTeamsWithoutVacationsThisMonth());
                 editModelAndView.addObject("clientList", clientService.getAllClients());
 
                 return editModelAndView;
@@ -230,15 +230,17 @@ public class ProjectController extends WebMvcConfigurerAdapter {
 
         if (bindingResult.hasErrors()) {
             editModelAndView.addObject("project", project);
-            editModelAndView.addObject("teamList", teamService.getAllTeams());
+            editModelAndView.addObject("teamList", teamService.getTeamsWithoutVacationsThisMonth());
             editModelAndView.addObject("clientList", clientService.getAllClients());
+            editModelAndView.addObject("errormessage","The form has errors please verify all fields!");
             return editModelAndView;
         }
 
         projectService.updateProject(project);
         editModelAndView.addObject("project", projectService.getProjectById(project.getId()));
-        editModelAndView.addObject("teamList", teamService.getAllTeams());
+        editModelAndView.addObject("teamList", teamService.getTeamsWithoutVacationsThisMonth());
         editModelAndView.addObject("clientList", clientService.getAllClients());
+        editModelAndView.addObject("successmessage","The project was edited successfuly!");
 
         return editModelAndView;
     }

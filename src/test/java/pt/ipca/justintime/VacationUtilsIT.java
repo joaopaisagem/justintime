@@ -40,7 +40,7 @@ public class VacationUtilsIT {
         vacation.setVacationEndDay(LocalDate.now().plusDays(1));
         vacationList.add(vacation);
         List<LocalDate> result = vacationUtils.getDaysBetweenDates(vacationList);
-        Assert.assertTrue(result.size() == 1);
+        Assert.assertTrue(result.size() == 2);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class VacationUtilsIT {
         vacation.setVacationEndDay(LocalDate.now().plusDays(6));
         vacationList.add(vacation);
         List<LocalDate> result = vacationUtils.getDaysOfVacationByMonth(vacationList, month);
-        Assert.assertTrue(result.size() == 6);
+        Assert.assertTrue(result.size() == 7);
 
     }
 
@@ -73,6 +73,6 @@ public class VacationUtilsIT {
         vacationList.add(b);
         vacationList.add(c);
         List<LocalDate> vacationByDaysList = vacationUtils.getDaysBetweenDates(vacationList);
-        Assert.assertTrue(vacationByDaysList.size() == 18);
+        Assert.assertTrue(vacationByDaysList.size() == 21);
     }
 }
