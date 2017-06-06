@@ -1,5 +1,6 @@
 package pt.ipca.justintime.services;
 
+import lombok.experimental.PackagePrivate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pt.ipca.justintime.domain.Employee;
@@ -30,39 +31,92 @@ public class TeamService {
     @Autowired
     private VacationUtils vacationUtils;
 
-
+    /**
+     * This method receive one argument
+     * The argument must be a Team
+     * Saves the team into database
+     * Return the saved team
+     *
+     * @param team to save
+     * @return team
+     */
     private Team saveTeam(Team team) {
 
         return teamRepository.save(team);
     }
 
+    /**
+     * This method receive one argument
+     * Teh argument must be related to a team id - Long id
+     * Finds the team trough the id
+     *
+     * @param id team id
+     * @return team
+     */
     public Team getTeamById(Long id) {
 
         return teamRepository.findOne(id);
     }
 
+    /**
+     * This method dosent receive any parameter
+     * Get all teams from database
+     *
+     * @return List<Team>
+     */
     public List<Team> getAllTeams() {
         return teamRepository.findAll();
 
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be a team
+     * Updates the team
+     * Dosent return any type
+     *
+     * @param team to update
+     */
     public void updateTeam(Team team) {
 
         teamRepository.saveAndFlush(team);
-
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be related to a team id -Long id
+     * Deletes the team from the database
+     * Dosent return any type
+     *
+     * @param id team id
+     */
     public void deleteTeam(Long id) {
 
         teamRepository.delete(id);
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be related to a team id -Long id
+     * Search if the team exists
+     *
+     * @param id Long
+     * @return TRUE,FALSE
+     */
     public boolean searchIfExists(Long id) {
 
         return teamRepository.exists(id);
     }
 
 
+    /**
+     * This method receive one argument
+     * The argument must be related to a team id -Long id
+     * checkIfTeamExists
+     *
+     * @param id team id
+     * @return TRUE,FALSE
+     */
     private boolean checkIfTeamExists(Long id) {
 
         if (id == null) {
@@ -76,6 +130,14 @@ public class TeamService {
         return false;
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be related to a team
+     * check if Team Exists By Name
+     *
+     * @param team team to search
+     * @return TRUE,FALSE
+     */
     private boolean checkIfTeamExistsByName(Team team) {
 
         List<Team> teamsList = getAllTeams();
@@ -90,6 +152,15 @@ public class TeamService {
         return false;
     }
 
+    /**
+     * This method receive one argument
+     * Teh argument must be a Team name ( String teamName)
+     * Removes the spaces from the team name ex:( Team One )
+     * The final result will be ( TeamOne )
+     *
+     * @param teamName String
+     * @return String teamName
+     */
     private String removeSpacesOnTheTeamName(String teamName) {
 
         String result = teamName.replace(" ", "");
@@ -98,9 +169,10 @@ public class TeamService {
     }
 
     /**
-     * Method to count the number of teams
+     * This method dosent receive any argument
+     * Method to count the number of teams in database
      *
-     * @return returns a count with the total of teams
+     * @return returns a int with the total of teams
      */
     public int countNumberOfTeams() {
 
@@ -111,7 +183,14 @@ public class TeamService {
         return count;
     }
 
-
+    /**
+     * This method receive one argument
+     * The argument must be a TeamForm from the team controller
+     * Updates the team
+     * Dosent return any type
+     *
+     * @param teamForm
+     */
     public void updateTeamForm(TeamForm teamForm) {
 
         Team team = teamFactory.transformTeamFormIntoTeam(teamForm);
@@ -119,6 +198,14 @@ public class TeamService {
         updateTeam(team);
     }
 
+    /**
+     * This method receive one argument
+     * The argument must be a NewTeamForm
+     * Saves the team into database
+     *
+     * @param teamForm a team to save
+     * @return TRUE,FALSE
+     */
     public boolean saveTeamForm(NewTeamForm teamForm) {
 
         Team team = teamFactory.transformNewTeamFormIntoTeam(teamForm);
@@ -136,6 +223,14 @@ public class TeamService {
         return true;
     }
 
+    /**
+     * Method that receive one argument
+     * The argument must be one TeamForm
+     * Try to remove a team from database
+     *
+     * @param teamForm team to remove
+     * @return TRUE,FALSE
+     */
     public boolean tryToRemoveTeam(TeamForm teamForm) {
 
         Team team = teamFactory.transformTeamFormIntoTeam(teamForm);
@@ -145,6 +240,7 @@ public class TeamService {
             try {
 
                 deleteTeam(team.getId());
+
                 return true;
             } catch (Exception e) {
 
@@ -155,6 +251,12 @@ public class TeamService {
         return false;
     }
 
+    /**
+     * Method that dosent receive any argument
+     * Gets all teams with vacations in the current month "LocalDate.Now()"
+     *
+     * @return List<Team> with teams with vacations
+     */
     public List<Team> getTeamsWithVacationsForCurrentMonth(){
 
         List<Team> teamList =  new ArrayList<>();

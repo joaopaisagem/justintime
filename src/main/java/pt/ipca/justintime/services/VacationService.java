@@ -29,13 +29,27 @@ public class VacationService {
     @Autowired
     private VacationUtils vacationUtils;
 
-
+    /**
+     * This method receive one argument
+     * The argument must be a Long id
+     * Get vacation with the id from database
+     *
+     * @param id vacation id "Long"
+     * @return Vacation
+     */
     public Vacation getVacationById(Long id) {
 
         return vacationRepository.findOne(id);
     }
 
-
+    /**
+     * This method receive one argument
+     * The argument must be related to EmployeeVacationForm
+     * Updates the employee vacations
+     *
+     * @param employeeVacationForm employee and vacation
+     * @return TRUE,FALSE
+     */
     public boolean updateEmployeeVacations(EmployeeVacationForm employeeVacationForm) {
 
         Employee employee = employeeRepository.getOne(employeeVacationForm.getEmployee().getId());
